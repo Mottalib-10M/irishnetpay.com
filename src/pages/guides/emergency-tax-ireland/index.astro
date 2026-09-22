@@ -3,8 +3,8 @@ import Layout from '../../../layouts/Layout.astro';
 ---
 
 <Layout
-  title="Emergency Tax in Ireland: Why It Happens & How to Get a Refund"
-  description="Understand why emergency tax is applied in Ireland, how much extra you pay, and step-by-step instructions to resolve it and claim a refund through Revenue myAccount."
+  title="Emergency tax in Ireland: why it happens and the fix"
+  description="What emergency tax costs, why Revenue applies it, the exact steps that stop it, and how long the refund takes once the correct RPN reaches your employer."
 >
   <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
     <ol class="flex items-center gap-1">
@@ -220,8 +220,8 @@ import Layout from '../../../layouts/Layout.astro';
     <h2>Sources</h2>
     <ul>
       <li><a href="https://www.revenue.ie/en/jobs-and-pensions/emergency-tax/index.aspx" target="_blank" rel="noopener noreferrer">Revenue.ie - Emergency Tax</a></li>
-      <li><a href="https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/tax-and-starting-work/" target="_blank" rel="noopener noreferrer">Citizens Information - Tax and Starting Work</a></li>
-      <li><a href="https://www.gov.ie/en/service/12e6de-get-your-pps-number/" target="_blank" rel="noopener noreferrer">Gov.ie - Get Your PPS Number</a></li>
+      <li><a href="https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/how-your-tax-is-calculated/" target="_blank" rel="noopener noreferrer">Citizens Information - Tax and Starting Work</a></li>
+      <li><a href="https://www.gov.ie/en/department-of-social-protection/services/get-a-personal-public-service-pps-number/" target="_blank" rel="noopener noreferrer">Gov.ie - Get Your PPS Number</a></li>
     </ul>
   </div>
 
@@ -236,24 +236,33 @@ import Layout from '../../../layouts/Layout.astro';
   })} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "How long does it take to get an emergency tax refund?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Once Revenue issues your correct RPN, the refund is typically included in your next regular pay packet. Revenue usually processes the RPN within 1-5 working days. In total, expect the refund within one to two pay cycles." }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I call Revenue to resolve emergency tax?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can contact Revenue's PAYE helpline to resolve emergency tax over the phone. However, using myAccount is usually faster and can be done at any time without waiting on hold." }
-      },
-      {
-        "@type": "Question",
-        "name": "What if I was on emergency tax for a full year and never resolved it?",
-        "acceptedAnswer": { "@type": "Answer", "text": "You can still claim a refund by registering on myAccount and requesting an end-of-year review for the year in question. Revenue will recalculate your tax and issue a refund. You can claim refunds for up to four years after the tax year." }
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How long does it take to get an emergency tax refund?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Once Revenue issues your correct RPN to your employer, the refund is typically included in your next regular pay packet. If you register your employment on myAccount today, Revenue usually processes the RPN within 1-5 working days. Your employer then applies the correct credits and the cumulative system automatically calculates the refund. In total, you can expect to see the refund within one to two pay cycles."
       }
-    ]
-  })} />
+    },
+    {
+      "@type": "Question",
+      "name": "Can I call Revenue to resolve emergency tax?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can contact Revenue's PAYE helpline to resolve emergency tax over the phone. However, using myAccount is usually faster and can be done at any time. If you cannot access myAccount (for example, because you have not yet verified your MyGovID), calling Revenue is a valid alternative. Have your PPS number, employer's details, and your start date ready when you call. Have your PPS number and your employer's registered number to hand before calling, since the agent cannot start without both."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I was on emergency tax for a full year and never resolved it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you were on emergency tax for an entire year without resolving it, you will have significantly overpaid tax. You can still claim a refund by registering on myAccount and requesting an end-of-year review (a \"Statement of Liability\") for the year in question. Revenue will recalculate your tax for the full year using the correct credits and rate bands, and issue a refund for the overpayment. You can claim refunds for up to four years after the tax year in question."
+      }
+    }
+  ]
+})} />
 </Layout>

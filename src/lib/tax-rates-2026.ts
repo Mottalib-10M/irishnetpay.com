@@ -11,7 +11,7 @@ export const STANDARD_RATE = 0.20;
 /** Higher rate of income tax */
 export const HIGHER_RATE = 0.40;
 
-/** Standard Rate Cut-Off Point (SRCOP) by filing status — annual */
+/** Standard Rate Cut-Off Point (SRCOP) by filing status, annual */
 export type FilingStatus = 'single' | 'married_one_income' | 'married_two_incomes' | 'single_parent';
 
 export const SRCOP: Record<FilingStatus, number> = {
@@ -39,7 +39,7 @@ export interface USCBand {
   rate: number;
 }
 
-/** USC bands 2026 — standard rates */
+/** USC bands 2026, standard rates */
 export const USC_BANDS: USCBand[] = [
   { max: 12_012, rate: 0.005 },   // 0.5%
   { max: 25_760, rate: 0.02 },    // 2%
@@ -47,7 +47,7 @@ export const USC_BANDS: USCBand[] = [
   { max: Infinity, rate: 0.08 },  // 8%
 ];
 
-/** USC exemption threshold — no USC if total income ≤ this */
+/** USC exemption threshold, no USC if total income ≤ this */
 export const USC_EXEMPTION = 13_000;
 
 /** USC surcharge for non-PAYE income > €100,000 */
@@ -59,7 +59,7 @@ export const USC_SURCHARGE_THRESHOLD = 100_000;
 /** Employee PRSI rate (Class A) */
 export const PRSI_RATE = 0.04; // 4%
 
-/** PRSI weekly income threshold — below this, no PRSI */
+/** PRSI weekly income threshold, below this, no PRSI */
 export const PRSI_WEEKLY_THRESHOLD = 352;
 
 /** PRSI credit: tapered relief for low earners */

@@ -51,6 +51,62 @@ const guides = [
     icon: '&#x1F393;',
   },
 ];
+
+/** FAQ de la page (RECETTE §7) : une source pour le balisage et pour l'affichage. */
+const faqSchemaPilier = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which of these guides should I read first?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Start with the PAYE guide, which explains how credits and the cut-off point interact, because every other page assumes that. If you have just started a job, the emergency tax guide comes next and is usually the more urgent of the two. The USC and PRSI guides are worth reading once, since both are charged on gross pay and neither can be reduced by the usual planning."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do these guides apply to self-employed income?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only partly. The income tax bands and credits are the same, but a self-employed person pays Class S PRSI rather than Class A, files a Form 11 rather than relying on payroll, and cannot claim the Employee PAYE Tax Credit on that income. Anyone with non-PAYE income above €5,000 falls into self-assessment, which changes the filing obligation even where the tax is identical."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How current are the figures in these guides?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each page carries its review date at the top and in the footer, and the sources are listed at the end. Credits, bands and USC thresholds are set in the Budget each October and take effect from the following January, so a page reviewed after that date reflects the current year. Where a figure has changed mid-year, the guide says so explicitly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I claim tax back for previous years?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, for the four most recent tax years. This is the single most valuable thing most people can do with an hour of their time: unclaimed medical expenses, the Rent Tax Credit, tuition fees and incorrectly allocated credits are all recoverable. Claims are made through Revenue myAccount, and a refund for several years at once is common on a first review."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do these guides replace advice from an accountant?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For a straightforward PAYE position, they cover what is needed. Once share options, rental income, foreign income or a business are involved, the interaction between reliefs becomes specific enough that professional advice pays for itself. Revenue's own guidance is free and authoritative, and it is worth reading before paying anyone to summarise it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do the guides quote a fifty-two percent marginal rate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because it is the combined effect of three separate charges on the same euro: forty percent income tax, eight percent USC in the top band, and four percent PRSI. Each is set independently, and none has an upper ceiling, which is why the figure holds at every income above the thresholds. It is the number that matters when weighing a raise, a bonus or a pension contribution."
+      }
+    }
+  ]
+};
 ---
 
 <Layout
@@ -109,4 +165,49 @@ const guides = [
       }
     ]
   })} />
+
+  <section class="mx-auto max-w-3xl px-4 pb-2">
+    <p class="leading-relaxed text-gray-700">
+      These guides are for someone looking at an Irish payslip and trying to work out why it says
+      what it says. Each covers one part of the system, names the Revenue publication it relies
+      on, and carries its review date at the top and bottom so that a figure can be checked
+      against the year it belongs to.
+    </p>
+    <p class="mt-3 leading-relaxed text-gray-700">
+      Read them in the order the question arises. The PAYE guide comes first, because credits and
+      the standard rate cut-off point determine everything else. If you have just started a job,
+      the emergency tax guide is the more urgent one: it explains why the first payslip is smaller
+      than expected and exactly what to do about it, usually within a single pay cycle.
+    </p>
+    <p class="mt-3 leading-relaxed text-gray-700">
+      The USC and PRSI guides matter because neither charge behaves like income tax. Both are
+      calculated on gross pay, neither is reduced by tax credits, and PRSI has no upper ceiling at
+      all, which is why the combined marginal rate stays at fifty-two percent however high the
+      salary goes. Understanding that explains most of the gap between a headline salary and what
+      arrives in the account.
+    </p>
+    <p class="mt-3 leading-relaxed text-gray-700">
+      The remaining guides deal with situations rather than mechanics: pension relief and its
+      age-related limits, the choice of assessment method for married couples, and the credits
+      that have to be claimed rather than granted. That last point is where most money is left
+      unclaimed, and claims can be backdated four years.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 mt-12 border-t border-gray-200 pt-8">
+    <h2 class="text-2xl font-bold" id="faq">Frequently asked questions</h2>
+    <div class="mt-6 space-y-4">
+      {faqSchemaPilier.mainEntity.map((q) => (
+        <details class="rounded-xl border border-gray-200 bg-white">
+          <summary class="cursor-pointer px-6 py-4 font-semibold text-gray-900 hover:text-primary">
+            {q.name}
+          </summary>
+          <div class="px-6 pb-4 text-sm leading-relaxed text-gray-600">
+            {q.acceptedAnswer.text}
+          </div>
+        </details>
+      ))}
+    </div>
+  </section>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchemaPilier)} />
 </Layout>

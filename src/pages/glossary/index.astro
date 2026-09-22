@@ -1,7 +1,63 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+
+/** FAQ de la page (RECETTE §7) : une source pour le balisage et pour l'affichage. */
+const faqSchemaPilier = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the Standard Rate Cut-Off Point?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is the amount of income taxed at twenty percent before the forty percent rate begins, set at €42,000 for a single person in 2026. Crossing it does not raise the tax on income already earned: only the excess is taxed at the higher rate. Married couples and single parents have higher cut-off points, which is why the same salary produces different take-home pay depending on status."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is an RPN and why does it matter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A Revenue Payroll Notification is the instruction Revenue sends your employer telling them which tax credits and cut-off point to apply. Without one, the employer must operate emergency tax, which deducts far more than is due. An RPN is issued once the employment is registered, usually within a few working days, and a missing one is the single most common cause of an unexpectedly small first payslip."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a tax credit and a relief?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A credit reduces the tax calculated, euro for euro, so a €1,875 credit cuts the bill by exactly that amount whatever your rate. A relief reduces the income on which tax is calculated, so its value depends on your marginal rate: €1,000 of pension relief is worth €400 at the higher rate and €200 at the standard rate. The distinction decides which is worth claiming first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does emergency tax actually cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Under emergency basis, the employer applies a reduced cut-off point and, after four weeks, no tax credits at all, so deductions can exceed half of gross pay. Nothing is lost permanently: the overpayment is refunded through payroll once Revenue issues the correct RPN, usually within one or two pay cycles. The cost is cash flow rather than tax, but at the start of a job that distinction matters."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the USC exemption threshold?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Anyone whose total income for the year is €13,000 or less pays no Universal Social Charge at all. Above that figure, USC applies to the whole income rather than only the excess, which makes the threshold a cliff rather than a slope. Reduced rates also apply to medical card holders under a certain income and to people aged seventy and over."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Class A PRSI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Class A is the contribution class covering most employees in the private sector and gives access to the widest range of benefits, including the State Pension, Jobseeker's Benefit and Illness Benefit. It is charged at four percent of gross earnings with no upper limit, and nothing is due where weekly earnings are €352 or less. Employers pay a further contribution on top, at one of two rates."
+      }
+    }
+  ]
+};
 ---
-<Layout title="Tax Glossary - Irish Payroll Terms Explained | TakeHomePay.ie" description="A comprehensive glossary of Irish payroll and tax terms including PAYE, USC, PRSI, tax credits, and more. Understand your payslip and tax obligations.">
+<Layout title="Irish payroll terms explained: PAYE, USC, RPN, SRCOP" description="The terms that appear on an Irish payslip and in Revenue correspondence, defined plainly, with what each one actually changes for the person being paid.">
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -98,4 +154,61 @@ import Layout from '../../layouts/Layout.astro';
       </div>
     </dl>
   </div>
+
+  <section class="mx-auto max-w-3xl px-4 mt-12 border-t border-gray-200 pt-8">
+    <h2 class="text-2xl font-bold" id="faq">Frequently asked questions</h2>
+    <div class="mt-6 space-y-4">
+      {faqSchemaPilier.mainEntity.map((q) => (
+        <details class="rounded-xl border border-gray-200 bg-white">
+          <summary class="cursor-pointer px-6 py-4 font-semibold text-gray-900 hover:text-primary">
+            {q.name}
+          </summary>
+          <div class="px-6 pb-4 text-sm leading-relaxed text-gray-600">
+            {q.acceptedAnswer.text}
+          </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Cumulative Basis</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">The default method of calculating PAYE, under which each payslip recalculates tax on everything earned in the year to date and deducts what has already been paid. It is self-correcting: an overdeduction one month is refunded the next without any action. Starting a job late in the year gives access to the full year's credits against only a few months of income, which is why deductions then look unusually low.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Week 1 Basis</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">A non-cumulative method, applied when Revenue lacks the information to calculate cumulatively. Each pay period is treated in isolation with one period's credits, and no adjustment is made for earlier periods. It is not emergency tax, but it produces similarly high deductions with no obvious cause. It resolves once Revenue issues a cumulative RPN, usually after the employment record is corrected in myAccount.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Form 11 and Form 12</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">Form 11 is the self-assessment return, required of anyone with non-PAYE income above €5,000 in a year, and filed by the October deadline. Form 12 is the simpler return for PAYE taxpayers with small amounts of other income. The threshold concerns the filing obligation rather than the tax itself: the same income can be taxed either way, but only one route requires self-assessment.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Additional Voluntary Contribution</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">An AVC is an extra payment into an occupational pension scheme, above whatever the scheme itself requires. It attracts the same income tax relief as an ordinary contribution, within the same age-related limits, and can usually be started or stopped at will. AVCs are the standard route for anyone wanting to increase pension saving without changing employer or scheme.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Rent Tax Credit</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">A credit of up to €1,000 for a single person and €2,000 for a jointly assessed couple, available to tenants in private rented accommodation. It must be claimed rather than granted automatically, and it can be backdated for up to four years, which makes a first claim frequently worth several thousand euro. The tenancy generally has to be registered with the Residential Tenancies Board.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Standard Rate Cut-Off Point</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">The amount of income taxed at twenty percent before the forty percent rate applies, set at €42,000 for a single person in 2026 and higher for married couples and single parents. Only income above the threshold is taxed at the higher rate. It is shown on every payslip, usually divided by the number of pay periods, and an incorrect figure there is a common cause of overdeduction.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Revenue Payroll Notification</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">The instruction Revenue sends an employer setting out which tax credits and cut-off point to apply to a given employee. Without one, the employer must operate emergency tax. It is issued once an employment is registered, normally within a few working days, and it is updated automatically whenever credits change during the year.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Universal Social Charge</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">A charge on gross income introduced in 2011, levied across four bands and calculated before any pension deduction. Credits do not reduce it and pension relief does not apply to it, which makes it the least avoidable of the three deductions. Anyone earning €13,000 or less in the year is exempt entirely, and reduced rates apply to some medical card holders and those over seventy.</dd>
+      </div>
+        </details>
+      ))}
+    </div>
+  </section>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchemaPilier)} />
 </Layout>

@@ -3,8 +3,8 @@ import Layout from '../../../layouts/Layout.astro';
 ---
 
 <Layout
-  title="Starting Your First Job in Ireland: Tax Registration & What to Expect"
-  description="A step-by-step guide for people starting their first job in Ireland. Covers PPS numbers, Revenue myAccount registration, understanding your payslip, emergency tax, and your rights as a new employee."
+  title="First job in Ireland: tax, credits and first payslip"
+  description="What to register with Revenue before your first payday, which credits apply automatically, and how to read the payslip that arrives at the end of the month."
 >
   <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
     <ol class="flex items-center gap-1">
@@ -290,7 +290,7 @@ import Layout from '../../../layouts/Layout.astro';
     <ul>
       <li><a href="https://www.revenue.ie/en/jobs-and-pensions/tax-and-starting-work/index.aspx" target="_blank" rel="noopener noreferrer">Revenue.ie - Tax and Starting Work</a></li>
       <li><a href="https://www.citizensinformation.ie/en/employment/starting-work-and-changing-job/starting-work/tax-and-starting-work/" target="_blank" rel="noopener noreferrer">Citizens Information - Tax and Starting Work</a></li>
-      <li><a href="https://www.gov.ie/en/service/12e6de-get-your-pps-number/" target="_blank" rel="noopener noreferrer">Gov.ie - Get Your PPS Number</a></li>
+      <li><a href="https://www.gov.ie/en/department-of-social-protection/services/get-a-personal-public-service-pps-number/" target="_blank" rel="noopener noreferrer">Gov.ie - Get Your PPS Number</a></li>
       <li><a href="https://www.workplacerelations.ie/en/" target="_blank" rel="noopener noreferrer">Workplace Relations Commission</a></li>
     </ul>
   </div>
@@ -306,24 +306,33 @@ import Layout from '../../../layouts/Layout.astro';
   })} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Do I need a PPS number before I start work?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Strictly speaking, no - you can start work without a PPS number. However, your employer will not be able to obtain a Revenue Payroll Notification without it, which means you will be placed on emergency tax. It is strongly recommended to obtain your PPS number and register on Revenue myAccount before your start date." }
-      },
-      {
-        "@type": "Question",
-        "name": "When will I get my first payslip?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Your first payslip depends on your employer's pay cycle. Most employers pay monthly or fortnightly. If you start mid-month on a monthly pay cycle, your first pay may be pro-rated. Your employer must provide a payslip each pay period." }
-      },
-      {
-        "@type": "Question",
-        "name": "How do I know if I am on emergency tax?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Check your payslip. If the Tax Credits line shows zero or a much lower amount than expected, you may be on emergency tax. You can also check myAccount - if your employment is not listed, Revenue has not issued an RPN, and your employer is applying emergency rates." }
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need a PPS number before I start work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Strictly speaking, no - you can start work without a PPS number. However, your employer will not be able to obtain a Revenue Payroll Notification (RPN) without it, which means you will be placed on emergency tax. This can result in significantly higher deductions from your first pay. It is strongly recommended to obtain your PPS number and register on Revenue myAccount before your start date to avoid emergency tax entirely."
       }
-    ]
-  })} />
+    },
+    {
+      "@type": "Question",
+      "name": "When will I get my first payslip?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your first payslip depends on your employer's pay cycle. Most employers pay monthly (at the end of the month or on a specific date) or fortnightly. If you start mid-month on a monthly pay cycle, your first pay may be pro-rated for the days you worked. Your employer must provide a payslip each pay period, either in print or electronically. If you started partway through a cycle, expect the first payment to be smaller than the ongoing rate rather than wrong."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I know if I am on emergency tax?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Check your payslip. If the \"Tax Credits\" line shows zero or a much lower amount than expected, you may be on emergency tax. You can also check myAccount - if your employment is not listed under \"Manage Your Tax,\" Revenue has not issued an RPN, and your employer is applying emergency rates. Register the employment on myAccount immediately to resolve it. Another sign is if your net pay is much lower than expected - use our calculator to check what you should be receiving."
+      }
+    }
+  ]
+})} />
 </Layout>

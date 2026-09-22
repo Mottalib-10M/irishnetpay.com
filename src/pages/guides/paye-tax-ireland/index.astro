@@ -3,8 +3,8 @@ import Layout from '../../../layouts/Layout.astro';
 ---
 
 <Layout
-  title="PAYE Tax in Ireland: How It Works, Rates & Bands 2026"
-  description="A complete guide to PAYE income tax in Ireland for 2026. Understand the 20% and 40% rates, standard rate cut-off points, tax credits, and how your employer deducts tax at source."
+  title="PAYE income tax in Ireland: bands, credits and rates"
+  description="How Irish income tax is actually calculated: the twenty and forty percent bands, the cut-off point, and the credits that cut the bill euro for euro each year."
 >
   <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
     <ol class="flex items-center gap-1">
@@ -209,7 +209,7 @@ import Layout from '../../../layouts/Layout.astro';
       <li><a href="https://www.revenue.ie/en/jobs-and-pensions/calculating-your-income-tax/index.aspx" target="_blank" rel="noopener noreferrer">Revenue.ie - Calculating your income tax</a></li>
       <li><a href="https://www.revenue.ie/en/jobs-and-pensions/tax-and-starting-work/index.aspx" target="_blank" rel="noopener noreferrer">Revenue.ie - Tax and starting work</a></li>
       <li><a href="https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/how-your-tax-is-calculated/" target="_blank" rel="noopener noreferrer">Citizens Information - How your tax is calculated</a></li>
-      <li><a href="https://www.gov.ie/en/publication/budget-2026/" target="_blank" rel="noopener noreferrer">Gov.ie - Budget 2026</a></li>
+      <li><a href="https://www.gov.ie/en/department-of-finance/campaigns/budget-2026/" target="_blank" rel="noopener noreferrer">Gov.ie - Budget 2026</a></li>
     </ul>
   </div>
 
@@ -224,33 +224,33 @@ import Layout from '../../../layouts/Layout.astro';
   })} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What happens if I pay too much PAYE tax?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "If you overpay income tax through PAYE, Revenue will identify this in your end-of-year review and issue an automatic refund to your bank account. You can also proactively request a review through myAccount at any time during the year."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do I need to file a tax return if I only have PAYE income?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "If your only source of income is a single PAYE employment, you are generally not required to file an annual tax return. However, it is advisable to complete a Form 12 each year to claim additional reliefs such as medical expenses, the Rent Tax Credit, or remote working relief."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can my spouse and I share our tax bands and credits?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes. Married couples who elect joint assessment can transfer unused standard rate band between spouses (up to a cap of €42,000 per person) and share tax credits. This is particularly beneficial when one spouse earns significantly more than the other."
-        }
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What happens if I pay too much PAYE tax?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you overpay income tax through PAYE, Revenue will identify this in your end-of-year review and issue an automatic refund to your bank account. You can also proactively request a review through myAccount at any time during the year. Common reasons for overpayment include being placed on emergency tax, not claiming all available credits, or a mid-year change in circumstances (such as getting married). Four years is the limit for claiming back an overpayment, so a review carried out now can still recover tax from several earlier years."
       }
-    ]
-  })} />
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to file a tax return if I only have PAYE income?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If your only source of income is a single PAYE employment, you are generally not required to file an annual tax return. However, it is still advisable to complete a Form 12 each year to claim any additional reliefs you may be entitled to, such as medical expenses, the Rent Tax Credit, or remote working relief. Filing is mandatory if you have non-PAYE income exceeding €5,000 or if you are a director of a company."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can my spouse and I share our tax bands and credits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Married couples who elect joint assessment can transfer unused standard rate band between spouses (up to a cap of €42,000 per person) and share tax credits. This is particularly beneficial when one spouse earns significantly more than the other, as it moves more income into the lower 20% tax band. You can set up joint assessment through Revenue's myAccount service."
+      }
+    }
+  ]
+})} />
 </Layout>

@@ -1,38 +1,147 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 
+/*
+ * Identite visuelle : le drapeau irlandais.
+ *
+ * Le site portait l'emeraude et l'indigo par defaut de Tailwind. Le vert du
+ * drapeau, #169B62, ne tient que 3,56:1 sur blanc : il sert donc d'aplat, et
+ * le texte utilise sa version foncee #0E6B43, mesuree a 6,56:1. L'orange du
+ * drapeau tombe a 2,37:1 et ne porte jamais de texte sur fond clair.
+ */
 @theme {
-  --color-primary: #059669;
-  --color-primary-dark: #047857;
-  --color-primary-light: #10b981;
-  --color-secondary: #f97316;
-  --color-accent: #6366f1;
-  --color-surface: #f8fafc;
-  --color-border: #e2e8f0;
-  --font-sans: "Inter", "system-ui", sans-serif;
+  --color-primary: #0e6b43;
+  --color-primary-dark: #0a5133;
+  --color-primary-light: #169b62;
+  --color-secondary: #b35420;
+  --color-secondary-light: #ff883e;
+  --color-accent: #8fd9b4;
+  --color-surface: #f7faf8;
+  --color-border: #dde8e2;
+  --color-text: #14201a;
+  --color-text-muted: #5a6b62;
+
+  /*
+   * Couleurs semantiques redefinies pour la lisibilite : celles de Tailwind
+   * sont calibrees pour des aplats. Mesures sur blanc, emerald-600 ne tient que
+   * 3,77:1, green-600 3,30:1, amber-600 3,19:1 et red-500 3,76:1, sous le seuil
+   * AA de 4,5:1. Elles ne servent ici que de couleurs de texte.
+   */
+  --color-emerald-500: #047857;
+  --color-emerald-600: #047857;
+  --color-emerald-700: #065f46;
+  --color-green-500: #15803d;
+  --color-green-600: #15803d;
+  --color-amber-500: #b45309;
+  --color-amber-600: #b45309;
+  --color-red-500: #b91c1c;
+  --color-red-600: #b91c1c;
+
+  /*
+   * Deux teintes employees comme texte sur des aplats colores tombaient sous
+   * le seuil AA : gris 500 a 4,44:1 sur le bleu clair de la carte annuelle,
+   * orange 500 a 3,58:1 pour le montant d'USC. Mesure, puis correction.
+   */
+  --color-gray-500: #565e6b;
+  --color-slate-500: #565e6b;
+  --color-orange-500: #b35420;
+  --color-orange-600: #94441a;
+
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
-/* Dark mode */
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-surface text-text font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
+  h1 { letter-spacing: -0.025em; }
+  h2, h3 { letter-spacing: -0.015em; }
+  p { text-wrap: pretty; }
+
+  table, .tabular-nums, td, th { font-variant-numeric: tabular-nums; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Signature graphique : les bandes du drapeau, reduites a un filet. */
+.flag-rule {
+  background: linear-gradient(to right, var(--color-primary) 0 33.33%, #f4f7f5 33.33% 66.66%, var(--color-secondary-light) 66.66% 100%);
+}
+
+/*
+ * Pas de regle sur les liens du pied : il est clair sur ce site
+ * (`bg-gray-50`), et les liens y prennent donc la couleur de marque, qui
+ * tient le contraste. Le mode sombre s'en charge plus bas.
+ */
+
+/*
+ * Mise en forme des pages de texte. Les classes `prose` viennent du plugin
+ * @tailwindcss/typography ; la ou il n'est pas installe, elles ne
+ * correspondent a aucune regle et la page s'affiche en HTML nu.
+ */
+@layer components {
+  .prose { color: var(--color-text); line-height: 1.75; max-width: 68ch; }
+  .prose > * + * { margin-top: 1.25em; }
+  .prose h2 { font-size: 1.6em; line-height: 1.25; font-weight: 700; margin-top: 2.25em; margin-bottom: 0.6em; }
+  .prose h3 { font-size: 1.25em; line-height: 1.35; font-weight: 700; margin-top: 1.9em; margin-bottom: 0.5em; }
+  .prose h2:first-child, .prose h3:first-child { margin-top: 0; }
+  .prose ul, .prose ol { padding-left: 1.5em; margin-top: 1em; }
+  .prose ul { list-style: disc; }
+  .prose ol { list-style: decimal; }
+  .prose li { margin-top: 0.5em; }
+  .prose li::marker { color: var(--color-primary); }
+  .prose strong { color: var(--color-text); font-weight: 600; }
+  .prose a { color: var(--color-primary); font-weight: 500; text-decoration: underline; text-decoration-color: var(--color-accent); text-underline-offset: 2px; }
+  .prose a:hover { text-decoration-color: currentColor; }
+  .prose blockquote { border-left: 3px solid var(--color-primary); padding-left: 1.1em; font-style: italic; color: var(--color-text-muted); }
+  .prose table { width: 100%; font-size: 0.925em; border-collapse: collapse; }
+  .prose th { text-align: left; font-weight: 600; border-bottom: 2px solid var(--color-border); padding: 0.5em 0.75em 0.5em 0; }
+  .prose td { border-bottom: 1px solid var(--color-border); padding: 0.5em 0.75em 0.5em 0; }
+  .prose-lg { font-size: 1.0625rem; }
+}
+
+/*
+ * Mode sombre. La version precedente empilait des `!important` sur des classes
+ * Tailwind et repassait les liens en bleu ciel generique, ce qui faisait perdre
+ * son identite au site. On redefinit ici les jetons, eclaircis.
+ */
 @media (prefers-color-scheme: dark) {
-  body { background-color: #0f172a; color: #e2e8f0; }
-  nav, header { background-color: #1e293b; }
-  footer { background-color: #1e293b; color: #94a3b8; }
-  main { background-color: #0f172a; }
-  h1, h2, h3, h4, h5, h6 { color: #f1f5f9; }
-  a { color: #60a5fa; }
-  a:hover { color: #93bbfd; }
-  input, select, textarea { background-color: #1e293b; color: #e2e8f0; border-color: #475569; }
-  table { border-color: #334155; }
-  th { background-color: #1e293b; color: #e2e8f0; }
-  td { border-color: #334155; }
-  .bg-white { background-color: #1e293b !important; }
-  .bg-gray-50, .bg-gray-100 { background-color: #0f172a !important; }
-  .bg-gray-800, .bg-gray-900 { background-color: #0f172a !important; }
-  .text-gray-900 { color: #e2e8f0 !important; }
-  .text-gray-800 { color: #e2e8f0 !important; }
-  .text-gray-700 { color: #cbd5e1 !important; }
-  .text-gray-600 { color: #94a3b8 !important; }
-  .text-gray-500 { color: #94a3b8 !important; }
-  .border-gray-200, .border-gray-300 { border-color: #334155 !important; }
-  .shadow-lg, .shadow-md, .shadow { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3) !important; }
+  :root {
+    --color-surface: #0f1512;
+    --color-border: #2a3630;
+    --color-text: #e4ece7;
+    --color-text-muted: #9aaba2;
+  }
+
+  body { background-color: #0f1512; color: #e4ece7; }
+
+  a { color: #8fd9b4; }
+  a:hover { color: #ffffff; }
+
+  .bg-white { background-color: #172019; }
+
+  input, select, textarea {
+    background-color: #172019;
+    color: #e4ece7;
+    border-color: #2a3630;
+  }
+
+  @layer components {
+    .prose a { color: #8fd9b4; }
+    .prose li::marker { color: #8fd9b4; }
+    .prose blockquote { border-left-color: #8fd9b4; }
+  }
+
+  :focus-visible { outline-color: #8fd9b4; }
+}
+
+@media print {
+  header, footer, nav, .no-print { display: none !important; }
+  body { background: #fff; color: #000; }
 }

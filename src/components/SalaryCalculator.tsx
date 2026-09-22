@@ -164,10 +164,10 @@ export default function SalaryCalculator() {
           </div>
         </div>
 
-        <p className="text-xs text-gray-400 mt-4 leading-relaxed">
+        <p className="text-xs text-gray-500 mt-4 leading-relaxed">
           Estimate based on 2026 Irish tax rates, USC bands, and PRSI rates. Actual amounts may vary
           based on specific circumstances, additional reliefs, and Revenue determinations. This is not
-          tax advice — consult <a href="https://www.revenue.ie" target="_blank" rel="noopener noreferrer" className="underline">Revenue.ie</a> or
+          tax advice, consult <a href="https://www.revenue.ie" target="_blank" rel="noopener noreferrer" className="underline">Revenue.ie</a> or
           a tax advisor for your individual situation.
         </p>
       </div>

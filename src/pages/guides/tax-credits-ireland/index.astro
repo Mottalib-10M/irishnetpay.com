@@ -3,8 +3,8 @@ import Layout from '../../../layouts/Layout.astro';
 ---
 
 <Layout
-  title="Tax Credits in Ireland 2026: Complete Guide to Personal, Employee & More"
-  description="A comprehensive guide to all Irish tax credits for 2026. Covers Personal, Employee (PAYE), Single Person Child Carer, Home Carer, Rent, medical expenses, and how credits reduce your income tax bill."
+  title="Irish tax credits 2026: what you can actually claim"
+  description="Every credit worth claiming, what each is worth, which are granted automatically and which need a claim, plus the four-year window for backdating them."
 >
   <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
     <ol class="flex items-center gap-1">
@@ -251,7 +251,7 @@ import Layout from '../../../layouts/Layout.astro';
     <ul>
       <li><a href="https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/index.aspx" target="_blank" rel="noopener noreferrer">Revenue.ie - Tax Credits, Reliefs and Exemptions</a></li>
       <li><a href="https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax-credits-and-reliefs/introduction-to-income-tax-credits-and-reliefs/" target="_blank" rel="noopener noreferrer">Citizens Information - Introduction to Income Tax Credits and Reliefs</a></li>
-      <li><a href="https://www.gov.ie/en/publication/budget-2026/" target="_blank" rel="noopener noreferrer">Gov.ie - Budget 2026</a></li>
+      <li><a href="https://www.gov.ie/en/department-of-finance/campaigns/budget-2026/" target="_blank" rel="noopener noreferrer">Gov.ie - Budget 2026</a></li>
     </ul>
   </div>
 
@@ -266,24 +266,33 @@ import Layout from '../../../layouts/Layout.astro';
   })} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Can tax credits carry forward to the next year?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Irish tax credits cannot be carried forward to future years. If your credits exceed your tax liability in a given year, the excess is lost. However, you can claim credits retroactively for up to four previous years if you did not claim them at the time." }
-      },
-      {
-        "@type": "Question",
-        "name": "Do I need to apply for the Personal and Employee credits?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. The Personal Tax Credit and Employee (PAYE) Tax Credit are granted automatically when you register for tax and start PAYE employment. Additional credits such as the Rent Tax Credit must be claimed separately through myAccount." }
-      },
-      {
-        "@type": "Question",
-        "name": "Can both parents claim the Single Person Child Carer Credit?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Only one parent can claim the SPCCC in any given year. The credit is available to the primary claimant - the parent with whom the qualifying child lives for the majority of the year." }
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can tax credits carry forward to the next year?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Irish tax credits cannot be carried forward to future years. If your credits exceed your tax liability in a given year, the excess is lost - it does not create a refund or transfer to the next year. This means that maximising your credits each year is important. However, you can claim credits retroactively for up to four previous years if you did not claim them at the time."
       }
-    ]
-  })} />
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to apply for the Personal and Employee credits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The Personal Tax Credit and Employee (PAYE) Tax Credit are granted automatically when you register for tax and start PAYE employment. Revenue allocates them to your employer through the Revenue Payroll Notification (RPN). You do not need to apply or fill in any forms. However, additional credits such as the Rent Tax Credit, Home Carer Credit, or medical expenses relief must be claimed separately through myAccount."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can both parents claim the Single Person Child Carer Credit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Only one parent can claim the SPCCC in any given year. The credit is available to the \"primary claimant\" - the parent with whom the qualifying child lives for the majority of the year. If the primary claimant does not claim the credit (or is not entitled due to cohabitation), they can surrender it to the other parent, but only the €1,750 credit transfers, not the increased standard rate cut-off point."
+      }
+    }
+  ]
+})} />
 </Layout>

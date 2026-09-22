@@ -3,8 +3,8 @@ import Layout from '../../../layouts/Layout.astro';
 ---
 
 <Layout
-  title="USC (Universal Social Charge): Rates, Thresholds & Exemptions 2026"
-  description="Everything you need to know about the Universal Social Charge in Ireland for 2026. USC rates, bands, exemptions, reduced rates for medical card holders, and how USC differs from income tax."
+  title="USC in Ireland 2026: bands, exemptions and real cost"
+  description="The four USC bands, the exemption threshold that works as a cliff rather than a slope, the reduced rates, and why credits and pensions do not reduce it."
 >
   <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
     <ol class="flex items-center gap-1">
@@ -254,7 +254,7 @@ import Layout from '../../../layouts/Layout.astro';
     <ul>
       <li><a href="https://www.revenue.ie/en/jobs-and-pensions/usc/index.aspx" target="_blank" rel="noopener noreferrer">Revenue.ie - Universal Social Charge (USC)</a></li>
       <li><a href="https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/universal-social-charge/" target="_blank" rel="noopener noreferrer">Citizens Information - Universal Social Charge</a></li>
-      <li><a href="https://www.gov.ie/en/publication/budget-2026/" target="_blank" rel="noopener noreferrer">Gov.ie - Budget 2026</a></li>
+      <li><a href="https://www.gov.ie/en/department-of-finance/campaigns/budget-2026/" target="_blank" rel="noopener noreferrer">Gov.ie - Budget 2026</a></li>
     </ul>
   </div>
 
@@ -269,24 +269,33 @@ import Layout from '../../../layouts/Layout.astro';
   })} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Can I reduce my USC bill with tax credits?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Unlike income tax, USC cannot be reduced by tax credits of any kind. The charge is calculated purely on your income bands and paid in full. The only ways to reduce USC are to earn below the €13,000 exemption threshold, qualify for reduced rates, or reduce your gross income." }
-      },
-      {
-        "@type": "Question",
-        "name": "Is USC going to be abolished?",
-        "acceptedAnswer": { "@type": "Answer", "text": "There have been periodic discussions about abolishing or merging USC with other charges, but as of 2026, it remains a separate and distinct tax. The government has gradually reduced USC rates over the years, but full abolition would require finding an alternative revenue source." }
-      },
-      {
-        "@type": "Question",
-        "name": "Do pension contributions reduce my USC?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Generally no. For occupational pension schemes, USC is calculated on your gross income before pension deductions, so your contribution does not reduce your USC liability. Pension contributions provide income tax relief but typically not USC relief." }
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I reduce my USC bill with tax credits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Unlike income tax, USC cannot be reduced by tax credits of any kind. The charge is calculated purely on your income bands and paid in full. The only ways to reduce USC are to earn below the €13,000 exemption threshold, qualify for reduced rates (medical card holders or over-70s with income under €60,000), or reduce your gross income."
       }
-    ]
-  })} />
+    },
+    {
+      "@type": "Question",
+      "name": "Is USC going to be abolished?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There have been periodic discussions about abolishing or merging USC with other charges, but as of 2026, it remains a separate and distinct tax. The government has gradually reduced USC rates over the years, but full abolition would require finding an alternative revenue source worth several billion euros annually. There is no current timeline for abolition."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do pension contributions reduce my USC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Generally no. For occupational pension schemes, USC is calculated on your gross income before pension deductions, so your contribution does not reduce your USC liability. For PRSAs, the position may differ depending on how contributions are structured. In practice, pension contributions provide income tax relief but typically not USC relief, which means the effective tax saving from pension contributions is lower than the headline marginal rate might suggest."
+      }
+    }
+  ]
+})} />
 </Layout>

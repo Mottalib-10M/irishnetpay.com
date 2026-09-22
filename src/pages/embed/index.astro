@@ -1,0 +1,46 @@
+---
+/**
+ * Cible de l'iframe (RECETTE §13).
+ *
+ * La page /widget/ explique comment integrer le calculateur ; celle-ci est ce
+ * que l'iframe charge reellement. Volontairement nue : pas d'en-tete, pas de
+ * pied, pas de publicite, et `noindex` — sans quoi Google indexerait deux
+ * pages pour un meme contenu, la seconde concurrencant la page d'accueil.
+ */
+import '../../styles/global.css';
+import SalaryCalculator from '../../components/SalaryCalculator';
+---
+
+<!doctype html>
+<html lang="en-IE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Irish Take-Home Pay Calculator | Free Embeddable Widget</title>
+    <meta
+      name="description"
+      content="Embeddable version of the Irish take-home pay calculator: income tax, USC and PRSI for 2026, without advertising, for insertion by iframe on any website."
+    />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href="https://takehomepay.ie/widget/" />
+    <style>
+      body { margin: 0; padding: 16px; background: #ffffff; }
+    </style>
+  </head>
+  <body>
+    <div class="mx-auto max-w-3xl">
+      <SalaryCalculator client:idle />
+      <div class="mt-6 border-t border-border pt-4 text-center">
+        <p class="text-xs text-text-muted">
+          Calculations by
+          <a
+            href="https://takehomepay.ie/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-semibold text-primary"
+          >takehomepay.ie</a>, using Revenue rates for 2026.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

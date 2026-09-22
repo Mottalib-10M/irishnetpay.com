@@ -17,6 +17,9 @@ interface Props {
 
 const { scenario } = Astro.props;
 
+/* Trois questions de plus, calculees sur la situation de CETTE page. */
+const faqsCompletes = [...scenario.faqs, ...faqsSituation(scenario)];
+
 const siteUrl = 'https://takehomepay.ie';
 const pageUrl = `${siteUrl}/${scenario.slug}-take-home-pay/`;
 
@@ -32,7 +35,7 @@ const breadcrumbSchema = {
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": scenario.faqs.map((faq) => ({
+  "mainEntity": faqsCompletes.map((faq) => ({
     "@type": "Question",
     "name": faq.question,
     "acceptedAnswer": { "@type": "Answer", "text": faq.answer },
@@ -40,11 +43,13 @@ const faqSchema = {
 };
 
 const otherScenarios = taxScenarios.filter((s) => s.slug !== scenario.slug);
+import { faqsSituation } from '../lib/faq-complement';
+import PayBreakdown from '../components/PayBreakdown.astro';
 ---
 
 <Layout
-  title={`${scenario.label} Take Home Pay Ireland 2026`}
-  description={`Calculate take-home pay in Ireland as a ${scenario.label.toLowerCase()} for 2026. Learn about tax credits, deductions, USC, PRSI, and net salary for this filing status.`}
+  title={`${scenario.label}: Take-Home Pay in Ireland 2026`}
+  description={`Take-home pay for a ${scenario.label.toLowerCase()} in Ireland for 2026: the tax credits that apply, the cut-off point, and what actually lands in the account each month.`}
   canonical={pageUrl}
 >
   <div class="space-y-10">
@@ -112,7 +117,7 @@ const otherScenarios = taxScenarios.filter((s) => s.slug !== scenario.slug);
     {/* FAQ Section */}
     <div class="prose prose-slate max-w-none">
       <h2>Frequently Asked Questions - {scenario.label}</h2>
-      {scenario.faqs.map((faq) => (
+      {faqsCompletes.map((faq) => (
         <details>
           <summary><strong>{faq.question}</strong></summary>
           <p>{faq.answer}</p>
@@ -125,7 +130,7 @@ const otherScenarios = taxScenarios.filter((s) => s.slug !== scenario.slug);
       <h3 class="text-sm font-semibold text-gray-700 mb-2">Sources</h3>
       <ul class="text-xs text-gray-500 space-y-1">
         <li><a href="https://www.revenue.ie" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">Revenue.ie</a> - Irish Tax and Customs, PAYE, USC &amp; PRSI rates</li>
-        <li><a href="https://www.gov.ie/en/publication/employment-law/" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">Gov.ie</a> - Employment and workplace legislation</li>
+        <li><a href="https://www.gov.ie/en/department-of-enterprise-tourism-and-employment/" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">Gov.ie</a> - Employment and workplace legislation</li>
       </ul>
     </section>
 
@@ -160,7 +165,7 @@ const otherScenarios = taxScenarios.filter((s) => s.slug !== scenario.slug);
     </div>
 
     {/* Disclaimer */}
-    <div class="text-xs text-gray-400 leading-relaxed border-t border-gray-200 pt-6">
+    <div class="text-xs text-gray-500 leading-relaxed border-t border-gray-200 pt-6">
       <p>
         <strong>Disclaimer:</strong> This page provides general information about Irish tax credits and deductions
         for the {scenario.label.toLowerCase()} filing status based on 2026 rates. Individual circumstances vary,
@@ -174,4 +179,9 @@ const otherScenarios = taxScenarios.filter((s) => s.slug !== scenario.slug);
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </div>
+  <PayBreakdown
+    brut={50000}
+    statut={scenario.slug.includes('married') ? 'married_one_income' : 'single'}
+    libelle={'a ' + scenario.label.toLowerCase() + ' on €50,000'}
+  />
 </Layout>

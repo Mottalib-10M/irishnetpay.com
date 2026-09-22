@@ -1,11 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SalaryCalculator from '../components/SalaryCalculator';
+import PayBreakdown from '../components/PayBreakdown.astro';
 ---
 
 <Layout
   title="Irish Take-Home Pay Calculator 2026 - Income Tax, USC, PRSI"
-  description="Calculate your take-home pay in Ireland for 2026. Includes income tax, USC, PRSI, tax credits, pension relief. Updated with the latest Revenue rates and thresholds."
+  description="Take-home pay in Ireland for 2026: income tax, USC, PRSI, tax credits and pension relief, using the Revenue rates and thresholds in force for this year."
 >
   <div class="space-y-10">
     <div class="text-center max-w-3xl mx-auto">
@@ -201,4 +202,8 @@ import SalaryCalculator from '../components/SalaryCalculator';
       })} />
     </div>
   </div>
+  <PayBreakdown
+    brut={45000}
+    libelle={'the median full-time salary of €45,000'}
+  />
 </Layout>

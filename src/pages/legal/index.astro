@@ -1,12 +1,21 @@
 ---
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { LEGAL } from '../../data/site-config';
 import Layout from '../../layouts/Layout.astro';
 ---
 
-<Layout title="Legal Notice - takehomepay.ie" description="Legal notice for takehomepay.ie, Irish salary calculator.">
-  <div class="prose prose-slate max-w-none">
+<Layout title="Legal notices for this Irish salary calculator 2026" description="Publisher details, editorial responsibility, terms of use and the disclaimer applying to every figure this calculator produces, plus how to raise a complaint.">
+  <div class="mx-auto max-w-3xl px-4 py-8 prose prose-slate">
     <h1>Legal Notice</h1>
     <h2>Publisher</h2>
-    <p>takehomepay.ie is an independent salary calculator. It is not affiliated with Revenue, the Department of Finance, or any government body.</p>
+    <p>takehomepay.ie is an independent salary calculator. It is not affiliated with Revenue, the Department of Finance, or any government body. It is published by:</p>
+    <LegalIdentity mode="publisher" lang="en" />
+
+    <h2>Hosting</h2>
+    <LegalIdentity mode="hosting" lang="en" />
+
+    <h2>Complaints</h2>
+    <p>If you believe your personal data has been mishandled, you may complain to {LEGAL.supervisoryAuthority}, whose contact details are at <a href={LEGAL.supervisoryAuthorityUrl} rel="nofollow noopener" target="_blank">{LEGAL.supervisoryAuthorityUrl}</a>.</p>
     <h2>Disclaimer</h2>
     <p>Results are estimates based on 2026 tax rates and thresholds. They do not constitute tax advice. Consult Revenue.ie or a qualified tax advisor for your specific situation.</p>
     <h2>Data</h2>

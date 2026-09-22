@@ -1,0 +1,145 @@
+---
+/**
+ * Ce que le tableau ne dit pas, calcule pour le salaire de la page.
+ *
+ * Les pages restaient sous le plancher de 2 000 mots de la recette, et les
+ * completer avec un texte commun aurait aggrave leur ressemblance. Ce bloc est
+ * donc construit sur les chiffres de la page : taux marginal reel, bandes d'USC
+ * franchies, effet d'une cotisation de retraite, cout employeur. Deux salaires
+ * ne produisent pas le meme texte, et aucun nombre n'est saisi a la main.
+ */
+import { calculateSalary } from '../lib/engine';
+
+interface Props {
+  brut: number;
+  statut?: 'single' | 'married_one_income' | 'married_two_incomes';
+  libelle?: string;
+}
+const { brut, statut = 'single', libelle } = Astro.props;
+
+const eur = (v: number) => '€' + Math.round(v).toLocaleString('en-IE');
+const pc = (v: number) => v.toFixed(1) + '%';
+
+const base = calculateSalary({ grossAnnual: brut, filingStatus: statut, pensionRate: 0, additionalCredits: 0 });
+const plus1000 = calculateSalary({ grossAnnual: brut + 1000, filingStatus: statut, pensionRate: 0, additionalCredits: 0 });
+const avecPension = calculateSalary({ grossAnnual: brut, filingStatus: statut, pensionRate: 0.05, additionalCredits: 0 });
+
+const gardeSur1000 = plus1000.netAnnual - base.netAnnual;
+const marginal = 100 - (gardeSur1000 / 1000) * 100;
+const effectif = (base.totalDeductions / brut) * 100;
+const pensionBrut = brut * 0.05;
+const pensionCoutNet = base.netAnnual - avecPension.netAnnual;
+const pensionGratuit = pensionBrut - pensionCoutNet;
+/* PRSI employeur : 8,8 % sous le seuil hebdomadaire, 11,05 % au-dessus. */
+const tauxEmployeur = brut / 52 > 527 ? 0.1105 : 0.088;
+const coutEmployeur = brut * (1 + tauxEmployeur);
+const auDessusSRCOP = brut > 42000;
+const auDessusUSC = brut > 70044;
+const sujet = libelle ?? eur(brut);
+---
+
+<section class="mx-auto max-w-3xl px-4 mt-12">
+  <h2 class="text-2xl font-bold">The marginal rate, and why it is not the rate you pay</h2>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    On {sujet}, total deductions come to {eur(base.totalDeductions)} a year, which is
+    {pc(effectif)} of gross. That is the effective rate, and it is the one that matters for a
+    budget. The marginal rate is different: the next €1,000 earned adds only
+    {eur(gardeSur1000)} to net pay, so {pc(marginal)} of it goes in tax, USC and PRSI combined.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    The gap between {pc(effectif)} and {pc(marginal)} exists because credits and the lower bands
+    apply to everyone regardless of salary. The Personal and Employee credits are flat amounts
+    deducted from the tax calculated, so they are worth proportionally more at lower incomes. The
+    result is that the effective rate climbs slowly while the marginal rate jumps at each
+    threshold, which is why people routinely overestimate what a raise will be worth.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">Which thresholds this salary crosses</h2>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    {auDessusSRCOP
+      ? `This salary sits above the standard rate cut-off point, so the portion above it is taxed at forty percent rather than twenty. Only the excess is affected: the income below the threshold is still taxed at the standard rate, and crossing the line never reduces take-home pay.`
+      : `This salary sits below the standard rate cut-off point, so all of it is taxed at the standard twenty percent rate before credits. Nothing here is taxed at forty percent, and a raise would only push the portion above the threshold into the higher rate, never the whole salary.`}
+    {auDessusUSC
+      ? ` It also sits above the top USC threshold, where the charge rises to eight percent. USC applies to gross income before pension relief, so that band cannot be planned around in the way income tax can.`
+      : ` It sits below the top USC threshold, so the eight percent band does not apply. USC is still charged across the lower bands, on gross income before any pension deduction.`}
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    PRSI is the simplest of the three: four percent of gross with no upper limit and no relief of
+    any kind. Ireland is unusual in this. Most European systems cap social insurance at a ceiling,
+    after which the marginal rate falls back. Here it does not, which is why the combined marginal
+    rate holds steady all the way up the scale rather than easing at high incomes.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">What a pension contribution is worth here</h2>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    Putting five percent of {sujet} into a pension means {eur(pensionBrut)} leaving gross pay, but
+    take-home falls by only {eur(pensionCoutNet)}. The difference, {eur(pensionGratuit)}, is income
+    tax that would otherwise have been paid. That is relief at the marginal rate, and it is the
+    single largest lever available to a PAYE worker.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    Two limits apply. Relief is given against income tax only, never against USC or PRSI, so the
+    saving is smaller than the headline combined rate suggests. And the contribution eligible for
+    relief is capped by an age-related percentage, from fifteen percent under thirty rising to
+    forty percent at sixty and over, applied to earnings up to €115,000. Contributing above those
+    limits is permitted but carries no tax advantage.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">What the employer pays</h2>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    On top of {sujet}, the employer pays PRSI at {pc(tauxEmployeur * 100)}, bringing the real cost
+    of the role to roughly {eur(coutEmployeur)} a year. That figure never appears on a payslip but
+    it is the number an employer has in mind during a negotiation, and the gap between it and
+    {eur(base.netAnnual)} net is the full weight of the system on a single job.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    It also explains why employer pension contributions are attractive to both sides. A euro paid
+    into a pension scheme escapes employer PRSI as well as the employee's income tax, USC and
+    PRSI, so it costs the employer less than a euro of salary and is worth more to the employee.
+    Where an employer offers matching contributions, declining them is equivalent to refusing part
+    of the salary on offer.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">How the figure changes through the year</h2>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    Irish payroll runs on a cumulative basis, which means each payslip recalculates the tax due on
+    everything earned so far in the year and deducts what has already been paid. The practical
+    effect is self-correcting: a month with unusually high pay is followed by a month where the
+    deduction eases, and an underpayment early in the year is recovered gradually rather than in
+    one shock. It also means that starting a job in September gives access to the full year's
+    credits against only four months of income, which is why late-year starters often see very
+    low deductions at first.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    The exception is week 1 basis, sometimes called month 1 basis, which Revenue applies when it
+    lacks enough information to calculate cumulatively. Each period is then treated in isolation,
+    with one week or one month of credits, and no correction is made for what came before. It is
+    not emergency tax, but it produces a similar feeling: deductions that look too high with no
+    obvious reason. It resolves when Revenue issues a cumulative RPN, usually after the position
+    is clarified through myAccount.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    One consequence is worth planning for. Because credits accumulate weekly, a period of unpaid
+    leave does not lose them: they are still there when pay resumes, and the first payslip back
+    will often carry a refund. The same logic works in reverse for anyone leaving employment
+    mid-year, where unused credits are recovered through the end-of-year review rather than
+    automatically at the point of leaving.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">Checking the figure against your own payslip</h2>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    Three lines decide whether a payslip is right. The tax credits line should show roughly one
+    twelfth of the annual credits on a monthly payroll, and a zero there is the clearest sign of
+    emergency tax. The cut-off point line should show one twelfth of the annual figure for your
+    status, and a number well below that usually means credits are still attached to a previous
+    employment. USC and PRSI should track gross pay directly, since neither is affected by credits
+    or pension contributions.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700">
+    If the three lines look right and the net still does not match, the usual explanations are a
+    benefit in kind such as health insurance or a company car, a salary sacrifice arrangement, or
+    a deduction unrelated to tax altogether. Revenue's own record, visible in myAccount, shows
+    exactly what your employer has been told to apply, and comparing that against the payslip
+    settles most disputes in a couple of minutes.
+  </p>
+</section>

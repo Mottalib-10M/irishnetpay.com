@@ -3,8 +3,8 @@ import Layout from '../../../layouts/Layout.astro';
 ---
 
 <Layout
-  title="Pension Contributions & Tax Relief in Ireland (20% and 40%) 2026"
-  description="How pension contributions work in Ireland, the tax relief available at 20% and 40%, age-related percentage limits, the €115,000 earnings cap, and how relief affects your take-home pay."
+  title="Pension tax relief in Ireland: limits and real value"
+  description="Age-related limits, the earnings cap, what relief is worth at each marginal rate, and why a pension contribution reduces income tax but never USC or PRSI."
 >
   <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
     <ol class="flex items-center gap-1">
@@ -244,7 +244,7 @@ import Layout from '../../../layouts/Layout.astro';
     <ul>
       <li><a href="https://www.revenue.ie/en/jobs-and-pensions/pensions/tax-relief-for-pension-contributions.aspx" target="_blank" rel="noopener noreferrer">Revenue.ie - Tax Relief for Pension Contributions</a></li>
       <li><a href="https://www.citizensinformation.ie/en/money-and-tax/personal-finance/pensions/tax-relief-on-pensions/" target="_blank" rel="noopener noreferrer">Citizens Information - Tax Relief on Pensions</a></li>
-      <li><a href="https://www.gov.ie/en/publication/budget-2026/" target="_blank" rel="noopener noreferrer">Gov.ie - Budget 2026</a></li>
+      <li><a href="https://www.gov.ie/en/department-of-finance/campaigns/budget-2026/" target="_blank" rel="noopener noreferrer">Gov.ie - Budget 2026</a></li>
     </ul>
   </div>
 
@@ -259,24 +259,33 @@ import Layout from '../../../layouts/Layout.astro';
   })} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Can I get tax relief at 40% if I am a standard-rate taxpayer?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Pension tax relief is given at your marginal rate of income tax. If all your income falls within the 20% standard rate band, you receive relief at 20%. You only receive 40% relief on the portion of your income that would otherwise be taxed at 40%." }
-      },
-      {
-        "@type": "Question",
-        "name": "Is there a maximum amount I can contribute to a pension?",
-        "acceptedAnswer": { "@type": "Answer", "text": "There is no absolute cap on contributions, but tax relief is only available up to the age-related percentage of net relevant earnings, capped at €115,000. Contributions above this limit can still be made but will not receive income tax relief." }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I carry forward unused pension relief to future years?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Ireland does not allow carry-forward of unused pension relief. If you do not use your full age-related percentage in a given year, the unused allowance is lost. However, you can make a contribution for the previous tax year up until the filing deadline." }
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I get tax relief at 40% if I am a standard-rate taxpayer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Pension tax relief is given at your marginal rate of income tax. If all your income falls within the 20% standard rate band (i.e., your income is below the SRCOP of €42,000 for a single person), you receive relief at 20%. You only receive 40% relief on the portion of your income that would otherwise be taxed at 40%. If a pension contribution brings your taxable income below the SRCOP, the contribution is split: part receives 40% relief and part receives 20% relief."
       }
-    ]
-  })} />
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a maximum amount I can contribute to a pension?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There is no absolute cap on contributions, but tax relief is only available up to the age-related percentage of net relevant earnings, capped at €115,000. For example, a 35-year-old earning €80,000 can get relief on up to €16,000 (20% of €80,000). Contributions above this limit can still be made but will not receive income tax relief. There is also a Standard Fund Threshold (SFT) of €2 million on the total value of pension benefits - funds above this level face a chargeable excess tax."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I carry forward unused pension relief to future years?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Unlike some other jurisdictions, Ireland does not allow carry-forward of unused pension relief. If you do not use your full age-related percentage in a given year, the unused allowance is lost. However, you can make a contribution for the previous tax year up until the filing deadline for that year's tax return (31 October of the following year, or mid-November for ROS filers), effectively giving you an extended window to maximise relief."
+      }
+    }
+  ]
+})} />
 </Layout>

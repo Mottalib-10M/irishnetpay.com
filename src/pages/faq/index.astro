@@ -3,8 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 ---
 
 <Layout
-  title="FAQ - Irish Salary & Tax Questions 2026"
-  description="Frequently asked questions about Irish income tax, USC, PRSI, tax credits, pension relief, and take-home pay calculations for 2026."
+  title="Irish tax questions answered: PAYE, USC and PRSI 2026"
+  description="Straight answers on tax credits, emergency tax, the cut-off point, USC bands and PRSI, for anyone trying to work out why their payslip looks the way it does."
 >
   <div class="prose prose-slate max-w-none">
     <h1>Frequently Asked Questions - Irish Salary & Tax</h1>
@@ -36,7 +36,7 @@ import Layout from '../../layouts/Layout.astro';
     </details>
     <details>
       <summary><strong>Is there a PRSI ceiling?</strong></summary>
-      <p>No, there is no upper earnings limit for employee PRSI. The 4% rate applies to all earnings above the €352 weekly threshold. Unlike many European countries, Ireland does not cap social insurance contributions.</p>
+      <p>No, there is no upper earnings limit for employee PRSI. The 4% rate applies to all earnings above the €352 weekly threshold. Unlike many European countries, Ireland does not cap social insurance contributions. That single fact is why the marginal rate stays at fifty-two percent all the way up the scale instead of falling back once a ceiling is passed, and why a bonus is taxed at exactly the same combined rate as the salary that earned it.</p>
     </details>
 
     <h2>Pension</h2>
@@ -48,7 +48,7 @@ import Layout from '../../layouts/Layout.astro';
     <h2>Employment</h2>
     <details>
       <summary><strong>What is the minimum wage in Ireland?</strong></summary>
-      <p>The national minimum wage for 2026 is €13.50 per hour for workers aged 20 and over. Reduced rates apply for younger workers: 80% for under-18s and 90% for 18-19 year olds. The Living Wage (recommended) is €14.80 per hour.</p>
+      <p>The national minimum wage for 2026 is €13.50 per hour for workers aged 20 and over. Reduced rates apply for younger workers: 80% for under-18s and 90% for 18-19 year olds. The Living Wage (recommended) is €14.80 per hour. Employers must also pay PRSI on top, and a worker on the minimum wage for a full year falls below the standard rate cut-off point, so none of that income is taxed at the higher rate.</p>
     </details>
     <details>
       <summary><strong>How much does an employer pay on top of my salary?</strong></summary>
@@ -57,81 +57,81 @@ import Layout from '../../layouts/Layout.astro';
   </div>
 
   <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What tax credits am I entitled to?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Every PAYE employee receives the Personal Tax Credit (\u20ac1,875 single / \u20ac3,750 married) and the Employee PAYE Tax Credit (\u20ac1,875). Single parents get an additional \u20ac1,750 (SPCCC). Married couples with one income can claim \u20ac1,800 (Home Carer Credit). Other credits include Rent Tax Credit, medical expenses relief, and flat rate expenses for specific occupations."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How does married assessment work?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Married couples can choose joint assessment, which provides a combined SRCOP of up to \u20ac84,000 (each spouse max \u20ac42,000) and double Personal Tax Credits (\u20ac3,750). The unused portion of one spouse's standard rate band can transfer to the other, up to the \u20ac42,000 cap per person."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is the marginal rate of tax?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The marginal rate is the tax rate applied to your next euro of income. For most workers above the SRCOP, it is 52%: 40% income tax + 8% USC + 4% PRSI. Below the SRCOP, the marginal rate depends on which USC band you are in, typically 20% + 4% USC + 4% PRSI = 28%."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I avoid paying USC?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "USC is payable on all income above \u20ac13,000. Unlike income tax, it cannot be reduced by tax credits. The only way to reduce USC is to reduce gross income - for example through pension contributions. Medical card holders earning under \u20ac60,000 pay reduced USC rates."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What benefits does PRSI provide?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Class A PRSI contributions entitle you to: State Pension (Contributory) at 66, Jobseeker's Benefit (up to 9 months), Illness Benefit, Maternity/Paternity/Parent's Benefit, Invalidity Pension, and Treatment Benefit (dental, optical). The State Pension (Contributory) is currently \u20ac277.30 per week for a full contribution record."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is there a PRSI ceiling?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No, there is no upper earnings limit for employee PRSI. The 4% rate applies to all earnings above the \u20ac352 weekly threshold. Unlike many European countries, Ireland does not cap social insurance contributions."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How much tax relief do I get on pension contributions?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Pension contributions get tax relief at your marginal income tax rate (20% or 40%). A \u20ac100 contribution costs \u20ac60 net if you're paying the higher rate (40% relief). Age-related limits apply: 15% of earnings (under 30), rising to 40% (over 60), on a maximum of \u20ac115,000 earnings. Pension contributions do not reduce your USC or PRSI."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is the minimum wage in Ireland?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The national minimum wage for 2026 is \u20ac13.50 per hour for workers aged 20 and over. Reduced rates apply for younger workers: 80% for under-18s and 90% for 18-19 year olds. The Living Wage (recommended) is \u20ac14.80 per hour."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How much does an employer pay on top of my salary?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Employers pay PRSI at 8.8% (for weekly earnings up to \u20ac441) or 11.05% (above \u20ac441). On a \u20ac50,000 salary, employer PRSI is approximately \u20ac5,525, making the total employment cost about \u20ac55,525. Employers may also contribute to pension schemes and provide benefits which have their own tax implications."
-        }
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What tax credits am I entitled to?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every PAYE employee receives the Personal Tax Credit (€1,875 single / €3,750 married) and the Employee PAYE Tax Credit (€1,875). Single parents get an additional €1,750 (SPCCC). Married couples with one income can claim €1,800 (Home Carer Credit). Other credits include Rent Tax Credit, medical expenses relief, and flat rate expenses for specific occupations."
       }
-    ]
-  })} />
+    },
+    {
+      "@type": "Question",
+      "name": "How does married assessment work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Married couples can choose joint assessment, which provides a combined SRCOP of up to €84,000 (each spouse max €42,000) and double Personal Tax Credits (€3,750). The unused portion of one spouse's standard rate band can transfer to the other, up to the €42,000 cap per person. This is most beneficial when one spouse earns significantly more than the other."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the marginal rate of tax?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The marginal rate is the tax rate applied to your next euro of income. For most workers above the SRCOP, it is 52%: 40% income tax + 8% USC + 4% PRSI. Below the SRCOP, the marginal rate depends on which USC band you are in, typically 20% + 4% USC + 4% PRSI = 28%."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I avoid paying USC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "USC is payable on all income above €13,000. Unlike income tax, it cannot be reduced by tax credits. The only way to reduce USC is to reduce gross income - for example through pension contributions (though USC technically applies before pension deductions for occupational pensions). Medical card holders earning under €60,000 pay reduced USC rates."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What benefits does PRSI provide?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Class A PRSI contributions entitle you to: State Pension (Contributory) at 66, Jobseeker's Benefit (up to 9 months), Illness Benefit, Maternity/Paternity/Parent's Benefit, Invalidity Pension, and Treatment Benefit (dental, optical). The State Pension (Contributory) is currently €277.30 per week for a full contribution record."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a PRSI ceiling?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, there is no upper earnings limit for employee PRSI. The 4% rate applies to all earnings above the €352 weekly threshold. Unlike many European countries, Ireland does not cap social insurance contributions. That single fact is why the marginal rate stays at fifty-two percent all the way up the scale instead of falling back once a ceiling is passed, and why a bonus is taxed at exactly the same combined rate as the salary that earned it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much tax relief do I get on pension contributions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pension contributions get tax relief at your marginal income tax rate (20% or 40%). A €100 contribution costs €60 net if you're paying the higher rate (40% relief). Age-related limits apply: 15% of earnings (under 30), rising to 40% (over 60), on a maximum of €115,000 earnings. Pension contributions do not reduce your USC or PRSI."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the minimum wage in Ireland?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The national minimum wage for 2026 is €13.50 per hour for workers aged 20 and over. Reduced rates apply for younger workers: 80% for under-18s and 90% for 18-19 year olds. The Living Wage (recommended) is €14.80 per hour. Employers must also pay PRSI on top, and a worker on the minimum wage for a full year falls below the standard rate cut-off point, so none of that income is taxed at the higher rate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does an employer pay on top of my salary?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Employers pay PRSI at 8.8% (for weekly earnings up to €441) or 11.05% (above €441). On a €50,000 salary, employer PRSI is approximately €5,525, making the total employment cost about €55,525. Employers may also contribute to pension schemes and provide benefits (health insurance, company car) which have their own tax implications."
+      }
+    }
+  ]
+})} />
 </Layout>

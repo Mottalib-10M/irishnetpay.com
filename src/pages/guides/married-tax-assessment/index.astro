@@ -3,8 +3,8 @@ import Layout from '../../../layouts/Layout.astro';
 ---
 
 <Layout
-  title="Married Couples Tax in Ireland: Single vs Joint Assessment 2026"
-  description="How married couples are taxed in Ireland. Compare single, separate, and joint assessment options. Learn how to transfer tax bands and credits, and optimise your combined tax bill."
+  title="Married tax assessment in Ireland: which option wins"
+  description="Joint, separate and single assessment compared on the arithmetic: which leaves more, when transferring the rate band helps, and how to change the election."
 >
   <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
     <ol class="flex items-center gap-1">
@@ -210,7 +210,7 @@ import Layout from '../../../layouts/Layout.astro';
     <ul>
       <li><a href="https://www.revenue.ie/en/life-events-and-personal-circumstances/marital-status/marriage-and-civil-partnerships/index.aspx" target="_blank" rel="noopener noreferrer">Revenue.ie - Marriage and Civil Partnerships</a></li>
       <li><a href="https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/taxation-of-married-people/" target="_blank" rel="noopener noreferrer">Citizens Information - Taxation of Married People</a></li>
-      <li><a href="https://www.gov.ie/en/publication/budget-2026/" target="_blank" rel="noopener noreferrer">Gov.ie - Budget 2026</a></li>
+      <li><a href="https://www.gov.ie/en/department-of-finance/campaigns/budget-2026/" target="_blank" rel="noopener noreferrer">Gov.ie - Budget 2026</a></li>
     </ul>
   </div>
 
@@ -225,24 +225,33 @@ import Layout from '../../../layouts/Layout.astro';
   })} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Is joint assessment always the best option for married couples?",
-        "acceptedAnswer": { "@type": "Answer", "text": "In almost all cases, yes. Joint assessment provides the highest combined SRCOP (up to €84,000 for two incomes) and the highest combined tax credits. The transfer of unused rate band from the lower earner to the higher earner produces genuine tax savings." }
-      },
-      {
-        "@type": "Question",
-        "name": "Can we change our assessment method mid-year?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can change your assessment method at any time during the year through Revenue myAccount. The change will be applied from 1 January of that year, and Revenue will issue updated RPNs to your employers." }
-      },
-      {
-        "@type": "Question",
-        "name": "What credits does a married couple with one income get?",
-        "acceptedAnswer": { "@type": "Answer", "text": "A married couple with one PAYE income receives: the Personal Tax Credit of €3,750, the Employee Tax Credit of €1,875, and potentially the Home Carer Tax Credit of €1,800. The SRCOP is €51,000." }
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is joint assessment always the best option for married couples?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In almost all cases, yes. Joint assessment provides the highest combined SRCOP (up to €84,000 for two incomes) and the highest combined tax credits (€3,750 personal + €1,875 per PAYE employment). The transfer of unused rate band from the lower earner to the higher earner produces genuine tax savings. The only situation where another option might be preferred is where privacy between spouses is a concern, but even then, separate assessment (which still shares credits equally) is preferable to single treatment."
       }
-    ]
-  })} />
+    },
+    {
+      "@type": "Question",
+      "name": "Can we change our assessment method mid-year?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can change your assessment method at any time during the year through Revenue myAccount. The change will be applied from 1 January of that year, and Revenue will issue updated RPNs to your employers. Any over- or under-payment of tax will be adjusted through the cumulative system in your subsequent pay packets. There is no penalty for changing methods."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What credits does a married couple with one income get?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A married couple with one PAYE income receives: the Personal Tax Credit of €3,750, the Employee Tax Credit of €1,875, and potentially the Home Carer Tax Credit of €1,800 (if the non-working spouse cares for a dependent person). The SRCOP is €51,000. The total annual credits of up to €7,425 are significantly higher than the €3,750 available to a single person."
+      }
+    }
+  ]
+})} />
 </Layout>
