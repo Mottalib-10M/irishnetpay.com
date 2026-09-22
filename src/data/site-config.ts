@@ -1,5 +1,5 @@
 
-export const CONTACT_EMAIL = 'contact@takehomepay.ie';
+export const CONTACT_EMAIL = 'contact@irishnetpay.com';
 
 /*
  * Identite legale de l'editeur (RECETTE-SITE.md, controle check-legal).

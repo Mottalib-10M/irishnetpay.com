@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { title, description, canonical } = Astro.props;
-const siteUrl = 'https://takehomepay.ie';
+const siteUrl = 'https://irishnetpay.com';
 const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
 ---
 
@@ -44,8 +44,8 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Take Home Pay Ireland",
-      "url": "https://takehomepay.ie",
-      "logo": "https://takehomepay.ie/favicon.svg",
+      "url": "https://irishnetpay.com",
+      "logo": "https://irishnetpay.com/favicon.svg",
       "founder": {
         "@type": "Organization",
         "name": "Radif Partners"
@@ -58,10 +58,10 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
       "name": "Radif Partners",
       "jobTitle": "Personal Finance & Taxation Expert",
       "description": "Publisher of calculators and practical guides",
-      "url": "https://takehomepay.ie/about/"
+      "url": "https://irishnetpay.com/about/"
     })} />
 
-    <script defer data-domain="takehomepay.ie" src="https://plausible.io/js/script.js"></script>
+    <script defer data-domain="irishnetpay.com" src="https://plausible.io/js/script.js"></script>
     <!--
       Pas de GA4 : l'identifiant etait reste a l'etat de gabarit
       (G-XXXXXXXXXX), donc deux requetes vers googletagmanager a chaque
@@ -76,7 +76,7 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
           <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          takehomepay.ie
+          irishnetpay.com
         </a>
 
         <!-- Desktop navigation -->

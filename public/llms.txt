@@ -1,4 +1,4 @@
-# takehomepay.ie
+# irishnetpay.com
 
 > Free Irish salary calculator for 2026.
 
