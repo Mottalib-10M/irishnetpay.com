@@ -11,10 +11,23 @@ function pct(n: number): string {
 }
 
 export default function SalaryCalculator() {
-  const [grossAnnual, setGrossAnnual] = useState(50_000);
+  // Le texte saisi est la source de verite ; les nombres en sont derives. Sans cela
+  // un champ vide vaut `Number("") === 0`, l'etat repasse a 0 et React reecrit « 0 »
+  // dans le champ : impossible de l'effacer.
+  const [grossText, setGrossText] = useState('50000');
   const [filingStatus, setFilingStatus] = useState<FilingStatus>('single');
-  const [pensionRate, setPensionRate] = useState(0);
-  const [additionalCredits, setAdditionalCredits] = useState(0);
+  const [pensionText, setPensionText] = useState('0');
+  const [creditsText, setCreditsText] = useState('0');
+
+  const nombre = (s: string, max = Infinity) => {
+    const v = parseFloat(s.replace(',', '.'));
+    return Number.isFinite(v) && v >= 0 ? Math.min(v, max) : 0;
+  };
+  const grossAnnual = nombre(grossText);
+  // Le plafond s'applique au nombre derive, jamais au texte : borner pendant la
+  // frappe faisait apparaitre « 40 » a qui tapait « 500 ».
+  const pensionRate = nombre(pensionText, 40);
+  const additionalCredits = nombre(creditsText);
 
   const result: SalaryResult = useMemo(() => {
     return calculateSalary({ grossAnnual, filingStatus, pensionRate: pensionRate / 100, additionalCredits });
@@ -29,8 +42,8 @@ export default function SalaryCalculator() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Gross Annual Salary</label>
             <div className="relative">
               <span className="absolute left-3 top-2.5 text-gray-500 text-sm">€</span>
-              <input type="number" value={grossAnnual} onChange={e => setGrossAnnual(Number(e.target.value) || 0)}
-                className="w-full rounded-lg border-gray-300 border pl-7 pr-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} step={1000} />
+              <input type="number" value={grossText} onChange={e => setGrossText(e.target.value)} inputMode="decimal"
+                className="w-full rounded-lg border-gray-300 border pl-7 pr-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} step="any" />
             </div>
           </div>
           <div>
@@ -45,15 +58,15 @@ export default function SalaryCalculator() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Pension Contribution (%)</label>
-            <input type="number" value={pensionRate} onChange={e => setPensionRate(Math.max(0, Math.min(40, Number(e.target.value) || 0)))}
-              className="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} max={40} step={0.5} />
+            <input type="number" value={pensionText} onChange={e => setPensionText(e.target.value)} inputMode="decimal"
+              className="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} max={40} step="any" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Extra Tax Credits (annual)</label>
             <div className="relative">
               <span className="absolute left-3 top-2.5 text-gray-500 text-sm">€</span>
-              <input type="number" value={additionalCredits} onChange={e => setAdditionalCredits(Number(e.target.value) || 0)}
-                className="w-full rounded-lg border-gray-300 border pl-7 pr-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} step={100} />
+              <input type="number" value={creditsText} onChange={e => setCreditsText(e.target.value)} inputMode="decimal"
+                className="w-full rounded-lg border-gray-300 border pl-7 pr-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} step="any" />
             </div>
           </div>
         </div>
