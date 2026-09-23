@@ -3,7 +3,8 @@ import { calculateSalary, type SalaryResult } from '../lib/engine';
 import type { FilingStatus } from '../lib/tax-rates-2026';
 
 function fmt(n: number): string {
-  return n.toLocaleString('en-IE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  // Entiers a l'ecran, decimales dans les calculs.
+  return n.toLocaleString('en-IE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 }
 
 function pct(n: number): string {
@@ -18,6 +19,16 @@ export default function SalaryCalculator() {
   const [filingStatus, setFilingStatus] = useState<FilingStatus>('single');
   const [pensionText, setPensionText] = useState('0');
   const [creditsText, setCreditsText] = useState('0');
+
+  // Le champ qu'on remplit garde son texte brut ; les autres affichent les
+  // milliers separes par la virgule anglaise.
+  const [champActif, setChampActif] = useState<string | null>(null);
+  const affiche = (texte: string, cle: string) => {
+    if (champActif === cle || texte === '') return texte;
+    const n = parseFloat(texte.replace(/,/g, ''));
+    return Number.isFinite(n) ? Math.round(n).toLocaleString('en-IE') : texte;
+  };
+  const nettoie = (v: string) => v.replace(/[^\d.,]/g, '');
 
   const nombre = (s: string, max = Infinity) => {
     const v = parseFloat(s.replace(',', '.'));
@@ -42,7 +53,7 @@ export default function SalaryCalculator() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Gross Annual Salary</label>
             <div className="relative">
               <span className="absolute left-3 top-2.5 text-gray-500 text-sm">€</span>
-              <input type="number" value={grossText} onChange={e => setGrossText(e.target.value)} inputMode="decimal"
+              <input type="text" value={affiche(grossText, "gross")} onChange={e => setGrossText(nettoie(e.target.value))} onFocus={() => setChampActif("gross")} onBlur={() => setChampActif(null)} inputMode="decimal"
                 className="w-full rounded-lg border-gray-300 border pl-7 pr-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} step="any" />
             </div>
           </div>
@@ -58,14 +69,14 @@ export default function SalaryCalculator() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Pension Contribution (%)</label>
-            <input type="number" value={pensionText} onChange={e => setPensionText(e.target.value)} inputMode="decimal"
+            <input type="text" value={pensionText} onChange={e => setPensionText(e.target.value.replace(/[^\d.,]/g, ""))} inputMode="decimal"
               className="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} max={40} step="any" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Extra Tax Credits (annual)</label>
             <div className="relative">
               <span className="absolute left-3 top-2.5 text-gray-500 text-sm">€</span>
-              <input type="number" value={creditsText} onChange={e => setCreditsText(e.target.value)} inputMode="decimal"
+              <input type="text" value={affiche(creditsText, "credits")} onChange={e => setCreditsText(nettoie(e.target.value))} onFocus={() => setChampActif("credits")} onBlur={() => setChampActif(null)} inputMode="decimal"
                 className="w-full rounded-lg border-gray-300 border pl-7 pr-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} step="any" />
             </div>
           </div>

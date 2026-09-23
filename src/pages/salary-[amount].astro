@@ -22,7 +22,7 @@ const { salary } = Astro.props;
 const faqsCompletes = [...completeCourtes(salary.faqs, salary.gross), ...faqsSalaire(salary)];
 
 const fmt = (n: number) =>
-  new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
+  new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n);
 
 const fmtWhole = (n: number) =>
   new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
