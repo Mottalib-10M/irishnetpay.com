@@ -1,0 +1,17 @@
+# irishnetpay.com
+
+> Free Irish salary calculator for 2026.
+
+## Tools
+
+- Take-home pay calculator: income tax (20%/40%), USC, PRSI, tax credits, pension relief
+- Supports all filing statuses: single, married (one/two incomes), single parent
+
+## Sources
+
+- Revenue.ie: 2026 tax rates and thresholds
+- Citizens Information: employment and tax guidance
+
+## Disclaimer
+
+Estimates only. Not tax advice. Consult Revenue.ie or a tax advisor.
