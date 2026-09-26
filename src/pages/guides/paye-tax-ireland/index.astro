@@ -1,4 +1,5 @@
 ---
+import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
 ---
 
@@ -16,6 +17,10 @@ import Layout from '../../../layouts/Layout.astro';
 
   <div class="prose prose-slate max-w-none">
     <h1>PAYE Tax in Ireland: How It Works, Rates &amp; Bands 2026</h1>
+      {/* §21 : the paragraph an answer engine can lift, before the rest of the
+          body. The hero is one line: it does not extract. */}
+      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/paye-tax-ireland/']}</p>
+
 
     <p>
       Pay As You Earn (PAYE) is the system through which most employees in Ireland pay income tax. Rather than filing an annual return and paying a lump sum, your employer deducts the correct amount of tax from each pay packet and sends it directly to Revenue. This guide explains how PAYE works in practice, the tax rates and bands that apply in 2026, how tax credits reduce your liability, and how to ensure you are paying the right amount.

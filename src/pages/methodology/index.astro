@@ -14,7 +14,7 @@ import Layout from '../../layouts/Layout.astro';
     <section class="mb-8">
       <h2 class="text-xl font-semibold text-gray-800 mb-3">The order in which the calculation runs</h2>
       <p class="text-gray-700 leading-relaxed mb-3">A payslip is not a single percentage. Three separate charges are worked out on your gross pay, each with its own rules, and the calculator applies them in the order Revenue uses.</p>
-      <p class="text-gray-700 leading-relaxed mb-3">First, <strong>PAYE</strong>. Income up to your standard rate cut-off point is charged at 20&nbsp;%, the balance at 40&nbsp;%. The cut-off depends on your marital status and, for married couples, on whether both spouses work. The gross tax is then reduced by your tax credits &mdash; the personal credit and the employee (PAYE) credit for most people. Credits reduce the tax itself, not the income, which is why they are subtracted last.</p>
+      <p class="text-gray-700 leading-relaxed mb-3">First, <strong>PAYE</strong>. Income up to your standard rate cut-off point is charged at 20&nbsp;%, the balance at 40&nbsp;%. The cut-off depends on your marital status and, for married couples, on whether both spouses work. The gross tax is then reduced by your tax credits, the personal credit and the employee (PAYE) credit for most people. Credits reduce the tax itself, not the income, which is why they are subtracted last.</p>
       <p class="text-gray-700 leading-relaxed mb-3">Second, <strong>USC</strong>, the Universal Social Charge. It is charged on gross income with no credits, through its own set of bands, and it starts only once income passes the annual exemption threshold. Someone below that threshold pays no USC at all, which is why very low salaries show a different effective rate from what a flat percentage would suggest.</p>
       <p class="text-gray-700 leading-relaxed mb-3">Third, <strong>PRSI</strong>, calculated at Class&nbsp;A1 for standard employees. A weekly credit tapers the charge for lower earnings rather than switching it on abruptly, so the calculator computes PRSI on a weekly basis and annualises the result instead of applying a single annual rate.</p>
     </section>
@@ -37,10 +37,10 @@ import Layout from '../../layouts/Layout.astro';
       <h2 class="text-xl font-semibold text-gray-800 mb-3">Where the figures come from</h2>
       <p class="text-gray-700 leading-relaxed mb-3">Every rate and threshold used by the calculator is taken from the following official publications, and nothing is derived from third-party summaries:</p>
       <ul class="list-disc pl-6 text-gray-700 space-y-2">
-        <li><a class="underline" href="https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-15/15-01-44.pdf" rel="nofollow noopener" target="_blank">Revenue &mdash; Tax rates, bands and reliefs</a></li>
-        <li><a class="underline" href="https://www.revenue.ie/en/jobs-and-pensions/usc/index.aspx" rel="nofollow noopener" target="_blank">Revenue &mdash; Universal Social Charge (USC)</a></li>
-        <li><a class="underline" href="https://www.gov.ie/en/department-of-social-protection/publications/prsi-pay-related-social-insurance/" rel="nofollow noopener" target="_blank">gov.ie &mdash; PRSI classes and contribution rates</a></li>
-        <li><a class="underline" href="https://www.gov.ie/en/department-of-finance/campaigns/budget-2026/" rel="nofollow noopener" target="_blank">gov.ie &mdash; Budget documentation</a></li>
+        <li><a class="underline" href="https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-15/15-01-44.pdf" rel="nofollow noopener" target="_blank">Revenue, Tax rates, bands and reliefs</a></li>
+        <li><a class="underline" href="https://www.revenue.ie/en/jobs-and-pensions/usc/index.aspx" rel="nofollow noopener" target="_blank">Revenue, Universal Social Charge (USC)</a></li>
+        <li><a class="underline" href="https://www.gov.ie/en/department-of-social-protection/publications/prsi-pay-related-social-insurance/" rel="nofollow noopener" target="_blank">gov.ie, PRSI classes and contribution rates</a></li>
+        <li><a class="underline" href="https://www.gov.ie/en/department-of-finance/campaigns/budget-2026/" rel="nofollow noopener" target="_blank">gov.ie, Budget documentation</a></li>
       </ul>
     </section>
   </div>

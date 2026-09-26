@@ -1,4 +1,5 @@
 ---
+import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
 ---
 
@@ -16,6 +17,10 @@ import Layout from '../../../layouts/Layout.astro';
 
   <div class="prose prose-slate max-w-none">
     <h1>Starting Your First Job in Ireland: Tax Registration &amp; What to Expect</h1>
+      {/* §21 : the paragraph an answer engine can lift, before the rest of the
+          body. The hero is one line: it does not extract. */}
+      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/first-job-ireland/']}</p>
+
 
     <p>
       Starting your first job in Ireland is an exciting milestone, but navigating the tax system for the first time can feel overwhelming. Between PPS numbers, Revenue myAccount, emergency tax, payslip deductions, and employment rights, there is a lot to take in. This guide walks you through everything step by step, in plain English, so you know exactly what to do and what to expect before, during, and after your first day at work.

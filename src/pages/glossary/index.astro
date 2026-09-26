@@ -1,4 +1,5 @@
 ---
+import { CITABLE } from '../../data/citable';
 import Layout from '../../layouts/Layout.astro';
 
 /** FAQ de la page (RECETTE §7) : une source pour le balisage et pour l'affichage. */
@@ -75,6 +76,10 @@ const faqSchemaPilier = {
     </nav>
 
     <h1 class="text-3xl font-bold text-gray-900 mb-4">Irish Tax and Payroll Glossary</h1>
+      {/* §21 : the paragraph an answer engine can lift, before the rest of the
+          body. The hero is one line: it does not extract. */}
+      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/glossary/']}</p>
+
     <p class="text-gray-600 mb-8">A guide to the key terms you will encounter on your Irish payslip, tax return, and when using our salary calculator. Terms are listed in alphabetical order.</p>
 
     <dl class="space-y-6">

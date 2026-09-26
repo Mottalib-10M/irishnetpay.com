@@ -1,4 +1,4 @@
-# Validation — irishnetpay.com
+# Validation, irishnetpay.com
 
 ## Sources
 
@@ -60,9 +60,9 @@
 
 ## Data files
 
-- tax-rates-2026.ts — PAYE bands, USC thresholds, PRSI rates, tax credits
-- salaries-data.ts — 12 salary entries with pre-calculated examples
-- tax-credits-data.ts — 6 tax scenario entries
+- tax-rates-2026.ts, PAYE bands, USC thresholds, PRSI rates, tax credits
+- salaries-data.ts, 12 salary entries with pre-calculated examples
+- tax-credits-data.ts, 6 tax scenario entries
 
 ## Quality gates
 

@@ -15,6 +15,33 @@ const net = (taux: number) =>
 
 const minimum = net(MINIMUM_WAGE_HOURLY);
 const living = net(LIVING_WAGE_HOURLY);
+const faqs = [
+  {
+    question: 'Can an employer pay less than the national minimum wage?',
+    answer: 'Only in the narrow cases the Act allows: close relatives of the employer, people on a statutory apprenticeship, and those under twenty, who have their own sub-minimum rates. Outside those cases the rate is a floor that no contract, collective agreement or consent can lower, and an agreement to accept less has no legal effect.',
+  },
+  {
+    question: 'Do tips count towards the minimum wage?',
+    answer: 'No. Since the Payment of Wages Amendment Act 2022, tips and gratuities cannot be used to make up the minimum wage, and they must be distributed fairly and transparently. Service charges presented to customers as going to staff must be paid to staff. An employer counting tips towards the hourly floor is in breach on both counts.',
+  },
+  {
+    question: 'What happens if I have been underpaid?',
+    answer: 'A complaint can be made to the Workplace Relations Commission within six months of the underpayment, extendable to twelve where there is reasonable cause. The adjudication can award arrears, and the Act makes penalisation for having made a complaint a separate offence. Records must be kept by the employer for three years, and their absence counts against them.',
+  },
+  {
+    question: 'Does the minimum wage apply to part-time work?',
+    answer: 'Yes, at exactly the same hourly rate. The rate is hourly, so it applies irrespective of the number of hours worked, and there is no threshold below which it ceases to apply. What changes with part-time work is only the weekly and annual total, along with the point at which PRSI and USC thresholds are crossed.',
+  },
+  {
+    question: 'Does it apply during a trial or probation period?',
+    answer: 'Yes. There is no probationary exemption in Irish law, and an unpaid trial shift is unlawful where work of value is performed. Training required by the employer counts as working time and must be paid. The only sub-minimum rates that exist are age-based and apply to employees under twenty, regardless of probation.',
+  },
+  {
+    question: 'Is the living wage a legal obligation?',
+    answer: 'Not yet. The living wage is a target figure, calculated on the cost of a minimum essential standard of living, towards which the statutory minimum is being raised in steps. Until the transition is complete, only the national minimum wage is legally enforceable, and the living wage figure serves as a benchmark rather than a right.',
+  },
+];
+
 const eur = (n: number) => Math.round(n).toLocaleString('en-IE');
 const eur2 = (n: number) => n.toLocaleString('en-IE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -135,7 +162,7 @@ const reduits = [
           <tr>
             <td>{r.an}</td>
             <td>&euro;{eur2(r.taux)}</td>
-            <td>{i === 0 ? '—' : (r.taux === historique[i - 1].taux ? 'unchanged' : `+${(100 * (r.taux - historique[i - 1].taux) / historique[i - 1].taux).toFixed(1)} %`)}</td>
+            <td>{i === 0 ? ', ' : (r.taux === historique[i - 1].taux ? 'unchanged' : `+${(100 * (r.taux - historique[i - 1].taux) / historique[i - 1].taux).toFixed(1)} %`)}</td>
             <td>&euro;{eur(brut(r.taux))}</td>
           </tr>
         ))}
@@ -215,49 +242,89 @@ const reduits = [
       this one was written to correct.
     </p>
 
+    <h2>The sub-minimum rates for employees under twenty</h2>
+
+    <p>
+      Irish law still permits lower statutory rates for younger employees, set as percentages of the
+      full national minimum wage: those aged under eighteen may be paid seventy per cent of it, those
+      aged eighteen ninety per cent, and those aged nineteen ninety per cent as well under the
+      structure introduced in 2019. From the twentieth birthday the full rate applies, and the
+      employer is expected to move to it in the pay period in which the birthday falls rather than at
+      the end of the year. These are ceilings on what may lawfully be deducted from the adult rate,
+      not target rates: nothing prevents an employer from paying the full rate to a seventeen-year-old,
+      and many collective agreements require it.
+    </p>
+
+    <p>
+      Two points about the sub-minimum rates are frequently misunderstood. They are age-based rather
+      than experience-based, so a nineteen-year-old with three years of service is still legally
+      payable at the reduced rate while a twenty-year-old on their first day is not. And the training
+      rates that used to allow reduced pay during structured training were abolished in 2019, so an
+      employer citing a training rate for an adult employee is relying on a provision that no longer
+      exists. The Low Pay Commission has recommended the phasing out of the remaining age-based rates,
+      and any change would come through an amending order rather than through negotiation.
+    </p>
+
+    <h2>Deductions an employer may and may not make</h2>
+
+    <p>
+      The minimum wage is a floor on gross pay, and the Payment of Wages Act governs what may come off
+      it. Statutory deductions, income tax, USC and PRSI, are always permitted. A deduction required
+      or authorised by the contract, such as a pension contribution the employee has agreed to, is
+      permitted if the contract was given in writing in advance. A deduction for something provided by
+      the employer, such as accommodation or a uniform, is permitted only within limits the Act sets,
+      and only where it is fair and reasonable in the circumstances.
+    </p>
+
+    <p>
+      What may not come off is anything that has the effect of taking pay below the statutory minimum
+      for time actually worked. Till shortages, breakages, customer walk-outs and the cost of required
+      uniforms cannot be recovered from wages where doing so would breach the floor, and a deduction
+      for an over-payment must be agreed in writing and spread so as not to breach it either.
+      Employers must keep records of hours and pay for three years, and in a Workplace Relations
+      Commission complaint the absence of those records is taken against the employer rather than the
+      employee.
+    </p>
+
+    <h2>Who enforces the rate, and how a complaint proceeds</h2>
+
+    <p>
+      Enforcement sits with the Workplace Relations Commission, whose inspectors may enter a workplace,
+      examine records and interview employees without notice. An individual complaint is made on a
+      standard form within six months of the contravention, and an adjudication officer holds a hearing
+      at which both sides may be represented. The remedy is payment of the arrears, and the officer may
+      also order compensation where the breach was accompanied by penalisation. Appeals go to the
+      Labour Court within forty-two days, and a determination may be enforced through the District
+      Court. Nothing in the process requires the employment to have ended, and dismissal for having
+      made a complaint is itself actionable.
+    </p>
+
+    <p>
+      Two practical notes on evidence. Keep a personal record of hours worked, since the statutory
+      three-year record-keeping duty falls on the employer and a dispute about hours is far easier to
+      win with a contemporaneous note than without one. And ask for the written statement of terms that
+      the Terms of Employment Information Act requires within five days of starting: it states the
+      hourly rate, and its absence is itself a separate contravention.
+    </p>
+
     <h2>Common questions</h2>
 
-    <h3>Can an employer pay less than the minimum wage?</h3>
-    <p>
-      Not by agreement. The floor applies regardless of what a contract says, and an employee cannot
-      validly consent to less. Narrow statutory exceptions exist, notably for close relatives of the
-      employer and for certain statutory apprenticeships, but they are exceptions rather than a
-      general discretion.
-    </p>
+    {faqs.map((f) => (
+      <div>
+        <h3>{f.question}</h3>
+        <p>{f.answer}</p>
+      </div>
+    ))}
 
-    <h3>Do tips count towards the minimum wage?</h3>
-    <p>
-      No. Tips and gratuities are not reckonable pay for the purpose of meeting the minimum, whether
-      paid in cash or through the payroll. An employer cannot use them to bring an hourly rate up to
-      the floor, and doing so is one of the more common breaches in practice.
-    </p>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+    })} />
 
-    <h3>What happens if I have been underpaid?</h3>
-    <p>
-      Start by requesting the written statement of average hourly pay for the reference period, which
-      your employer must provide. If the shortfall is confirmed and not resolved, a complaint can be
-      made to the Workplace Relations Commission, which can order payment of arrears.
-    </p>
-
-    <h3>Does the minimum wage apply to part-time work?</h3>
-    <p>
-      Yes, in full. The floor is an hourly rate, so it applies identically whether someone works four
-      hours a week or thirty-nine. Part-time employees have the same entitlement per hour worked, and
-      the reference period test works the same way. What changes is only the total, never the rate.
-    </p>
-
-    <h3>Does it apply during a trial or probation period?</h3>
-    <p>
-      Yes. There is no lawful trial period at below the minimum rate for an employee aged twenty or
-      over. Sub-minimum rates depend on age, not on how long someone has been in the job, so a
-      probation period does not by itself justify paying less than the applicable rate.
-    </p>
-
-    <h3>Is the living wage a legal obligation?</h3>
-    <p>
-      No. It is a recommended figure reflecting the estimated cost of a minimum acceptable standard
-      of living, and no employer is required to pay it. Only the national minimum wage is
-      enforceable, which is why the two appear separately in the table above.
-    </p>
   </div>
 </Layout>

@@ -1,4 +1,5 @@
 ---
+import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
 ---
 
@@ -16,6 +17,10 @@ import Layout from '../../../layouts/Layout.astro';
 
   <div class="prose prose-slate max-w-none">
     <h1>PRSI in Ireland: Classes, Rates &amp; What You Get 2026</h1>
+      {/* §21 : the paragraph an answer engine can lift, before the rest of the
+          body. The hero is one line: it does not extract. */}
+      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/prsi-social-insurance/']}</p>
+
 
     <p>
       Pay Related Social Insurance (PRSI) is Ireland's social insurance system. Both employees and employers make contributions, and in return, workers build up entitlements to a range of social welfare benefits including the State Pension, Jobseeker's Benefit, Maternity Benefit, and Illness Benefit. This guide explains the different PRSI classes, the rates that apply in 2026, how the tapered credit works for lower earners, and the specific benefits that PRSI contributions unlock.

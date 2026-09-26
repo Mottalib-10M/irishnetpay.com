@@ -1,5 +1,10 @@
 ---
 /**
+ * §6.4 : ce bloc est le meme sur toutes les pages de salaire, seules les
+ * sommes changent, et le controle d'unicite neutralise les sommes. Il reste
+ * utile au lecteur mais il ne fait pas l'unicite de la page.
+ */
+/**
  * Ce que le tableau ne dit pas, calcule pour le salaire de la page.
  *
  * Les pages restaient sous le plancher de 2 000 mots de la recette, et les
@@ -38,7 +43,7 @@ const auDessusUSC = brut > 70044;
 const sujet = libelle ?? eur(brut);
 ---
 
-<section class="mx-auto max-w-5xl px-4 mt-12">
+<section data-chrome class="mx-auto max-w-5xl px-4 mt-12">
   <h2 class="text-2xl font-bold">The marginal rate, and why it is not the rate you pay</h2>
   <p class="mt-3 leading-relaxed text-gray-700">
     On {sujet}, total deductions come to {eur(base.totalDeductions)} a year, which is

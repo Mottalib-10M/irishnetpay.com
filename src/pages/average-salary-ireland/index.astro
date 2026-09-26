@@ -36,6 +36,33 @@ const serie = [
   { an: 2023, hebdo: 912.12 }, { an: 2024, hebdo: 964.54 },
   { an: 2025, hebdo: 1007.58 }, { an: 2026, hebdo: 1046.88 },
 ];
+const faqs = [
+  {
+    question: 'Is the average salary in Ireland a good salary?',
+    answer: 'It is the average, which means a majority of employees earn less. Whether it is good depends entirely on sector, hours and location, and the sector table above shows a spread of more than three to one. A better question is what the average is in the sector you work in, which is why that breakdown is on this page.',
+  },
+  {
+    question: 'Why is the average hourly rate so high compared with the weekly figure?',
+    answer: 'Because the average paid week is under thirty-three hours, not thirty-nine. Part-time employment pulls the weekly average down without affecting the hourly rate. If you work full-time hours, the hourly figure is closer to your reality than the weekly one.',
+  },
+  {
+    question: 'Does the figure include bonuses and overtime?',
+    answer: 'Yes. The CSO series used here covers total earnings, which includes irregular earnings such as bonuses and overtime. The CSO also publishes a series excluding irregular earnings, which runs lower and is the better measure for comparing base pay between sectors.',
+  },
+  {
+    question: 'How often is this page updated?',
+    answer: 'The CSO publishes this series quarterly. This page states the quarter it reflects and the date the figures were retrieved, and both appear in the section above so you can tell at a glance whether a newer release exists. Revisions to recent quarters are normal as later returns arrive, so a figure can move slightly after publication.',
+  },
+  {
+    question: 'Is the average the same for men and women?',
+    answer: 'No. The CSO publishes a separate gender pay gap measure, and the gap persists across most sectors once hours are controlled for. The earnings series used on this page is an all-employee average and does not break down by sex, so it should not be read as a typical salary for either group.',
+  },
+  {
+    question: 'How does the average compare with the median?',
+    answer: 'The median is lower, because a minority of very high earners pulls the average up. Ireland\'s earnings distribution is more skewed than most of western Europe, largely because of the concentration of multinational employment in a few sectors, so the gap between average and median is wider here than the figures alone suggest.',
+  },
+];
+
 const euro = (n: number) => n.toLocaleString('en-IE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const annuel = (n: number) => Math.round(n * 52).toLocaleString('en-IE');
 ---
@@ -77,8 +104,8 @@ const annuel = (n: number) => Math.round(n * 52).toLocaleString('en-IE');
       </thead>
       <tbody>
         <tr><td>Average weekly earnings</td><td>&euro;{euro(HEBDO)}</td><td>&euro;{ANNUEL.toLocaleString('en-IE')}</td></tr>
-        <tr><td>Average hourly earnings</td><td>&euro;{euro(HORAIRE)}</td><td>&mdash;</td></tr>
-        <tr><td>Average weekly paid hours</td><td>{HEURES} hours</td><td>&mdash;</td></tr>
+        <tr><td>Average hourly earnings</td><td>&euro;{euro(HORAIRE)}</td><td>, </td></tr>
+        <tr><td>Average weekly paid hours</td><td>{HEURES} hours</td><td>, </td></tr>
       </tbody>
     </table>
 
@@ -149,7 +176,7 @@ const annuel = (n: number) => Math.round(n * 52).toLocaleString('en-IE');
             <td>{r.an}Q2</td>
             <td>&euro;{euro(r.hebdo)}</td>
             <td>&euro;{annuel(r.hebdo)}</td>
-            <td>{i === 0 ? '—' : `+${(100 * (r.hebdo - serie[i - 1].hebdo) / serie[i - 1].hebdo).toFixed(1)} %`}</td>
+            <td>{i === 0 ? ', ' : `+${(100 * (r.hebdo - serie[i - 1].hebdo) / serie[i - 1].hebdo).toFixed(1)} %`}</td>
           </tr>
         ))}
       </tbody>
@@ -228,35 +255,78 @@ const annuel = (n: number) => Math.round(n * 52).toLocaleString('en-IE');
       check it against the current release rather than trusting it indefinitely.
     </p>
 
+    <h2>What a national average cannot tell you</h2>
+
+    <p>
+      Three structural features of the Irish labour market make the national average less
+      informative here than in most comparable economies, and all three are visible in the sector
+      table above. The first is the weight of foreign-owned multinational employment, concentrated in
+      information and communication, pharmaceuticals and financial services. Those sectors pay well
+      above the national figure and employ a small share of the workforce, which pulls the average up
+      without moving the middle of the distribution. The second is the size of the accommodation and
+      food sector, at the other end of the table, where a large number of employees work part-time
+      hours at close to the statutory minimum. The third is geography: earnings in Dublin run
+      materially above the national average, and the gap is larger in the high-paying sectors than in
+      the low-paying ones, so a national figure understates the capital and overstates everywhere else.
+    </p>
+
+    <p>
+      The practical consequence is that comparing your own salary to the national average answers
+      almost nothing. The useful comparison has three coordinates rather than one: the sector, the
+      region and whether the hours are full-time. The CSO publishes each of these breakdowns
+      separately, and the sector table on this page is the one that moves the number most. A second
+      comparison worth making is against the same sector two years ago rather than against other
+      sectors today, because that is the figure a pay review is implicitly measured against.
+    </p>
+
+    <h2>How Ireland compares, and why the comparison is difficult</h2>
+
+    <p>
+      Ireland ranks high among European countries on average gross earnings, and the ranking is real
+      but flatters the position in two ways. Eurostat figures are gross and before tax, and Ireland
+      combines a relatively low effective tax rate on average earnings with an unusually high cost of
+      housing, so gross earnings translate into a smaller advantage in disposable terms than the
+      ranking suggests. And national accounts measures such as GDP per head are distorted in Ireland
+      by the accounting treatment of multinational activity, which is why the Central Statistics
+      Office publishes a modified gross national income series specifically to correct for it.
+    </p>
+
+    <p>
+      For an individual comparison, the measure that survives these problems is net earnings after
+      housing cost, and it is the one that international rankings rarely publish. Anyone weighing a
+      move should therefore compute the figure themselves: take the gross offer, run it through a net
+      pay calculation for the country in question, and subtract a realistic rent or mortgage for the
+      specific city rather than a national average. On that basis the gap between Irish cities and
+      several continental ones narrows considerably, and in some cases reverses.
+    </p>
+
+    <p>
+      One last caution applies to any single-figure comparison. Average earnings are a flow measured
+      over a quarter, while a salary offer is an annual commitment, and the two differ whenever
+      bonuses are seasonal. In Ireland the first quarter carries most bonus payments in financial
+      services and the fourth carries most in retail, which is why the same sector can appear several
+      percentage points apart between two quarters of the same year. Comparing the same quarter across
+      years, as the series above does, removes that effect and is the only way to read a trend.
+    </p>
+
     <h2>Common questions</h2>
 
-    <h3>Is &euro;{ANNUEL.toLocaleString('en-IE')} a good salary in Ireland?</h3>
-    <p>
-      It is the average, which means a majority of employees earn less. Whether it is good depends
-      entirely on sector, hours and location, and the sector table above shows a spread of more than
-      three to one. A better question is what the average is in the sector you work in, which is why
-      that breakdown is on this page.
-    </p>
+    {faqs.map((f) => (
+      <div>
+        <h3>{f.question}</h3>
+        <p>{f.answer}</p>
+      </div>
+    ))}
 
-    <h3>Why is the average hourly rate so high compared with the weekly figure?</h3>
-    <p>
-      Because the average paid week is {HEURES} hours, not thirty-nine. Part-time employment pulls the
-      weekly average down without affecting the hourly rate. If you work full-time hours, the hourly
-      figure is closer to your reality than the weekly one.
-    </p>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+    })} />
 
-    <h3>Does this include bonuses and overtime?</h3>
-    <p>
-      Yes. The CSO series used here covers total earnings, which includes irregular earnings such as
-      bonuses and overtime. The CSO also publishes a series excluding irregular earnings, which runs
-      lower and is the better measure for comparing base pay between sectors.
-    </p>
-
-    <h3>How often is this updated?</h3>
-    <p>
-      The CSO publishes this series quarterly. This page states the quarter it reflects and the date
-      the figures were retrieved, and both appear in the section above so you can tell at a glance
-      whether a newer release exists.
-    </p>
   </div>
 </Layout>

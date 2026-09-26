@@ -1,4 +1,5 @@
 ---
+import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
 ---
 
@@ -16,6 +17,10 @@ import Layout from '../../../layouts/Layout.astro';
 
   <div class="prose prose-slate max-w-none">
     <h1>Emergency Tax in Ireland: Why It Happens &amp; How to Get a Refund</h1>
+      {/* §21 : the paragraph an answer engine can lift, before the rest of the
+          body. The hero is one line: it does not extract. */}
+      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/emergency-tax-ireland/']}</p>
+
 
     <p>
       If you have ever started a new job in Ireland and been shocked by how little your first pay packet was, there is a good chance you were placed on emergency tax. Emergency tax is a temporary measure that Revenue requires employers to apply when they do not have the correct tax details for an employee. It often results in significantly higher deductions than the employee should actually pay. The good news is that emergency tax is fully refundable once the situation is resolved. This guide explains why it happens, how the rates work, and the exact steps you need to take to get your money back.

@@ -1,4 +1,5 @@
 ---
+import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
 ---
 
@@ -16,6 +17,10 @@ import Layout from '../../../layouts/Layout.astro';
 
   <div class="prose prose-slate max-w-none">
     <h1>USC (Universal Social Charge): Rates, Thresholds &amp; Exemptions 2026</h1>
+      {/* §21 : the paragraph an answer engine can lift, before the rest of the
+          body. The hero is one line: it does not extract. */}
+      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/usc-universal-social-charge/']}</p>
+
 
     <p>
       The Universal Social Charge (USC) is a tax on income that was introduced in Ireland on 1 January 2011. It replaced two earlier levies - the Income Levy and the Health Contribution - and applies to almost all forms of gross income. Unlike income tax, USC cannot be reduced by tax credits, which makes it one of the less forgiving elements of the Irish tax system. This guide covers the 2026 USC rates and bands, who is exempt, how reduced rates apply, and practical examples of how USC is calculated.

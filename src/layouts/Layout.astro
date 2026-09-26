@@ -8,6 +8,11 @@ interface Props {
 }
 
 const { title, description, canonical } = Astro.props;
+// §11 : la vignette de partage. Son nom suit le chemin de la page, ce que le
+// script og-cards.py de la trame respecte. Sans elle, une page partagée sortait
+// en lien nu (relevé du 2026-09-26).
+const cheminOg = (canonical ?? '/').replace(/^\/+|\/+$/g, '').replace(/\//g, '-');
+const ogImage = `https://irishnetpay.com/og/${cheminOg || 'accueil'}.png`;
 const siteUrl = 'https://irishnetpay.com';
 const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
 ---
@@ -24,6 +29,13 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Radif Partners" />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={pageUrl} />

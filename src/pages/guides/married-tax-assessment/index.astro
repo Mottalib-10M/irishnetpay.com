@@ -1,4 +1,5 @@
 ---
+import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
 ---
 
@@ -16,6 +17,10 @@ import Layout from '../../../layouts/Layout.astro';
 
   <div class="prose prose-slate max-w-none">
     <h1>Married Couples Tax in Ireland: Single vs Joint Assessment 2026</h1>
+      {/* §21 : the paragraph an answer engine can lift, before the rest of the
+          body. The hero is one line: it does not extract. */}
+      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/married-tax-assessment/']}</p>
+
 
     <p>
       Getting married in Ireland has significant implications for your tax position. Married couples and civil partners can choose from three different assessment options, each with different advantages depending on their circumstances. The right choice can save thousands of euros per year in income tax. This guide explains all three options in detail, walks through worked examples, and helps you determine which approach is best for your situation.

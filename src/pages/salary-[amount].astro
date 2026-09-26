@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { SALARY_ANGLES } from '../data/salary-angles';
 import SalaryCalculator from '../components/SalaryCalculator';
 import { salaries, type SalaryEntry } from '../lib/salaries-data';
 import { calculateSalary, type SalaryResult } from '../lib/engine';
@@ -74,7 +75,7 @@ import PayBreakdown from '../components/PayBreakdown.astro';
   <div class="space-y-10">
 
     {/* Breadcrumb */}
-    <nav aria-label="Breadcrumb" class="text-sm text-gray-500">
+    <nav data-chrome aria-label="Breadcrumb" class="text-sm text-gray-500">
       <ol class="flex items-center gap-1.5 flex-wrap">
         <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
         <li class="before:content-['/'] before:mx-1.5 before:text-gray-300">{salary.grossFormatted} Salary</li>
@@ -82,7 +83,7 @@ import PayBreakdown from '../components/PayBreakdown.astro';
     </nav>
 
     {/* Trust badge */}
-    <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500">
+    <div data-chrome class="flex flex-wrap items-center gap-3 text-xs text-gray-500">
       <span class="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 font-medium text-primary">
         <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
@@ -108,7 +109,7 @@ import PayBreakdown from '../components/PayBreakdown.astro';
     </div>
 
     {/* Stat Cards */}
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div data-chrome class="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <div class="bg-white rounded-xl shadow-sm border border-border p-6 text-center">
         <p class="text-xs text-gray-500 mb-1 uppercase tracking-wide">Gross Annual</p>
         <p class="text-2xl font-bold text-gray-900">{fmtWhole(salary.gross)}</p>
@@ -170,8 +171,19 @@ import PayBreakdown from '../components/PayBreakdown.astro';
       <p>{salary.description}</p>
     </div>
 
+    {/* §6 : ce qui ne vaut que pour ce niveau de salaire. Les douze pages
+        partageaient 80 % de leur texte, les chiffres etant neutralises. */}
+    <div class="prose prose-gray max-w-none">
+      {(SALARY_ANGLES[salary.slug] ?? []).map((a) => (
+        <div>
+          <h2>{a.heading}</h2>
+          {a.paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+      ))}
+    </div>
+
     {/* Calculator */}
-    <div>
+    <div data-chrome>
       <h2 class="text-xl font-semibold text-gray-900 mb-4">Calculate Your Exact Take-Home Pay</h2>
       <p class="text-gray-600 mb-6">
         Adjust the salary, filing status, and pension contributions below to see your personalised breakdown.
@@ -180,7 +192,7 @@ import PayBreakdown from '../components/PayBreakdown.astro';
     </div>
 
     {/* FAQ Section */}
-    <div class="prose prose-slate max-w-none">
+    <div data-chrome class="prose prose-slate max-w-none">
       <h2>Frequently Asked Questions - {salary.grossFormatted} Salary</h2>
       {faqsCompletes.map((faq) => (
         <details>
@@ -191,7 +203,7 @@ import PayBreakdown from '../components/PayBreakdown.astro';
     </div>
 
     {/* Sources */}
-    <section class="mt-12 pt-8 border-t border-gray-200">
+    <section data-chrome class="mt-12 pt-8 border-t border-gray-200">
       <h3 class="text-sm font-semibold text-gray-700 mb-2">Sources</h3>
       <ul class="text-xs text-gray-500 space-y-1">
         <li><a href="https://www.revenue.ie" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">Revenue.ie</a> - Irish Tax and Customs, PAYE, USC &amp; PRSI rates</li>
@@ -200,7 +212,7 @@ import PayBreakdown from '../components/PayBreakdown.astro';
     </section>
 
     {/* Cross-links: Other Salary Pages */}
-    <div class="bg-white rounded-xl shadow-sm border border-border p-6">
+    <div data-chrome class="bg-white rounded-xl shadow-sm border border-border p-6">
       <h2 class="text-lg font-semibold text-gray-900 mb-4">Explore Other Salary Levels</h2>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
         {otherSalaries.map((s) => (
@@ -215,7 +227,7 @@ import PayBreakdown from '../components/PayBreakdown.astro';
     </div>
 
     {/* Cross-links: Guide Pages */}
-    <div class="bg-white rounded-xl shadow-sm border border-border p-6">
+    <div data-chrome class="bg-white rounded-xl shadow-sm border border-border p-6">
       <h2 class="text-lg font-semibold text-gray-900 mb-4">Tax Scenario Guides</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
         <a href="/single-paye-take-home-pay/" class="block rounded-lg border border-border px-4 py-3 text-sm font-medium text-primary hover:bg-green-50 hover:border-primary transition-colors">Single PAYE Worker</a>
@@ -228,7 +240,7 @@ import PayBreakdown from '../components/PayBreakdown.astro';
     </div>
 
     {/* Disclaimer */}
-    <div class="text-xs text-gray-500 leading-relaxed border-t border-gray-200 pt-6">
+    <div data-chrome class="text-xs text-gray-500 leading-relaxed border-t border-gray-200 pt-6">
       <p>
         <strong>Disclaimer:</strong> This page provides estimates based on 2026 Irish tax rates, USC bands, and PRSI rates
         as published by Revenue. Actual take-home pay may vary depending on individual circumstances, additional reliefs,

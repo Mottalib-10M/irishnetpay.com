@@ -1,4 +1,5 @@
 ---
+import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
 ---
 
@@ -16,6 +17,10 @@ import Layout from '../../../layouts/Layout.astro';
 
   <div class="prose prose-slate max-w-none">
     <h1>Tax Credits in Ireland 2026: Complete Guide to Personal, Employee &amp; More</h1>
+      {/* §21 : the paragraph an answer engine can lift, before the rest of the
+          body. The hero is one line: it does not extract. */}
+      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/tax-credits-ireland/']}</p>
+
 
     <p>
       Tax credits are one of the most important factors in determining how much income tax you actually pay in Ireland. They work by reducing your tax bill euro for euro - a &euro;1,875 credit saves you exactly &euro;1,875 in tax. Many Irish workers are only aware of the two main credits (Personal and Employee), but there are numerous additional credits that could save you hundreds or even thousands of euros per year. This guide covers every significant tax credit available in 2026, how to claim them, and common mistakes people make.

@@ -1,4 +1,5 @@
 ---
+import { CITABLE } from '../../data/citable';
 import Layout from '../../layouts/Layout.astro';
 
 const guides = [
@@ -124,6 +125,10 @@ const faqSchemaPilier = {
     <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
       Irish Tax &amp; Salary Guides
     </h1>
+      {/* §21 : the paragraph an answer engine can lift, before the rest of the
+          body. The hero is one line: it does not extract. */}
+      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/']}</p>
+
     <p class="text-lg text-gray-600 leading-relaxed">
       Plain-English guides to every deduction on your Irish payslip. Written for the 2026 tax year using the latest Revenue rates and thresholds.
     </p>

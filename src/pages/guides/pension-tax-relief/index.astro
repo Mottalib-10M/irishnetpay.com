@@ -1,4 +1,5 @@
 ---
+import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
 ---
 
@@ -16,6 +17,10 @@ import Layout from '../../../layouts/Layout.astro';
 
   <div class="prose prose-slate max-w-none">
     <h1>Pension Contributions &amp; Tax Relief in Ireland (20% and 40%) 2026</h1>
+      {/* §21 : the paragraph an answer engine can lift, before the rest of the
+          body. The hero is one line: it does not extract. */}
+      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/pension-tax-relief/']}</p>
+
 
     <p>
       Pension tax relief is one of the most valuable tax benefits available to Irish workers. When you contribute to an approved pension scheme, the contribution is deducted from your income before income tax is calculated, effectively giving you relief at your marginal tax rate - either 20% or 40%. For higher-rate taxpayers, this means every &euro;100 contributed to a pension costs just &euro;60 out of pocket, with the government effectively contributing &euro;40 through tax relief. This guide explains how pension tax relief works in Ireland for 2026, the different types of pension schemes, age-related limits, and how contributions affect your take-home pay.
