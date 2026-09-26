@@ -1,0 +1,262 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// Tous les chiffres viennent du Central Statistics Office, jeu EHQ03
+// (Average Earnings, Hours Worked, Employment and Labour Costs), trimestre
+// 2026Q2, releve le 2026-09-26 par l'API publique du CSO. Rien n'est estime
+// ni arrondi a l'avantage d'une conclusion : l'equivalent annuel est
+// simplement le montant hebdomadaire multiplie par 52, et la page le dit.
+const TRIMESTRE = '2026Q2';
+const RELEVE = '26 September 2026';
+const HEBDO = 1046.88;
+const HORAIRE = 31.96;
+const HEURES = 32.8;
+const ANNUEL = Math.round(HEBDO * 52);
+
+const secteurs = [
+  { nom: 'Information and communication', hebdo: 1730.61 },
+  { nom: 'Financial and insurance activities', hebdo: 1556.66 },
+  { nom: 'Professional, scientific and technical activities', hebdo: 1294.65 },
+  { nom: 'Public administration and defence', hebdo: 1256.79 },
+  { nom: 'Electricity, water supply and waste management', hebdo: 1222.55 },
+  { nom: 'Manufacturing', hebdo: 1165.43 },
+  { nom: 'Construction', hebdo: 1089.21 },
+  { nom: 'Real estate activities', hebdo: 896.21 },
+  { nom: 'Administrative and support service activities', hebdo: 838.79 },
+  { nom: 'Wholesale and retail trade', hebdo: 775.71 },
+  { nom: 'Arts, entertainment and recreation', hebdo: 684.00 },
+  { nom: 'Other service activities', hebdo: 666.31 },
+  { nom: 'Accommodation and food service activities', hebdo: 506.78 },
+];
+// Meme jeu CSO, deuxieme trimestre de chaque annee : comparer le meme
+// trimestre evite le biais saisonnier des primes.
+const serie = [
+  { an: 2019, hebdo: 771.39 }, { an: 2020, hebdo: 817.34 },
+  { an: 2021, hebdo: 851.14 }, { an: 2022, hebdo: 873.32 },
+  { an: 2023, hebdo: 912.12 }, { an: 2024, hebdo: 964.54 },
+  { an: 2025, hebdo: 1007.58 }, { an: 2026, hebdo: 1046.88 },
+];
+const euro = (n: number) => n.toLocaleString('en-IE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const annuel = (n: number) => Math.round(n * 52).toLocaleString('en-IE');
+---
+
+<Layout
+  title="Average Salary in Ireland 2026: What the CSO Data Shows"
+  description="Average weekly earnings reached €1,046.88 in the second quarter of 2026. What that means annually, how it splits by sector, and why the average misleads."
+>
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
+    <ol class="flex items-center gap-1">
+      <li><a href="/" class="hover:text-primary">Home</a></li>
+      <li class="before:content-['/'] before:mx-1">Average Salary Ireland</li>
+    </ol>
+  </nav>
+
+  <div class="prose prose-slate max-w-none">
+    <h1>Average Salary in Ireland 2026: What the CSO Data Shows</h1>
+
+    <p>
+      Average weekly earnings across all sectors in Ireland stood at <strong>&euro;{euro(HEBDO)}</strong>
+      in {TRIMESTRE}, according to the Central Statistics Office. Multiplied across fifty-two weeks,
+      that is <strong>&euro;{ANNUEL.toLocaleString('en-IE')} a year</strong> before tax. Average hourly
+      earnings were &euro;{euro(HORAIRE)}, over an average paid week of {HEURES} hours. Those three
+      numbers come from the same official release and describe the same workforce, which is why they
+      are worth reading together rather than separately: the hourly figure looks high precisely
+      because the average paid week is well under forty hours, and any comparison with a full-time
+      salary elsewhere has to account for that. The headline figure is also an average across every
+      employee in the economy, from part-time hospitality staff to full-time software engineers. It
+      is not what a typical worker earns, it is not a median, and it is not a salary you should expect
+      to be offered. What it is good for is comparison over time and between sectors, and that is how
+      this page uses it.
+    </p>
+
+    <h2>The headline numbers, and what each one measures</h2>
+
+    <table>
+      <thead>
+        <tr><th>Measure</th><th>{TRIMESTRE}</th><th>Annual equivalent</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Average weekly earnings</td><td>&euro;{euro(HEBDO)}</td><td>&euro;{ANNUEL.toLocaleString('en-IE')}</td></tr>
+        <tr><td>Average hourly earnings</td><td>&euro;{euro(HORAIRE)}</td><td>&mdash;</td></tr>
+        <tr><td>Average weekly paid hours</td><td>{HEURES} hours</td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      The annual equivalent is the weekly figure multiplied by fifty-two. It is arithmetic, not a
+      measurement: the CSO publishes earnings weekly and hourly, not annually. Treating the result as
+      a salary assumes fifty-two paid weeks, which holds for most salaried employees in Ireland since
+      annual leave is paid, but not for seasonal or irregular work.
+    </p>
+    <p>
+      The gap between the hourly and weekly figures is the part most readers miss. At
+      &euro;{euro(HORAIRE)} an hour, a standard thirty-nine hour week would produce roughly
+      &euro;{euro(HORAIRE * 39)}. The published weekly average is lower because the average paid week
+      is {HEURES} hours, pulled down by part-time employment, which is concentrated in particular
+      sectors rather than spread evenly.
+    </p>
+
+    <h2>Average weekly earnings by sector</h2>
+
+    <p>
+      The spread between sectors is far wider than any change over time, which is why a single
+      national average tells you so little about your own position.
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Sector</th><th>Weekly</th><th>Annual equivalent</th></tr>
+      </thead>
+      <tbody>
+        {secteurs.map((s) => (
+          <tr>
+            <td>{s.nom}</td>
+            <td>&euro;{euro(s.hebdo)}</td>
+            <td>&euro;{annuel(s.hebdo)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <p>
+      Information and communication sits at &euro;{euro(1730.61)} a week, accommodation and food
+      service at &euro;{euro(506.78)}. That is a ratio of more than three to one between the highest
+      and lowest sectors published. Someone working in hospitality and someone working in software
+      are both included in the &euro;{euro(HEBDO)} national average, and neither would recognise it as
+      describing their pay.
+    </p>
+    <p>
+      Part of the gap is hours rather than rates. Accommodation and food service averages twenty-eight
+      paid hours a week against the national {HEURES}, so the weekly figure understates the hourly
+      rate in that sector. Comparing sectors on weekly earnings alone therefore overstates the
+      difference in pay per hour, though a substantial difference remains after that adjustment.
+    </p>
+
+    <h2>How the average has moved since 2019</h2>
+
+    <p>
+      Comparing the same quarter each year removes the seasonal effect of bonuses, which land
+      unevenly across the year and distort quarter-to-quarter comparisons.
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Quarter</th><th>Weekly</th><th>Annual equivalent</th><th>Change on previous year</th></tr>
+      </thead>
+      <tbody>
+        {serie.map((r, i) => (
+          <tr>
+            <td>{r.an}Q2</td>
+            <td>&euro;{euro(r.hebdo)}</td>
+            <td>&euro;{annuel(r.hebdo)}</td>
+            <td>{i === 0 ? '—' : `+${(100 * (r.hebdo - serie[i - 1].hebdo) / serie[i - 1].hebdo).toFixed(1)} %`}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <p>
+      Average weekly earnings rose from &euro;{euro(771.39)} in 2019Q2 to &euro;{euro(HEBDO)} in
+      {TRIMESTRE}, an increase of {(100 * (HEBDO - 771.39) / 771.39).toFixed(1)} per cent across seven
+      years. That is the nominal change: it says nothing about what those euros buy. Comparing it with
+      consumer price inflation over the same period is the only way to tell whether pay has kept pace,
+      and that comparison is outside what this dataset supports.
+    </p>
+    <p>
+      The two largest annual rises in the series fall in 2020 and 2024. The 2020 figure deserves
+      particular caution: employment composition changed sharply that year, and when lower-paid roles
+      leave the measured workforce the average rises without anyone receiving a pay increase. An
+      average is sensitive to who is counted, not only to what they are paid.
+    </p>
+
+    <h2>Why the average is not the typical salary</h2>
+
+    <p>
+      Three things separate the published average from what a given person earns, and all three push
+      in the same direction.
+    </p>
+    <p>
+      <strong>It is a mean, not a median.</strong> A small number of very high earners lifts a mean
+      well above the midpoint of the distribution. More people earn below the average than above it.
+      The CSO release used here publishes means; anyone quoting it as what most people earn has
+      misread it.
+    </p>
+    <p>
+      <strong>It mixes full-time and part-time.</strong> The {HEURES} hour average paid week is the
+      clearest evidence of this. A figure that blends a thirty-nine hour contract with a fifteen hour
+      one describes neither.
+    </p>
+    <p>
+      <strong>It is national, not local.</strong> Sector composition differs across the country, and
+      the sectors that pay most are not evenly distributed. A national average carries that
+      composition with it.
+    </p>
+
+    <h2>From gross average to what actually arrives</h2>
+
+    <p>
+      A gross figure is not take-home pay. On &euro;{ANNUEL.toLocaleString('en-IE')} a year, an
+      employee in Ireland pays income tax at the standard and higher rates depending on where the
+      standard rate cut-off point falls, plus USC and PRSI, and receives tax credits that reduce the
+      bill directly rather than reducing taxable income.
+    </p>
+    <p>
+      The difference between the gross headline and the net amount is large enough that comparing job
+      offers on gross alone is unreliable, particularly across the cut-off point where each additional
+      euro is taxed at the higher rate. Our <a href="/">take-home pay calculator</a> applies the
+      current bands, credits, USC rates and PRSI to a gross figure and shows what remains, and our
+      <a href="/methodology/">methodology page</a> sets out exactly which rates it uses and where they
+      come from.
+    </p>
+
+    <h2>Where these figures come from</h2>
+
+    <p>
+      Every number on this page comes from the Central Statistics Office release
+      <em>Average Earnings, Hours Worked, Employment and Labour Costs</em>, dataset EHQ03, for
+      {TRIMESTRE}, retrieved from the CSO public data API on {RELEVE}. Sector figures are for all
+      employees within each NACE Rev. 2 sector.
+    </p>
+    <p>
+      Annual equivalents are our own arithmetic, weekly earnings multiplied by fifty-two, and are
+      labelled as such throughout. The CSO does not publish an annual average salary figure, and any
+      site presenting one as official has calculated it the same way without saying so.
+    </p>
+    <p>
+      The CSO revises quarterly earnings data as later returns arrive, so figures for recent quarters
+      can change. This page states the quarter and the retrieval date precisely so that a reader can
+      check it against the current release rather than trusting it indefinitely.
+    </p>
+
+    <h2>Common questions</h2>
+
+    <h3>Is &euro;{ANNUEL.toLocaleString('en-IE')} a good salary in Ireland?</h3>
+    <p>
+      It is the average, which means a majority of employees earn less. Whether it is good depends
+      entirely on sector, hours and location, and the sector table above shows a spread of more than
+      three to one. A better question is what the average is in the sector you work in, which is why
+      that breakdown is on this page.
+    </p>
+
+    <h3>Why is the average hourly rate so high compared with the weekly figure?</h3>
+    <p>
+      Because the average paid week is {HEURES} hours, not thirty-nine. Part-time employment pulls the
+      weekly average down without affecting the hourly rate. If you work full-time hours, the hourly
+      figure is closer to your reality than the weekly one.
+    </p>
+
+    <h3>Does this include bonuses and overtime?</h3>
+    <p>
+      Yes. The CSO series used here covers total earnings, which includes irregular earnings such as
+      bonuses and overtime. The CSO also publishes a series excluding irregular earnings, which runs
+      lower and is the better measure for comparing base pay between sectors.
+    </p>
+
+    <h3>How often is this updated?</h3>
+    <p>
+      The CSO publishes this series quarterly. This page states the quarter it reflects and the date
+      the figures were retrieved, and both appear in the section above so you can tell at a glance
+      whether a newer release exists.
+    </p>
+  </div>
+</Layout>

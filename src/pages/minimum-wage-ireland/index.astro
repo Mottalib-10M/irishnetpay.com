@@ -1,0 +1,263 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { calculateSalary } from '../../lib/engine';
+import { MINIMUM_WAGE_HOURLY, LIVING_WAGE_HOURLY } from '../../lib/tax-rates-2026';
+
+// Les montants nets viennent du moteur du site, jamais d'un calcul a part :
+// une page qui annoncerait un net different de celui que le calculateur
+// affiche detruirait la confiance qu'elle cherche a etablir. Constate le
+// 2026-09-26 sur l'accueil, qui affichait un net de 24 700 EUR la ou le
+// moteur en donnait 24 158.
+const SEMAINE = 39;
+const brut = (taux: number) => Math.round(taux * SEMAINE * 52 * 100) / 100;
+const net = (taux: number) =>
+  calculateSalary({ grossAnnual: brut(taux), filingStatus: 'single', pensionRate: 0, additionalCredits: 0 });
+
+const minimum = net(MINIMUM_WAGE_HOURLY);
+const living = net(LIVING_WAGE_HOURLY);
+const eur = (n: number) => Math.round(n).toLocaleString('en-IE');
+const eur2 = (n: number) => n.toLocaleString('en-IE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+// Les taux reduits sont exprimes en pourcentage du taux plein par la
+// legislation, pas en montants fixes : ils suivent donc automatiquement.
+// Le taux en vigueur au premier semestre de chaque annee, publie par Eurostat
+// en montant mensuel et ramene a l'heure par la formule officielle
+// (mensuel x 12 / 52 / 39). La serie reproduit exactement les taux connus,
+// ce qui valide la conversion.
+const historique = [
+  { an: 2019, taux: 9.80 }, { an: 2020, taux: 9.80 }, { an: 2021, taux: 10.20 },
+  { an: 2022, taux: 10.50 }, { an: 2023, taux: 11.30 }, { an: 2024, taux: 12.70 },
+  { an: 2025, taux: 13.50 }, { an: 2026, taux: 14.15 },
+];
+
+const reduits = [
+  { age: 'Aged 20 and over', part: 1.00, libelle: 'Full rate' },
+  { age: 'Aged 19', part: 0.90, libelle: '90 % of the full rate' },
+  { age: 'Aged 18', part: 0.80, libelle: '80 % of the full rate' },
+  { age: 'Under 18', part: 0.70, libelle: '70 % of the full rate' },
+];
+---
+
+<Layout
+  title="Minimum Wage Ireland 2026: Rates, Take-Home Pay and Rules"
+  description="The national minimum wage is €14.15 an hour in 2026. What it leaves after tax, the reduced rates for young workers, and how it sits against the living wage."
+>
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
+    <ol class="flex items-center gap-1">
+      <li><a href="/" class="hover:text-primary">Home</a></li>
+      <li class="before:content-['/'] before:mx-1">Minimum Wage Ireland</li>
+    </ol>
+  </nav>
+
+  <div class="prose prose-slate max-w-none">
+    <h1>Minimum Wage Ireland 2026: Rates, Take-Home Pay and Rules</h1>
+
+    <p>
+      The national minimum wage in Ireland is <strong>&euro;{eur2(MINIMUM_WAGE_HOURLY)} an hour</strong>
+      in 2026, for employees aged twenty and over. On a thirty-nine hour week that is
+      &euro;{eur(brut(MINIMUM_WAGE_HOURLY))} a year before deductions, and
+      <strong>&euro;{eur(minimum.netAnnual)}</strong> after income tax, USC and PRSI for a single
+      employee with the standard credits, which works out at about
+      &euro;{eur(minimum.netMonthly)} a month. Those net figures come from the same calculation engine
+      that powers the calculator on this site, so the numbers here and the numbers it produces agree.
+      The minimum wage is a legal floor, not a recommendation: paying less is an offence, and the
+      obligation applies whatever the contract says. It is set as an hourly rate, which matters more
+      than it sounds, because entitlement is calculated over a pay reference period rather than per
+      shift. What follows sets out the reduced rates for younger workers, what actually counts as
+      pay for the purpose of meeting the floor, and how the minimum compares with the living wage.
+    </p>
+
+    <h2>The rates in 2026</h2>
+
+    <table>
+      <thead>
+        <tr><th>Age</th><th>Share of full rate</th><th>Hourly</th><th>Annual equivalent</th></tr>
+      </thead>
+      <tbody>
+        {reduits.map((r) => (
+          <tr>
+            <td>{r.age}</td>
+            <td>{r.libelle}</td>
+            <td>&euro;{eur2(Math.round(MINIMUM_WAGE_HOURLY * r.part * 100) / 100)}</td>
+            <td>&euro;{eur(brut(Math.round(MINIMUM_WAGE_HOURLY * r.part * 100) / 100))}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <p>
+      The reduced rates are set in law as percentages of the full rate rather than as fixed amounts,
+      so they move automatically whenever the headline rate changes. Annual equivalents assume a
+      thirty-nine hour week across fifty-two weeks and are our own arithmetic, not an official figure.
+    </p>
+
+    <h2>What the minimum wage leaves after deductions</h2>
+
+    <table>
+      <thead>
+        <tr><th></th><th>Minimum wage</th><th>Living wage</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Hourly</td><td>&euro;{eur2(MINIMUM_WAGE_HOURLY)}</td><td>&euro;{eur2(LIVING_WAGE_HOURLY)}</td></tr>
+        <tr><td>Gross annual, 39 hours</td><td>&euro;{eur(brut(MINIMUM_WAGE_HOURLY))}</td><td>&euro;{eur(brut(LIVING_WAGE_HOURLY))}</td></tr>
+        <tr><td>Net annual</td><td>&euro;{eur(minimum.netAnnual)}</td><td>&euro;{eur(living.netAnnual)}</td></tr>
+        <tr><td>Net monthly</td><td>&euro;{eur(minimum.netMonthly)}</td><td>&euro;{eur(living.netMonthly)}</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      The difference between the two is &euro;{eur(brut(LIVING_WAGE_HOURLY) - brut(MINIMUM_WAGE_HOURLY))}
+      a year gross, but only
+      &euro;{eur(living.netAnnual - minimum.netAnnual)} after deductions. Roughly a quarter of the
+      gross gap disappears into tax, USC and PRSI, which is worth knowing before treating the two
+      hourly rates as directly comparable measures of living standards.
+    </p>
+    <p>
+      At this level of income the income tax bill is small, because tax credits reduce it directly
+      rather than reducing taxable income. USC and PRSI still apply and account for most of what is
+      deducted. Someone on the minimum wage for a full year stays well below the standard rate
+      cut-off point, so none of that income is taxed at the higher rate.
+    </p>
+    <p>
+      These figures assume a single employee with the standard credits and no pension contribution.
+      Change any of those and the net changes: the <a href="/">calculator</a> takes filing status,
+      pension rate and additional credits, and applies the same engine used here.
+    </p>
+
+    <h2>How the rate has moved since 2019</h2>
+
+    <table>
+      <thead>
+        <tr><th>Year</th><th>Hourly rate</th><th>Change</th><th>Gross annual, 39 hours</th></tr>
+      </thead>
+      <tbody>
+        {historique.map((r, i) => (
+          <tr>
+            <td>{r.an}</td>
+            <td>&euro;{eur2(r.taux)}</td>
+            <td>{i === 0 ? '—' : (r.taux === historique[i - 1].taux ? 'unchanged' : `+${(100 * (r.taux - historique[i - 1].taux) / historique[i - 1].taux).toFixed(1)} %`)}</td>
+            <td>&euro;{eur(brut(r.taux))}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <p>
+      The rate rose from &euro;{eur2(9.80)} in 2019 to &euro;{eur2(MINIMUM_WAGE_HOURLY)} in 2026, an
+      increase of {(100 * (MINIMUM_WAGE_HOURLY - 9.80) / 9.80).toFixed(0)} per cent across seven
+      years. The three largest rises fall in 2023, 2024 and 2025, reflecting a period of high
+      consumer price inflation and a stated policy of moving the floor towards the living wage.
+    </p>
+    <p>
+      This is the nominal rate, not what it buys. A rise that trails inflation is a cut in real
+      terms, and comparing this series with consumer prices is the only way to tell which years were
+      which. That comparison needs a different dataset and is outside what this page covers.
+    </p>
+    <p>
+      Rates shown are those in force at the start of each year. Increases usually take effect on
+      1 January following the Budget, though that has not always been the case, so a rate that
+      changed mid-year may appear here under the year it began rather than the year it was announced.
+    </p>
+
+    <h2>What counts as pay towards the minimum</h2>
+
+    <p>
+      This is where disputes usually start, because not everything an employer pays counts towards
+      the floor.
+    </p>
+    <p>
+      Basic pay counts, as do shift premiums, productivity bonuses and, within limits set in
+      regulation, board and lodging provided by the employer. Overtime premiums, tips, expenses,
+      allowances for special duties and public holiday premium payments do not count towards the
+      minimum, even though they are real money in the employee's pocket.
+    </p>
+    <p>
+      The practical consequence is that an employee whose total pay looks comfortably above the floor
+      can still be underpaid once the non-reckonable elements are stripped out. Anyone checking a
+      payslip should therefore compare the reckonable pay against the hours worked in the pay
+      reference period, not the gross total against the hourly rate.
+    </p>
+
+    <h2>The pay reference period</h2>
+
+    <p>
+      Entitlement is not assessed shift by shift. The employer sets a pay reference period, which
+      cannot exceed one month, and the test is whether average reckonable pay across that period
+      meets the hourly minimum.
+    </p>
+    <p>
+      That has a consequence people find counter-intuitive: a single week paid below the rate is not
+      automatically a breach if the average across the reference period clears it. Conversely,
+      averaging cannot be used to justify a persistent shortfall.
+    </p>
+    <p>
+      An employee is entitled to ask their employer in writing for a statement of average hourly pay
+      for a given reference period, and the employer must supply it. That statement is the starting
+      point for any complaint, and it is worth requesting before escalating anywhere else.
+    </p>
+
+    <h2>Where these figures come from</h2>
+
+    <p>
+      The hourly rate and the reduced percentages are statutory. The gross annual equivalents are our
+      own arithmetic, the hourly rate multiplied by thirty-nine hours and fifty-two weeks, and are
+      labelled as such wherever they appear.
+    </p>
+    <p>
+      The net amounts are produced by this site's own calculation engine, applying the 2026 income
+      tax bands, tax credits, USC rates and PRSI. Our <a href="/methodology/">methodology page</a>
+      sets out exactly which rates are used and where each comes from.
+    </p>
+    <p>
+      Statutory rates change, typically at the start of a calendar year following the Budget. If you
+      are reading this well into a later year, check the current rate before relying on it: a page
+      that quietly keeps last year's figure is worse than no page, and that is precisely the mistake
+      this one was written to correct.
+    </p>
+
+    <h2>Common questions</h2>
+
+    <h3>Can an employer pay less than the minimum wage?</h3>
+    <p>
+      Not by agreement. The floor applies regardless of what a contract says, and an employee cannot
+      validly consent to less. Narrow statutory exceptions exist, notably for close relatives of the
+      employer and for certain statutory apprenticeships, but they are exceptions rather than a
+      general discretion.
+    </p>
+
+    <h3>Do tips count towards the minimum wage?</h3>
+    <p>
+      No. Tips and gratuities are not reckonable pay for the purpose of meeting the minimum, whether
+      paid in cash or through the payroll. An employer cannot use them to bring an hourly rate up to
+      the floor, and doing so is one of the more common breaches in practice.
+    </p>
+
+    <h3>What happens if I have been underpaid?</h3>
+    <p>
+      Start by requesting the written statement of average hourly pay for the reference period, which
+      your employer must provide. If the shortfall is confirmed and not resolved, a complaint can be
+      made to the Workplace Relations Commission, which can order payment of arrears.
+    </p>
+
+    <h3>Does the minimum wage apply to part-time work?</h3>
+    <p>
+      Yes, in full. The floor is an hourly rate, so it applies identically whether someone works four
+      hours a week or thirty-nine. Part-time employees have the same entitlement per hour worked, and
+      the reference period test works the same way. What changes is only the total, never the rate.
+    </p>
+
+    <h3>Does it apply during a trial or probation period?</h3>
+    <p>
+      Yes. There is no lawful trial period at below the minimum rate for an employee aged twenty or
+      over. Sub-minimum rates depend on age, not on how long someone has been in the job, so a
+      probation period does not by itself justify paying less than the applicable rate.
+    </p>
+
+    <h3>Is the living wage a legal obligation?</h3>
+    <p>
+      No. It is a recommended figure reflecting the estimated cost of a minimum acceptable standard
+      of living, and no employer is required to pay it. Only the national minimum wage is
+      enforceable, which is why the two appear separately in the table above.
+    </p>
+  </div>
+</Layout>

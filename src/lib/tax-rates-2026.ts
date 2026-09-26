@@ -76,7 +76,7 @@ export const EMPLOYER_PRSI_WEEKLY_THRESHOLD = 441;
 // --- Minimum Wage ---
 
 /** National minimum wage (per hour) 2026 */
-export const MINIMUM_WAGE_HOURLY = 13.50;
+export const MINIMUM_WAGE_HOURLY = 14.15;
 
 /** Living wage (per hour) 2026 */
 export const LIVING_WAGE_HOURLY = 14.80;
