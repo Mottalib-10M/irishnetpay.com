@@ -62,12 +62,12 @@ export function faqsSalaire(s: SalaryEntry): FAQ[] {
     {
       question: `Which tax band does ${s.grossFormatted} fall into?`,
       answer: auDessusSRCOP
-        ? `${s.grossFormatted} sits above the standard rate cut-off point of €42,000 for a single ` +
+        ? `${s.grossFormatted} sits above the standard rate cut-off point of €44,000 for a single ` +
           `person, so the portion above that threshold is taxed at forty percent rather than twenty. ` +
-          `Only the excess is affected: the first €42,000 is still taxed at the standard rate. A ` +
+          `Only the excess is affected: the first €44,000 is still taxed at the standard rate. A ` +
           `married couple with one income has a higher cut-off point, which is why the same salary ` +
           `produces a different result depending on filing status.`
-        : `${s.grossFormatted} sits below the standard rate cut-off point of €42,000 for a single ` +
+        : `${s.grossFormatted} sits below the standard rate cut-off point of €44,000 for a single ` +
           `person, so all of it is taxed at the standard twenty percent rate before credits are ` +
           `applied. Crossing that threshold does not raise the tax on income already earned; only ` +
           `the portion above it is taxed at forty percent, which is the point most often ` +

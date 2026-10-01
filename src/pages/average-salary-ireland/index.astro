@@ -65,6 +65,7 @@ const faqs = [
 
 const euro = (n: number) => n.toLocaleString('en-IE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const annuel = (n: number) => Math.round(n * 52).toLocaleString('en-IE');
+import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
 ---
 
 <Layout
@@ -95,6 +96,8 @@ const annuel = (n: number) => Math.round(n * 52).toLocaleString('en-IE');
       to be offered. What it is good for is comparison over time and between sectors, and that is how
       this page uses it.
     </p>
+<MiniSimAutonome client:visible kind="takehome" lang="en" locale="en-IE" href="/" />
+
 
     <h2>The headline numbers, and what each one measures</h2>
 

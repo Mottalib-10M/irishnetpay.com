@@ -6,31 +6,31 @@ const DEFAULT = { pensionRate: 0, additionalCredits: 0 };
 describe('Income Tax', () => {
   it('calculates tax for income below SRCOP (single)', () => {
     const r = calculateSalary({ grossAnnual: 35_000, filingStatus: 'single', ...DEFAULT });
-    // All at 20%: 35000 × 0.20 = 7000 - credits (1875 + 1875) = 3250
+    // All at 20%: 35000 × 0.20 = 7000 - credits (2000 + 2000) = 3000
     expect(r.incomeTaxGross).toBeCloseTo(7_000, 0);
-    expect(r.incomeTaxNet).toBeCloseTo(3_250, 0);
+    expect(r.incomeTaxNet).toBeCloseTo(3_000, 0);
   });
 
   it('calculates tax for income above SRCOP (single)', () => {
     const r = calculateSalary({ grossAnnual: 60_000, filingStatus: 'single', ...DEFAULT });
-    // 42000 × 0.20 + 18000 × 0.40 = 8400 + 7200 = 15600 - 3750 credits = 11850
-    expect(r.incomeTaxGross).toBeCloseTo(15_600, 0);
-    expect(r.incomeTaxNet).toBeCloseTo(11_850, 0);
+    // 44000 × 0.20 + 16000 × 0.40 = 8800 + 6400 = 15200 - 4000 credits = 11200
+    expect(r.incomeTaxGross).toBeCloseTo(15_200, 0);
+    expect(r.incomeTaxNet).toBeCloseTo(11_200, 0);
   });
 
   it('applies married one income SRCOP and credits', () => {
     const r = calculateSalary({ grossAnnual: 60_000, filingStatus: 'married_one_income', ...DEFAULT });
-    // SRCOP = 51000: 51000×0.20 + 9000×0.40 = 10200 + 3600 = 13800
-    // Credits: 3750 (married) + 1875 (PAYE) + 1800 (home carer) = 7425
-    // Net tax = 13800 - 7425 = 6375
-    expect(r.incomeTaxGross).toBeCloseTo(13_800, 0);
-    expect(r.incomeTaxNet).toBeCloseTo(6_375, 0);
+    // SRCOP = 53000: 53000×0.20 + 7000×0.40 = 10600 + 2800 = 13400
+    // Credits: 4000 (married) + 2000 (PAYE) + 1950 (home carer) = 7950
+    // Net tax = 13400 - 7950 = 5450
+    expect(r.incomeTaxGross).toBeCloseTo(13_400, 0);
+    expect(r.incomeTaxNet).toBeCloseTo(5_450, 0);
   });
 
   it('applies single parent credits', () => {
     const r = calculateSalary({ grossAnnual: 40_000, filingStatus: 'single_parent', ...DEFAULT });
-    // Credits: 1875 (personal) + 1875 (PAYE) + 1750 (SPCCC) = 5500
-    expect(r.taxCreditsTotal).toBe(5_500);
+    // Credits: 2000 (personal) + 2000 (PAYE) + 1900 (SPCCC) = 5900
+    expect(r.taxCreditsTotal).toBe(5_900);
   });
 
   it('never returns negative income tax', () => {
@@ -48,17 +48,17 @@ describe('USC', () => {
   it('calculates USC for standard income', () => {
     const r = calculateSalary({ grossAnnual: 50_000, filingStatus: 'single', ...DEFAULT });
     // Band 1: 12012 × 0.5% = 60.06
-    // Band 2: (25760-12012) × 2% = 274.96
-    // Band 3: (50000-25760) × 4% = 969.60
-    // Total ≈ 1304.62
-    expect(r.usc).toBeCloseTo(1_304.62, 0);
+    // Band 2: (28700-12012) × 2% = 333.76
+    // Band 3: (50000-28700) × 3% = 639.00
+    // Total ≈ 1032.82
+    expect(r.usc).toBeCloseTo(1_032.82, 0);
   });
 
   it('applies 8% band for high earners', () => {
     const r = calculateSalary({ grossAnnual: 100_000, filingStatus: 'single', ...DEFAULT });
-    // Band 1: 60.06, Band 2: 274.96, Band 3: (70044-25760)×4% = 1771.36, Band 4: (100000-70044)×8% = 2396.48
-    // Total ≈ 4502.86
-    expect(r.usc).toBeCloseTo(4_502.86, 0);
+    // Band 1: 60.06, Band 2: 333.76, Band 3: (70044-28700)×3% = 1240.32, Band 4: (100000-70044)×8% = 2396.48
+    // Total ≈ 4030.62
+    expect(r.usc).toBeCloseTo(4_030.62, 0);
   });
 });
 
@@ -69,9 +69,9 @@ describe('PRSI', () => {
     expect(r.prsi).toBe(0);
   });
 
-  it('calculates PRSI at 4% for standard income', () => {
+  it('calculates PRSI at the 2026 calendar-year rate of 4.2375% (4.2% then 4.35% from October)', () => {
     const r = calculateSalary({ grossAnnual: 50_000, filingStatus: 'single', ...DEFAULT });
-    expect(r.prsi).toBeCloseTo(2_000, 0);
+    expect(r.prsi).toBeCloseTo(2_118.75, 0);
   });
 });
 

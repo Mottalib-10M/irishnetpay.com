@@ -1,6 +1,7 @@
 ---
 import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
+import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
 ---
 
 <Layout
@@ -20,6 +21,8 @@ import Layout from '../../../layouts/Layout.astro';
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
       <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/married-tax-assessment/']}</p>
+<MiniSimAutonome client:visible kind="married" lang="en" locale="en-IE" href="/" />
+
 
 
     <p>
@@ -43,11 +46,11 @@ import Layout from '../../../layouts/Layout.astro';
       Joint assessment is the most common option and is the default setting when Revenue is notified of a marriage or civil partnership. Under joint assessment:
     </p>
     <ul>
-      <li>The couple receives a combined Personal Tax Credit of &euro;3,750 (double the single person's &euro;1,875).</li>
-      <li>Each PAYE spouse receives their own Employee Tax Credit of &euro;1,875.</li>
-      <li>The combined Standard Rate Cut-Off Point (SRCOP) is up to &euro;84,000, provided both spouses have income. Each spouse's SRCOP is capped at &euro;42,000.</li>
-      <li>If only one spouse has income, the SRCOP is &euro;51,000 (higher than the single person's &euro;42,000).</li>
-      <li>Unused standard rate band from one spouse can be transferred to the other, up to the &euro;42,000 per-person cap.</li>
+      <li>The couple receives a combined Personal Tax Credit of &euro;4,000 (double the single person's &euro;2,000).</li>
+      <li>Each PAYE spouse receives their own Employee Tax Credit of &euro;2,000.</li>
+      <li>The combined Standard Rate Cut-Off Point (SRCOP) is up to &euro;88,000, provided both spouses have income: &euro;53,000 plus the lower earner's income, up to &euro;35,000.</li>
+      <li>If only one spouse has income, the SRCOP is &euro;53,000 (higher than the single person's &euro;44,000).</li>
+      <li>The &euro;53,000 part of the band can be allocated to either spouse; the increase of up to &euro;35,000 belongs to the lower earner and cannot be transferred.</li>
     </ul>
     <p>
       One spouse is nominated as the "assessable spouse," typically the higher earner. This spouse's employer receives the full RPN with the couple's combined credits and rate bands. The other spouse's employer receives an RPN reflecting their individual allocation.
@@ -59,37 +62,37 @@ import Layout from '../../../layouts/Layout.astro';
       The rate band transfer is the most powerful feature of joint assessment. It allows a couple to move unused standard rate band from the lower-earning spouse to the higher-earning spouse, reducing the amount of income taxed at the 40% higher rate.
     </p>
     <p>
-      For example, consider a couple where Spouse A earns &euro;70,000 and Spouse B earns &euro;25,000. Under single assessment, Spouse A would pay 40% on &euro;28,000 (&euro;70,000 minus &euro;42,000 SRCOP). Under joint assessment, Spouse B only uses &euro;25,000 of their &euro;42,000 SRCOP, leaving &euro;17,000 unused. This &euro;17,000 can be transferred to Spouse A, increasing their SRCOP from &euro;42,000 to &euro;59,000 (note: this cannot exceed &euro;42,000 per individual, but the couple's combined band shifts accordingly). Spouse A now only pays 40% on &euro;11,000 (&euro;70,000 minus &euro;59,000), saving &euro;3,400 in tax per year.
+      For example, consider a couple where Spouse A earns &euro;70,000 and Spouse B earns &euro;25,000. Under single assessment, Spouse A would pay 40% on &euro;26,000 (&euro;70,000 minus the &euro;44,000 SRCOP). Under joint assessment, the couple's standard rate band is &euro;53,000 plus Spouse B's income of &euro;25,000, &euro;78,000 in all. Spouse A can use the &euro;53,000 part, Spouse B the rest. Spouse A now only pays 40% on &euro;17,000 (&euro;70,000 minus &euro;53,000), saving &euro;1,800 in tax per year.
     </p>
 
     <h2>Married couple with one income</h2>
 
     <p>
-      When only one spouse has income, joint assessment provides a SRCOP of &euro;51,000, compared to &euro;42,000 for a single person. This means an additional &euro;9,000 is taxed at 20% instead of 40%, saving &euro;1,800 in income tax.
+      When only one spouse has income, joint assessment provides a SRCOP of &euro;53,000, compared to &euro;44,000 for a single person. This means an additional &euro;9,000 is taxed at 20% instead of 40%, saving &euro;1,800 in income tax.
     </p>
     <p>
-      The couple also receives the full &euro;3,750 Personal Tax Credit and the &euro;1,875 Employee Credit for the working spouse. If the non-working spouse cares for a dependent person (child, elderly relative, or incapacitated person), they may also qualify for the Home Carer Tax Credit of &euro;1,800.
+      The couple also receives the full &euro;4,000 Personal Tax Credit and the &euro;2,000 Employee Credit for the working spouse. If the non-working spouse cares for a dependent person (child, elderly relative, or incapacitated person), they may also qualify for the Home Carer Tax Credit of &euro;1,950.
     </p>
     <p>
-      The Home Carer Tax Credit is subject to an income limit on the home carer's own earnings: the full credit is available if their income does not exceed &euro;7,200. Between &euro;7,200 and &euro;10,800, the credit is tapered. Above &euro;10,800, it is not available.
+      The Home Carer Tax Credit is subject to an income limit on the home carer's own earnings: the full credit is available if their income does not exceed &euro;7,200. Between &euro;7,200 and &euro;11,100, the credit is reduced by half of the excess. Above &euro;11,100, it is not available.
     </p>
 
     <h2>Married couple with two incomes</h2>
 
     <p>
-      When both spouses work, joint assessment allows a combined SRCOP of up to &euro;84,000. Each spouse's individual SRCOP is capped at &euro;42,000, so the transfer of unused band is limited. In practice, this means the full &euro;84,000 is only available when both spouses earn at least &euro;42,000 each.
+      When both spouses work, joint assessment allows a combined SRCOP of up to &euro;88,000. The increase for the second income is capped at &euro;35,000 and at that spouse's actual income. In practice, this means the full &euro;88,000 is only available when the lower earner has an income of at least &euro;35,000.
     </p>
     <p>
       The combined credits for a two-income couple are:
     </p>
     <ul>
-      <li>Personal Tax Credit: &euro;3,750</li>
-      <li>Employee Tax Credit (Spouse A): &euro;1,875</li>
-      <li>Employee Tax Credit (Spouse B): &euro;1,875</li>
-      <li><strong>Total: &euro;7,500</strong></li>
+      <li>Personal Tax Credit: &euro;4,000</li>
+      <li>Employee Tax Credit (Spouse A): &euro;2,000</li>
+      <li>Employee Tax Credit (Spouse B): &euro;2,000</li>
+      <li><strong>Total: &euro;8,000</strong></li>
     </ul>
     <p>
-      This compares to &euro;3,750 for a single person, so the married couple has double the credits plus a doubled rate band. For high-earning couples, the tax saving compared to being single can be substantial.
+      This compares to &euro;4,000 for a single person, so the married couple has double the credits plus a doubled rate band. For high-earning couples, the tax saving compared to being single can be substantial.
     </p>
 
     <h2>Worked example: comparing the three options</h2>
@@ -110,27 +113,27 @@ import Layout from '../../../layouts/Layout.astro';
       <tbody>
         <tr>
           <td>Single (separate treatment)</td>
-          <td>&euro;9,850</td>
-          <td>&euro;275</td>
-          <td>&euro;10,125</td>
+          <td>&euro;13,200</td>
+          <td>&euro;0</td>
+          <td>&euro;13,200</td>
         </tr>
         <tr>
           <td>Separate assessment</td>
-          <td>&euro;7,850</td>
-          <td>&euro;275</td>
-          <td>&euro;8,125</td>
+          <td>&euro;11,400</td>
+          <td>&euro;0</td>
+          <td>&euro;11,400</td>
         </tr>
         <tr>
           <td>Joint assessment</td>
-          <td>&euro;7,350</td>
-          <td>&euro;275</td>
-          <td>&euro;7,625</td>
+          <td>&euro;11,400</td>
+          <td>&euro;0</td>
+          <td>&euro;11,400</td>
         </tr>
       </tbody>
     </table>
 
     <p>
-      In this example, joint assessment saves the couple &euro;2,500 per year compared to single treatment. The saving comes primarily from the transfer of Spouse B's unused rate band to Spouse A, which moves &euro;22,000 from the 40% band to the 20% band. Even the separate assessment option provides a &euro;2,000 saving over single treatment, thanks to the sharing of credits.
+      In this example, joint assessment saves the couple &euro;1,800 of income tax per year compared to single treatment. Spouse A's income tax is 20% on &euro;53,000 and 40% on &euro;12,000, less &euro;4,000 of credits; Spouse B's tax of &euro;4,000 is cancelled by their own credits. The saving comes from the higher band available to Spouse A, which moves &euro;9,000 from the 40% band to the 20% band. Separate assessment produces the same total, because unused rate band and credits are transferred between the spouses; only the split between them differs.
     </p>
 
     <h2>How to set up joint assessment</h2>
@@ -179,7 +182,7 @@ import Layout from '../../../layouts/Layout.astro';
     <h2>Separation and divorce</h2>
 
     <p>
-      When a married couple separates, they can continue to be jointly assessed in the year of separation. From the following year, they are treated as single people unless they reconcile. Separated individuals who are the primary carer of a qualifying child can claim the Single Person Child Carer Credit (SPCCC) of &euro;1,750 and the increased SRCOP of &euro;46,000.
+      When a married couple separates, they can continue to be jointly assessed in the year of separation. From the following year, they are treated as single people unless they reconcile. Separated individuals who are the primary carer of a qualifying child can claim the Single Person Child Carer Credit (SPCCC) of &euro;1,900 and the increased SRCOP of &euro;48,000.
     </p>
     <p>
       After a divorce, each person is permanently treated as a single person for tax purposes. Maintenance payments may be taxable for the recipient and deductible for the payer, depending on whether they are made voluntarily or under a court order. This area can be complex, and professional tax advice is recommended.
@@ -189,7 +192,7 @@ import Layout from '../../../layouts/Layout.astro';
 
     <details>
       <summary><strong>Is joint assessment always the best option for married couples?</strong></summary>
-      <p>In almost all cases, yes. Joint assessment provides the highest combined SRCOP (up to &euro;84,000 for two incomes) and the highest combined tax credits (&euro;3,750 personal + &euro;1,875 per PAYE employment). The transfer of unused rate band from the lower earner to the higher earner produces genuine tax savings. The only situation where another option might be preferred is where privacy between spouses is a concern, but even then, separate assessment (which still shares credits equally) is preferable to single treatment.</p>
+      <p>In almost all cases, yes. Joint assessment provides the highest combined SRCOP (up to &euro;88,000 for two incomes) and the highest combined tax credits (&euro;4,000 personal + &euro;2,000 per PAYE employment). The transfer of unused rate band from the lower earner to the higher earner produces genuine tax savings. The only situation where another option might be preferred is where privacy between spouses is a concern, but even then, separate assessment (which still shares credits equally) is preferable to single treatment.</p>
     </details>
     <details>
       <summary><strong>Can we change our assessment method mid-year?</strong></summary>
@@ -197,7 +200,7 @@ import Layout from '../../../layouts/Layout.astro';
     </details>
     <details>
       <summary><strong>What credits does a married couple with one income get?</strong></summary>
-      <p>A married couple with one PAYE income receives: the Personal Tax Credit of &euro;3,750, the Employee Tax Credit of &euro;1,875, and potentially the Home Carer Tax Credit of &euro;1,800 (if the non-working spouse cares for a dependent person). The SRCOP is &euro;51,000. The total annual credits of up to &euro;7,425 are significantly higher than the &euro;3,750 available to a single person.</p>
+      <p>A married couple with one PAYE income receives: the Personal Tax Credit of &euro;4,000, the Employee Tax Credit of &euro;2,000, and potentially the Home Carer Tax Credit of &euro;1,950 (if the non-working spouse cares for a dependent person). The SRCOP is &euro;53,000. The total annual credits of up to &euro;7,950 are significantly higher than the &euro;4,000 available to a single person.</p>
     </details>
 
     <div class="not-prose bg-emerald-50 border border-emerald-200 rounded-xl p-6 my-8">
@@ -238,7 +241,7 @@ import Layout from '../../../layouts/Layout.astro';
       "name": "Is joint assessment always the best option for married couples?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "In almost all cases, yes. Joint assessment provides the highest combined SRCOP (up to €84,000 for two incomes) and the highest combined tax credits (€3,750 personal + €1,875 per PAYE employment). The transfer of unused rate band from the lower earner to the higher earner produces genuine tax savings. The only situation where another option might be preferred is where privacy between spouses is a concern, but even then, separate assessment (which still shares credits equally) is preferable to single treatment."
+        "text": "In almost all cases, yes. Joint assessment provides the highest combined SRCOP (up to €88,000 for two incomes) and the highest combined tax credits (€4,000 personal + €2,000 per PAYE employment). The transfer of unused rate band from the lower earner to the higher earner produces genuine tax savings. The only situation where another option might be preferred is where privacy between spouses is a concern, but even then, separate assessment (which still shares credits equally) is preferable to single treatment."
       }
     },
     {
@@ -254,7 +257,7 @@ import Layout from '../../../layouts/Layout.astro';
       "name": "What credits does a married couple with one income get?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A married couple with one PAYE income receives: the Personal Tax Credit of €3,750, the Employee Tax Credit of €1,875, and potentially the Home Carer Tax Credit of €1,800 (if the non-working spouse cares for a dependent person). The SRCOP is €51,000. The total annual credits of up to €7,425 are significantly higher than the €3,750 available to a single person."
+        "text": "A married couple with one PAYE income receives: the Personal Tax Credit of €4,000, the Employee Tax Credit of €2,000, and potentially the Home Carer Tax Credit of €1,950 (if the non-working spouse cares for a dependent person). The SRCOP is €53,000. The total annual credits of up to €7,950 are significantly higher than the €4,000 available to a single person."
       }
     }
   ]

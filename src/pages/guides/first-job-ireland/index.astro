@@ -1,6 +1,12 @@
 ---
 import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
+import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
+import { calculateSalary } from '../../../lib/engine';
+import { TAX_CREDITS, STANDARD_RATE } from '../../../lib/tax-rates-2026';
+const eur = (x: number) => new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(x);
+const credits = TAX_CREDITS.personal_single + TAX_CREDITS.employee_paye;
+const rows = [28000, 32000, 36000, 40000, 45000].map((g) => calculateSalary({ grossAnnual: g, filingStatus: 'single', pensionRate: 0, additionalCredits: 0 }));
 ---
 
 <Layout
@@ -20,6 +26,8 @@ import Layout from '../../../layouts/Layout.astro';
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
       <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/first-job-ireland/']}</p>
+<MiniSimAutonome client:visible kind="takehome" lang="en" locale="en-IE" href="/" />
+
 
 
     <p>
@@ -93,7 +101,7 @@ import Layout from '../../../layouts/Layout.astro';
         </tr>
         <tr>
           <td>PRSI (Employee)</td>
-          <td>Pay Related Social Insurance at 4% of your gross pay (nil if you earn under &euro;352/week).</td>
+          <td>Pay Related Social Insurance at 4.2% of your gross pay, 4.35% from 1 October 2026 (nil if you earn &euro;352 a week or less).</td>
         </tr>
         <tr>
           <td>Pension</td>
@@ -105,11 +113,11 @@ import Layout from '../../../layouts/Layout.astro';
         </tr>
         <tr>
           <td>Tax Credits</td>
-          <td>The annual or period tax credits applied. For a single PAYE employee: &euro;3,750/year.</td>
+          <td>The annual or period tax credits applied. For a single PAYE employee: &euro;4,000/year.</td>
         </tr>
         <tr>
           <td>Standard Rate Cut-Off</td>
-          <td>The income threshold for the 20% rate. &euro;42,000/year for a single person.</td>
+          <td>The income threshold for the 20% rate. &euro;44,000/year for a single person.</td>
         </tr>
         <tr>
           <td>Cumulative Pay</td>
@@ -132,14 +140,14 @@ import Layout from '../../../layouts/Layout.astro';
       As a single person starting your first PAYE employment, you are entitled to two automatic tax credits:
     </p>
     <ul>
-      <li><strong>Personal Tax Credit:</strong> &euro;1,875 per year</li>
-      <li><strong>Employee (PAYE) Tax Credit:</strong> &euro;1,875 per year</li>
+      <li><strong>Personal Tax Credit:</strong> &euro;2,000 per year</li>
+      <li><strong>Employee (PAYE) Tax Credit:</strong> &euro;2,000 per year</li>
     </ul>
     <p>
-      Together, these &euro;3,750 in annual credits mean you will not pay any net income tax on the first &euro;18,750 of annual income (at the 20% rate). If you earn below this amount, your income tax will be zero - though USC and PRSI may still apply.
+      Together, these &euro;4,000 in annual credits mean you will not pay any net income tax on the first {eur(credits / STANDARD_RATE)} of annual income (at the 20% rate). If you earn below this amount, your income tax will be zero - though USC and PRSI may still apply.
     </p>
     <p>
-      You may also be entitled to additional credits depending on your circumstances. If you are renting, the Rent Tax Credit of &euro;750 per year is available. If you are a single parent, the Single Person Child Carer Credit (SPCCC) of &euro;1,750 may apply. These must be claimed separately through myAccount.
+      You may also be entitled to additional credits depending on your circumstances. If you are renting, the Rent Tax Credit of &euro;1,000 per year is available. If you are a single parent, the Single Person Child Carer Credit (SPCCC) of &euro;1,900 may apply. These must be claimed separately through myAccount.
     </p>
 
     <h2>How much will you take home?</h2>
@@ -160,46 +168,16 @@ import Layout from '../../../layouts/Layout.astro';
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>&euro;28,000</td>
-          <td>&euro;2,333</td>
-          <td>&euro;154</td>
-          <td>&euro;41</td>
-          <td>&euro;93</td>
-          <td>&euro;2,045</td>
-        </tr>
-        <tr>
-          <td>&euro;32,000</td>
-          <td>&euro;2,667</td>
-          <td>&euro;221</td>
-          <td>&euro;54</td>
-          <td>&euro;107</td>
-          <td>&euro;2,285</td>
-        </tr>
-        <tr>
-          <td>&euro;36,000</td>
-          <td>&euro;3,000</td>
-          <td>&euro;288</td>
-          <td>&euro;69</td>
-          <td>&euro;120</td>
-          <td>&euro;2,523</td>
-        </tr>
-        <tr>
-          <td>&euro;40,000</td>
-          <td>&euro;3,333</td>
-          <td>&euro;354</td>
-          <td>&euro;85</td>
-          <td>&euro;133</td>
-          <td>&euro;2,761</td>
-        </tr>
-        <tr>
-          <td>&euro;45,000</td>
-          <td>&euro;3,750</td>
-          <td>&euro;504</td>
-          <td>&euro;105</td>
-          <td>&euro;150</td>
-          <td>&euro;2,991</td>
-        </tr>
+        {rows.map((r) => (
+          <tr>
+            <td>{eur(r.grossAnnual)}</td>
+            <td>{eur(r.grossMonthly)}</td>
+            <td>{eur(r.incomeTaxMonthly)}</td>
+            <td>{eur(r.uscMonthly)}</td>
+            <td>{eur(r.prsiMonthly)}</td>
+            <td>{eur(r.netMonthly)}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
 
@@ -237,7 +215,7 @@ import Layout from '../../../layouts/Layout.astro';
     </p>
     <ol>
       <li><strong>Register on myAccount immediately:</strong> Do not wait until your first payday. Register as soon as you accept the job offer to avoid emergency tax.</li>
-      <li><strong>Claim the Rent Tax Credit:</strong> If you are renting, claim the &euro;750 Rent Tax Credit through myAccount. You will need your landlord's name, address, and the RTB registration number for the tenancy.</li>
+      <li><strong>Claim the Rent Tax Credit:</strong> If you are renting, claim the &euro;1,000 Rent Tax Credit through myAccount. You will need your landlord's name, address, and the RTB registration number for the tenancy.</li>
       <li><strong>Consider pension contributions:</strong> If your employer offers a pension scheme with matching contributions, join it as early as possible. The tax relief and employer match make early pension saving extremely cost-effective, even on a modest salary.</li>
       <li><strong>Keep receipts for medical expenses:</strong> GP visits, prescribed medications, dental treatments, and optical care can be claimed for tax relief at 20%. Collect receipts throughout the year and claim the relief on your annual return.</li>
       <li><strong>Check for flat-rate expenses:</strong> If your occupation is on Revenue's list of flat-rate expenses (nurses, teachers, shop assistants, etc.), claim the deduction through myAccount.</li>
@@ -247,10 +225,10 @@ import Layout from '../../../layouts/Layout.astro';
     <h2>Part-year employment and refunds</h2>
 
     <p>
-      If you start your first job part-way through the year - say in September - your annual tax credits of &euro;3,750 still apply for the full year, but you only earn income for four months. This means your credits far exceed your tax liability, and you may be entitled to a significant refund. The cumulative PAYE system handles this automatically, but requesting an end-of-year review through myAccount ensures that any remaining overpayment is identified and refunded.
+      If you start your first job part-way through the year - say in September - your annual tax credits of &euro;4,000 still apply for the full year, but you only earn income for four months. This means your credits far exceed your tax liability, and you may be entitled to a significant refund. The cumulative PAYE system handles this automatically, but requesting an end-of-year review through myAccount ensures that any remaining overpayment is identified and refunded.
     </p>
     <p>
-      For example, a single person who starts work in September earning &euro;3,000 per month will earn &euro;12,000 in the year. Income tax at 20% on &euro;12,000 is &euro;2,400. Tax credits of &euro;3,750 exceed this, so no income tax is payable. USC of approximately &euro;60 is still due (0.5% on &euro;12,000), and PRSI will be approximately &euro;480 (4% on &euro;12,000), but the income tax component is zero.
+      For example, a single person who starts work in September earning &euro;3,000 per month will earn &euro;12,000 in the year. Income tax at 20% on &euro;12,000 is &euro;2,400. Tax credits of &euro;4,000 exceed this, so no income tax is payable. No USC is due for the year either, because total income stays under the &euro;13,000 exemption; any USC deducted is refunded. PRSI of roughly &euro;518 is payable (4.2% in September, 4.35% from October), since PRSI has no annual exemption.
     </p>
 
     <h2>Resources for new employees</h2>

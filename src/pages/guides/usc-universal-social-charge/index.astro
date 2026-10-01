@@ -1,6 +1,7 @@
 ---
 import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
+import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
 ---
 
 <Layout
@@ -20,6 +21,8 @@ import Layout from '../../../layouts/Layout.astro';
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
       <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/usc-universal-social-charge/']}</p>
+<MiniSimAutonome client:visible kind="usc" lang="en" locale="en-IE" href="/" />
+
 
 
     <p>
@@ -54,12 +57,12 @@ import Layout from '../../../layouts/Layout.astro';
           <td>0.5%</td>
         </tr>
         <tr>
-          <td>&euro;12,012.01 to &euro;25,760</td>
+          <td>&euro;12,012.01 to &euro;28,700</td>
           <td>2%</td>
         </tr>
         <tr>
-          <td>&euro;25,760.01 to &euro;70,044</td>
-          <td>4%</td>
+          <td>&euro;28,700.01 to &euro;70,044</td>
+          <td>3%</td>
         </tr>
         <tr>
           <td>Over &euro;70,044</td>
@@ -91,12 +94,12 @@ import Layout from '../../../layouts/Layout.astro';
     </p>
     <ol>
       <li><strong>Band 1:</strong> &euro;12,012 &times; 0.5% = &euro;60.06</li>
-      <li><strong>Band 2:</strong> (&euro;25,760 &minus; &euro;12,012) = &euro;13,748 &times; 2% = &euro;274.96</li>
-      <li><strong>Band 3:</strong> (&euro;55,000 &minus; &euro;25,760) = &euro;29,240 &times; 4% = &euro;1,169.60</li>
-      <li><strong>Total USC:</strong> &euro;60.06 + &euro;274.96 + &euro;1,169.60 = <strong>&euro;1,504.62</strong></li>
+      <li><strong>Band 2:</strong> (&euro;28,700 &minus; &euro;12,012) = &euro;16,688 &times; 2% = &euro;333.76</li>
+      <li><strong>Band 3:</strong> (&euro;55,000 &minus; &euro;28,700) = &euro;26,300 &times; 3% = &euro;789.00</li>
+      <li><strong>Total USC:</strong> &euro;60.06 + &euro;333.76 + &euro;789.00 = <strong>&euro;1,182.82</strong></li>
     </ol>
     <p>
-      Divided across 12 months, this employee would see approximately &euro;125.39 deducted for USC each month. Note that unlike income tax, no credits are available to offset this charge. The full amount is payable.
+      Divided across 12 months, this employee would see approximately &euro;98.57 deducted for USC each month. Note that unlike income tax, no credits are available to offset this charge. The full amount is payable.
     </p>
 
     <h2>How USC differs from income tax</h2>
@@ -119,7 +122,7 @@ import Layout from '../../../layouts/Layout.astro';
 
     <h3>Medical card holders</h3>
     <p>
-      If you hold a full medical card and your total income for the year is &euro;60,000 or less, reduced USC rates apply. The maximum rate you will pay is 2%, applied across all bands. This can result in a significant saving compared to the standard rates. For example, someone earning &euro;50,000 with a medical card would pay approximately &euro;920 in USC, compared to approximately &euro;1,304 under standard rates.
+      If you hold a full medical card and your total income for the year is &euro;60,000 or less, reduced USC rates apply. The maximum rate you will pay is 2%, applied across all bands. This can result in a significant saving compared to the standard rates. For example, someone earning &euro;50,000 with a medical card would pay approximately &euro;820 in USC, compared to approximately &euro;1,033 under standard rates.
     </p>
 
     <h3>Over-70s</h3>
@@ -199,23 +202,23 @@ import Layout from '../../../layouts/Layout.astro';
         </tr>
         <tr>
           <td>&euro;35,000</td>
-          <td>&euro;705</td>
-          <td>2.01%</td>
+          <td>&euro;583</td>
+          <td>1.67%</td>
         </tr>
         <tr>
           <td>&euro;50,000</td>
-          <td>&euro;1,305</td>
-          <td>2.61%</td>
+          <td>&euro;1,033</td>
+          <td>2.07%</td>
         </tr>
         <tr>
           <td>&euro;70,044</td>
-          <td>&euro;2,107</td>
-          <td>3.01%</td>
+          <td>&euro;1,634</td>
+          <td>2.33%</td>
         </tr>
         <tr>
           <td>&euro;100,000</td>
-          <td>&euro;4,503</td>
-          <td>4.50%</td>
+          <td>&euro;4,031</td>
+          <td>4.03%</td>
         </tr>
       </tbody>
     </table>

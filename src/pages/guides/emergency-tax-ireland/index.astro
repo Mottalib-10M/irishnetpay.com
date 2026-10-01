@@ -1,6 +1,19 @@
 ---
 import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
+import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
+import { calculateSalary } from '../../../lib/engine';
+import { SRCOP, TAX_CREDITS, STANDARD_RATE, HIGHER_RATE } from '../../../lib/tax-rates-2026';
+const eur = (x: number) => new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(x);
+const eur2 = (x: number) => new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
+const C = (g: number) => calculateSalary({ grossAnnual: g, filingStatus: 'single', pensionRate: 0, additionalCredits: 0 });
+const credits = TAX_CREDITS.personal_single + TAX_CREDITS.employee_paye;
+const n48 = C(48000); const m50 = 50000 / 12;
+const correct = C(50000).incomeTaxMonthly;
+// Emergency basis, month 1 : one twelfth of the single cut-off point at 20%, the balance at 40%, no credits.
+const band = SRCOP.single / 12;
+const month1 = Math.min(m50, band) * STANDARD_RATE + Math.max(0, m50 - band) * HIGHER_RATE;
+const flat = m50 * HIGHER_RATE;
 ---
 
 <Layout
@@ -20,6 +33,8 @@ import Layout from '../../../layouts/Layout.astro';
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
       <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/emergency-tax-ireland/']}</p>
+<MiniSimAutonome client:visible kind="emergency" lang="en" locale="en-IE" href="/" />
+
 
 
     <p>
@@ -55,44 +70,41 @@ import Layout from '../../../layouts/Layout.astro';
       Emergency tax applies in stages, becoming more punitive the longer the situation goes unresolved. The exact treatment depends on how many pay periods have passed since the employment started.
     </p>
 
-    <h3>First pay period (week 1 / month 1)</h3>
+    <h3>You gave your PPS number: the first four weeks</h3>
     <p>
-      In the first pay period, the employee is given a proportion of the standard rate cut-off point and tax credits for a single person on a week-1 or month-1 basis. This means:
+      If the employer has your PPS number but no Revenue Payroll Notification, the first four weeks, or the first month for monthly-paid staff, are taxed as follows:
     </p>
     <ul>
-      <li>Monthly employees receive &euro;3,500 taxed at 20% (one-twelfth of the &euro;42,000 SRCOP), with the balance at 40%.</li>
-      <li>Monthly tax credits of approximately &euro;312.50 (one-twelfth of &euro;3,750) are applied.</li>
-    </ul>
-    <p>
-      For the first pay period, emergency tax is not dramatically different from the correct tax for a single person. The main issue is that it does not account for any additional credits or an increased SRCOP that the employee might be entitled to.
-    </p>
-
-    <h3>Second and subsequent pay periods</h3>
-    <p>
-      From the second pay period onwards, the position worsens significantly. If the RPN has still not been issued:
-    </p>
-    <ul>
+      <li>Pay up to one fifty-second of the single person's cut-off point, {eur2(SRCOP.single / 52)} a week or {eur2(SRCOP.single / 12)} a month, is taxed at 20%, and the balance at 40%.</li>
       <li>No tax credits are applied.</li>
-      <li>The standard rate cut-off point is still applied on a week-1/month-1 basis, but without credits the tax bill increases substantially.</li>
+      <li>USC is charged at 8% on all pay.</li>
     </ul>
-
-    <h3>After four weeks (or the second month)</h3>
     <p>
-      If the situation remains unresolved after four weeks (for weekly-paid employees) or the second month (for monthly-paid employees), the most punitive emergency rates kick in:
+      In this first stage the damage comes from the missing credits: {eur2(credits / 12)} a month for a single PAYE worker, plus the higher USC.
+    </p>
+
+    <h3>From week five, or the second month</h3>
+    <p>
+      If the situation is still unresolved, the most punitive stage begins:
     </p>
     <ul>
       <li>All income is taxed at the higher rate of 40%.</li>
       <li>No tax credits are applied.</li>
       <li>No standard rate cut-off point is applied.</li>
     </ul>
+
+    <h3>No PPS number at all</h3>
     <p>
-      At this stage, the employee is paying 40% income tax on every euro earned, plus USC and PRSI. For someone earning &euro;4,000 per month, the emergency tax alone would be &euro;1,600, compared to approximately &euro;525 under normal taxation for a single person. The difference of over &euro;1,000 per month is why resolving emergency tax quickly is so important.
+      An employee who has not given a PPS number is taxed at 40% on every euro from the first payment, with no credits and USC at 8%. Getting a PPS number to the employer is therefore the first thing to do.
+    </p>
+    <p>
+      At the 40% stage, someone earning {eur(4000)} per month pays {eur(4000 * HIGHER_RATE)} in income tax alone, compared to approximately {eur(n48.incomeTaxMonthly)} under normal taxation for a single person. The difference of over {eur(1000)} per month is why resolving emergency tax quickly is so important.
     </p>
 
     <h2>How much extra do you pay on emergency tax?</h2>
 
     <p>
-      The following table illustrates the monthly impact of emergency tax compared to correct taxation for a single person earning &euro;50,000 per year.
+      The following table illustrates the monthly impact of emergency tax compared to correct taxation for a single person earning {eur(50000)} per year.
     </p>
 
     <table>
@@ -106,29 +118,24 @@ import Layout from '../../../layouts/Layout.astro';
       <tbody>
         <tr>
           <td>Correct taxation (single, standard credits)</td>
-          <td>&euro;654</td>
+          <td>{eur(correct)}</td>
           <td>-</td>
         </tr>
         <tr>
-          <td>Emergency tax (month 1)</td>
-          <td>&euro;747</td>
-          <td>+&euro;93</td>
+          <td>Emergency tax, month 1 (cut-off point, no credits)</td>
+          <td>{eur(month1)}</td>
+          <td>+{eur(month1 - correct)}</td>
         </tr>
         <tr>
-          <td>Emergency tax (month 2 - no credits)</td>
-          <td>&euro;1,060</td>
-          <td>+&euro;406</td>
-        </tr>
-        <tr>
-          <td>Emergency tax (month 3+ - 40% flat)</td>
-          <td>&euro;1,667</td>
-          <td>+&euro;1,013</td>
+          <td>Emergency tax, month 2 onwards (40% flat)</td>
+          <td>{eur(flat)}</td>
+          <td>+{eur(flat - correct)}</td>
         </tr>
       </tbody>
     </table>
 
     <p>
-      As the table shows, the financial penalty escalates rapidly. After just three months on emergency tax, the employee has overpaid by approximately &euro;1,512 in income tax alone. Adding the USC and PRSI components (which are generally unaffected by emergency tax), the total take-home pay can be dramatically lower than it should be.
+      As the table shows, the financial penalty escalates rapidly. After just three months on emergency tax, the employee has overpaid by approximately {eur(month1 - correct + 2 * (flat - correct))} in income tax alone. USC is also deducted at 8% on all pay during emergency tax, instead of the lower bands, so the total take-home pay can be dramatically lower than it should be. Everything overpaid is refunded once the correct notification reaches the employer.
     </p>
 
     <h2>How to resolve emergency tax - step by step</h2>

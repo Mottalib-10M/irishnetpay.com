@@ -63,6 +63,7 @@ const reduits = [
   { age: 'Aged 18', part: 0.80, libelle: '80 % of the full rate' },
   { age: 'Under 18', part: 0.70, libelle: '70 % of the full rate' },
 ];
+import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
 ---
 
 <Layout
@@ -93,6 +94,8 @@ const reduits = [
       shift. What follows sets out the reduced rates for younger workers, what actually counts as
       pay for the purpose of meeting the floor, and how the minimum compares with the living wage.
     </p>
+<MiniSimAutonome client:visible kind="minwage" lang="en" locale="en-IE" href="/" />
+
 
     <h2>The rates in 2026</h2>
 

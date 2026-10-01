@@ -100,14 +100,15 @@ const faqSchemaPilier = {
     },
     {
       "@type": "Question",
-      "name": "Why do the guides quote a fifty-two percent marginal rate?",
+      "name": "Why do the guides quote a marginal rate of just over fifty-two percent?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Because it is the combined effect of three separate charges on the same euro: forty percent income tax, eight percent USC in the top band, and four percent PRSI. Each is set independently, and none has an upper ceiling, which is why the figure holds at every income above the thresholds. It is the number that matters when weighing a raise, a bonus or a pension contribution."
+        "text": "Because it is the combined effect of three separate charges on the same euro: forty percent income tax, eight percent USC in the top band, and 4.2 percent PRSI, which becomes 4.35 percent from 1 October 2026. Each is set independently, and none has an upper ceiling, which is why the figure holds at every income above the thresholds. It is the number that matters when weighing a raise, a bonus or a pension contribution."
       }
     }
   ]
 };
+import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
 ---
 
 <Layout
@@ -128,6 +129,8 @@ const faqSchemaPilier = {
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
       <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/']}</p>
+<MiniSimAutonome client:visible kind="takehome" lang="en" locale="en-IE" href="/" />
+
 
     <p class="text-lg text-gray-600 leading-relaxed">
       Plain-English guides to every deduction on your Irish payslip. Written for the 2026 tax year using the latest Revenue rates and thresholds.
@@ -187,7 +190,7 @@ const faqSchemaPilier = {
     <p class="mt-3 leading-relaxed text-gray-700">
       The USC and PRSI guides matter because neither charge behaves like income tax. Both are
       calculated on gross pay, neither is reduced by tax credits, and PRSI has no upper ceiling at
-      all, which is why the combined marginal rate stays at fifty-two percent however high the
+      all, which is why the combined marginal rate stays just above fifty-two percent however high the
       salary goes. Understanding that explains most of the gap between a headline salary and what
       arrives in the account.
     </p>

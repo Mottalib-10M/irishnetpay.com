@@ -1,6 +1,7 @@
 ---
 import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
+import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
 ---
 
 <Layout
@@ -20,6 +21,8 @@ import Layout from '../../../layouts/Layout.astro';
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
       <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/pension-tax-relief/']}</p>
+<MiniSimAutonome client:visible kind="pension" lang="en" locale="en-IE" href="/" />
+
 
 
     <p>
@@ -35,7 +38,7 @@ import Layout from '../../../layouts/Layout.astro';
       The relief is given at your marginal tax rate. If your income (after the pension deduction) still exceeds the Standard Rate Cut-Off Point, you receive relief at 40% on the portion of the contribution that falls within the higher rate band. If the contribution brings your income below the SRCOP, you receive relief at 40% on part and 20% on the remainder.
     </p>
     <p>
-      For example, if you earn &euro;55,000 (single person, SRCOP &euro;42,000) and contribute &euro;5,000 to a pension, your taxable income for income tax purposes falls to &euro;50,000. Since this is still above the &euro;42,000 SRCOP, the entire &euro;5,000 contribution receives relief at 40%, saving you &euro;2,000 in income tax. The &euro;5,000 contribution effectively costs you only &euro;3,000.
+      For example, if you earn &euro;55,000 (single person, SRCOP &euro;44,000) and contribute &euro;5,000 to a pension, your taxable income for income tax purposes falls to &euro;50,000. Since this is still above the &euro;44,000 SRCOP, the entire &euro;5,000 contribution receives relief at 40%, saving you &euro;2,000 in income tax. The &euro;5,000 contribution effectively costs you only &euro;3,000.
     </p>
 
     <h2>Types of pension schemes</h2>
@@ -170,7 +173,7 @@ import Layout from '../../../layouts/Layout.astro';
       An important limitation of pension tax relief is that it applies only to income tax. Pension contributions do not reduce your USC or PRSI liability in most cases. For occupational pension schemes, USC and PRSI are calculated on your gross income before pension deductions.
     </p>
     <p>
-      This means the effective tax relief on a pension contribution is less than your headline marginal rate might suggest. For a higher-rate taxpayer, the marginal rate is 52% (40% income tax + 8% USC + 4% PRSI), but the pension relief is only 40% (income tax only). The remaining 12% (USC and PRSI) is still payable on the contributed amount.
+      This means the effective tax relief on a pension contribution is less than your headline marginal rate might suggest. For a higher-rate taxpayer earning more than &euro;70,044, the marginal rate is 52.2% (40% income tax + 8% USC + 4.2% PRSI), but the pension relief is only 40% (income tax only). The remaining 12.2% (USC and PRSI) is still payable on the contributed amount.
     </p>
     <p>
       For PRSA contributions made through payroll, the position regarding USC can vary. In some arrangements, the PRSA contribution may be deducted before USC is calculated, providing USC relief as well. This makes PRSAs slightly more tax-efficient than occupational schemes in certain circumstances. The specific treatment depends on the payroll arrangement, so it is worth checking with your employer.
@@ -223,7 +226,7 @@ import Layout from '../../../layouts/Layout.astro';
 
     <details>
       <summary><strong>Can I get tax relief at 40% if I am a standard-rate taxpayer?</strong></summary>
-      <p>No. Pension tax relief is given at your marginal rate of income tax. If all your income falls within the 20% standard rate band (i.e., your income is below the SRCOP of &euro;42,000 for a single person), you receive relief at 20%. You only receive 40% relief on the portion of your income that would otherwise be taxed at 40%. If a pension contribution brings your taxable income below the SRCOP, the contribution is split: part receives 40% relief and part receives 20% relief.</p>
+      <p>No. Pension tax relief is given at your marginal rate of income tax. If all your income falls within the 20% standard rate band (i.e., your income is below the SRCOP of &euro;44,000 for a single person), you receive relief at 20%. You only receive 40% relief on the portion of your income that would otherwise be taxed at 40%. If a pension contribution brings your taxable income below the SRCOP, the contribution is split: part receives 40% relief and part receives 20% relief.</p>
     </details>
     <details>
       <summary><strong>Is there a maximum amount I can contribute to a pension?</strong></summary>
@@ -272,7 +275,7 @@ import Layout from '../../../layouts/Layout.astro';
       "name": "Can I get tax relief at 40% if I am a standard-rate taxpayer?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Pension tax relief is given at your marginal rate of income tax. If all your income falls within the 20% standard rate band (i.e., your income is below the SRCOP of €42,000 for a single person), you receive relief at 20%. You only receive 40% relief on the portion of your income that would otherwise be taxed at 40%. If a pension contribution brings your taxable income below the SRCOP, the contribution is split: part receives 40% relief and part receives 20% relief."
+        "text": "No. Pension tax relief is given at your marginal rate of income tax. If all your income falls within the 20% standard rate band (i.e., your income is below the SRCOP of €44,000 for a single person), you receive relief at 20%. You only receive 40% relief on the portion of your income that would otherwise be taxed at 40%. If a pension contribution brings your taxable income below the SRCOP, the contribution is split: part receives 40% relief and part receives 20% relief."
       }
     },
     {

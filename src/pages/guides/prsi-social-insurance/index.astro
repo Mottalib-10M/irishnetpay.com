@@ -1,11 +1,12 @@
 ---
 import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
+import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
 ---
 
 <Layout
   title="PRSI in Ireland: classes, rates and what it buys you"
-  description="What PRSI costs at four percent with no ceiling, which class applies to you, the benefits each class unlocks, and how to check your contribution record."
+  description="What PRSI costs at 4.2 percent with no ceiling, which class applies to you, the benefits each class unlocks, and how to check your contribution record."
 >
   <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
     <ol class="flex items-center gap-1">
@@ -20,6 +21,8 @@ import Layout from '../../../layouts/Layout.astro';
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
       <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/prsi-social-insurance/']}</p>
+<MiniSimAutonome client:visible kind="prsi" lang="en" locale="en-IE" href="/" />
+
 
 
     <p>
@@ -32,7 +35,7 @@ import Layout from '../../../layouts/Layout.astro';
       PRSI is Ireland's compulsory social insurance scheme, managed by the Department of Social Protection. Unlike income tax and USC, which fund general government expenditure, PRSI contributions are specifically linked to your entitlement to social welfare benefits. The number and class of contributions you make over your working life directly determines what benefits you can claim and how much you receive.
     </p>
     <p>
-      The most significant benefit funded by PRSI is the State Pension (Contributory), which is currently worth up to &euro;277.30 per week for a person with a full contribution record. Over a 20-year retirement, this pension is worth approximately &euro;288,000 in total, making PRSI contributions one of the most valuable "investments" an Irish worker makes during their career. Unlike private pensions, the State Pension is guaranteed by the government, adjusted annually, and paid for life.
+      The most significant benefit funded by PRSI is the State Pension (Contributory), which is currently worth up to &euro;299.30 per week for a person with a full contribution record. Over a 20-year retirement, this pension is worth approximately &euro;311,000 in total, making PRSI contributions one of the most valuable "investments" an Irish worker makes during their career. Unlike private pensions, the State Pension is guaranteed by the government, adjusted annually, and paid for life.
     </p>
     <p>
       Your PRSI contribution record is tracked by the Department of Social Protection and can be viewed through your MyWelfare account. It is worth checking this record periodically to ensure all contributions have been correctly recorded, particularly if you have had gaps in employment, worked abroad, or had multiple employers.
@@ -57,8 +60,8 @@ import Layout from '../../../layouts/Layout.astro';
         <tr>
           <td>Class A</td>
           <td>Most employees in industrial, commercial, and service employment</td>
-          <td>4%</td>
-          <td>8.8% or 11.05%</td>
+          <td>4.2% (4.35% from 1 October 2026)</td>
+          <td>9% or 11.25%</td>
         </tr>
         <tr>
           <td>Class B</td>
@@ -81,7 +84,7 @@ import Layout from '../../../layouts/Layout.astro';
         <tr>
           <td>Class S</td>
           <td>Self-employed workers including farmers and professionals</td>
-          <td>4%</td>
+          <td>4.2% (4.35% from 1 October 2026)</td>
           <td>N/A</td>
         </tr>
         <tr>
@@ -94,14 +97,14 @@ import Layout from '../../../layouts/Layout.astro';
     </table>
 
     <p>
-      The vast majority of workers in Ireland - over 2.3 million people - fall into Class A. This guide focuses primarily on Class A, as it is the most common and provides the broadest range of benefits. Class S (self-employed) is also significant and shares the same 4% rate, but provides a slightly narrower range of benefits.
+      The vast majority of workers in Ireland - over 2.3 million people - fall into Class A. This guide focuses primarily on Class A, as it is the most common and provides the broadest range of benefits. Class S (self-employed) is also significant and shares the same rate, but provides a slightly narrower range of benefits.
     </p>
 
     <h2>Class A PRSI rates in 2026</h2>
 
     <h3>Employee contribution</h3>
     <p>
-      Class A employees pay PRSI at 4% of their gross weekly earnings. There is no upper earnings limit - unlike many European countries, Ireland does not cap employee social insurance contributions. Someone earning &euro;200,000 pays PRSI on the full amount, resulting in an annual contribution of &euro;8,000.
+      Class A employees pay PRSI at 4.2% of their gross weekly earnings, rising to 4.35% from 1 October 2026. There is no upper earnings limit - unlike many European countries, Ireland does not cap employee social insurance contributions. Someone earning &euro;200,000 pays PRSI on the full amount, resulting in a contribution of about &euro;8,475 over 2026.
     </p>
     <p>
       However, there is a lower threshold. If your gross weekly earnings are &euro;352 or less (approximately &euro;18,304 per year), you pay no employee PRSI at all. This threshold provides relief for low-paid workers and those in part-time employment.
@@ -112,17 +115,17 @@ import Layout from '../../../layouts/Layout.astro';
       Employers also pay PRSI on behalf of their employees. The employer rate depends on the employee's weekly earnings:
     </p>
     <ul>
-      <li><strong>8.8%</strong> for employees earning &euro;441 per week or less (approximately &euro;22,932 annually)</li>
-      <li><strong>11.05%</strong> for employees earning more than &euro;441 per week</li>
+      <li><strong>9%</strong> for employees earning &euro;552 per week or less (approximately &euro;28,704 annually)</li>
+      <li><strong>11.25%</strong> for employees earning more than &euro;552 per week</li>
     </ul>
     <p>
-      The employer's contribution is not deducted from the employee's pay - it is an additional cost borne by the employer. For someone earning &euro;60,000 per year, the employer pays approximately &euro;6,630 in PRSI (11.05%), making the total cost of employment around &euro;66,630. This is often referred to as the "employer's total cost" or the "cost to company."
+      The employer's contribution is not deducted from the employee's pay - it is an additional cost borne by the employer. For someone earning &euro;60,000 per year, the employer pays approximately &euro;6,773 in PRSI over 2026 (11.25%, then 11.4% from October), making the total cost of employment around &euro;66,773. This is often referred to as the "employer's total cost" or the "cost to company."
     </p>
 
     <h2>The PRSI tapered credit</h2>
 
     <p>
-      For employees earning just above the &euro;352 per week threshold, a tapered PRSI credit applies to ease the transition from no PRSI to the full 4% rate. Without this credit, an employee earning &euro;353 per week would suddenly face a PRSI charge of &euro;14.12 (4% of &euro;353), creating a significant disincentive to earn above the threshold.
+      For employees earning just above the &euro;352 per week threshold, a tapered PRSI credit applies to ease the transition from no PRSI to the full rate. Without this credit, an employee earning &euro;353 per week would suddenly face a PRSI charge of &euro;14.83 (4.2% of &euro;353), creating a significant disincentive to earn above the threshold.
     </p>
     <p>
       The PRSI credit works as follows:
@@ -134,7 +137,7 @@ import Layout from '../../../layouts/Layout.astro';
       <li>The credit is fully withdrawn at &euro;424 per week.</li>
     </ul>
     <p>
-      For example, an employee earning &euro;380 per week would have a gross PRSI charge of &euro;15.20 (4% of &euro;380). The credit available is &euro;12 minus (&euro;380 &minus; &euro;352.01) &divide; 6 = &euro;12 &minus; &euro;4.67 = &euro;7.33. The net PRSI charge is therefore &euro;15.20 &minus; &euro;7.33 = &euro;7.87, rather than the full &euro;15.20. This tapering mechanism ensures a smooth increase in PRSI as earnings rise.
+      For example, an employee earning &euro;380 per week would have a gross PRSI charge of &euro;15.96 (4.2% of &euro;380). The credit available is &euro;12 minus (&euro;380 &minus; &euro;352.01) &divide; 6 = &euro;12 &minus; &euro;4.67 = &euro;7.33. The net PRSI charge is therefore &euro;15.96 &minus; &euro;7.33 = &euro;8.63, rather than the full &euro;15.20. This tapering mechanism ensures a smooth increase in PRSI as earnings rise.
     </p>
 
     <h2>What benefits does PRSI unlock?</h2>
@@ -155,32 +158,32 @@ import Layout from '../../../layouts/Layout.astro';
         <tr>
           <td>State Pension (Contributory)</td>
           <td>520 paid contributions (10 years)</td>
-          <td>&euro;277.30 per week</td>
+          <td>&euro;299.30 per week</td>
         </tr>
         <tr>
           <td>Jobseeker's Benefit</td>
           <td>104 paid contributions (2 years)</td>
-          <td>&euro;220 per week (up to 9 months)</td>
+          <td>&euro;254 per week (up to 9 months)</td>
         </tr>
         <tr>
           <td>Illness Benefit</td>
           <td>104 paid contributions</td>
-          <td>&euro;220 per week (up to 2 years)</td>
+          <td>&euro;254 per week (up to 2 years)</td>
         </tr>
         <tr>
           <td>Maternity Benefit</td>
           <td>39 paid contributions in the 12 months before leave</td>
-          <td>&euro;274 per week (26 weeks)</td>
+          <td>&euro;299 per week (26 weeks)</td>
         </tr>
         <tr>
           <td>Paternity Benefit</td>
           <td>39 paid contributions in the 12 months before leave</td>
-          <td>&euro;274 per week (2 weeks)</td>
+          <td>&euro;299 per week (2 weeks)</td>
         </tr>
         <tr>
           <td>Parent's Benefit</td>
           <td>39 paid contributions in the 12 months before leave</td>
-          <td>&euro;274 per week (9 weeks)</td>
+          <td>&euro;299 per week (9 weeks)</td>
         </tr>
         <tr>
           <td>Invalidity Pension</td>
@@ -202,7 +205,7 @@ import Layout from '../../../layouts/Layout.astro';
     <h2>PRSI and self-employment (Class S)</h2>
 
     <p>
-      Self-employed workers pay PRSI at 4% of their income through the self-assessment tax return, with a minimum annual contribution of &euro;500. Class S contributions provide access to the State Pension (Contributory), Maternity Benefit, Paternity Benefit, Parent's Benefit, and Treatment Benefit. However, Class S does not cover Jobseeker's Benefit, Illness Benefit, or Invalidity Pension.
+      Self-employed workers pay PRSI at 4.2% of their income, 4.35% from 1 October 2026, through the self-assessment tax return, with a minimum annual contribution of &euro;650. Class S contributions provide access to the State Pension (Contributory), Maternity Benefit, Paternity Benefit, Parent's Benefit, and Treatment Benefit. However, Class S does not cover Jobseeker's Benefit, Illness Benefit, or Invalidity Pension.
     </p>
     <p>
       This narrower coverage has been a source of debate, particularly during the COVID-19 pandemic when self-employed workers found they had no access to Illness Benefit. The government has gradually expanded Class S entitlements in recent years, and further expansion may occur in future budgets.
@@ -223,21 +226,21 @@ import Layout from '../../../layouts/Layout.astro';
     <h2>How PRSI compares to social insurance in other countries</h2>
 
     <p>
-      Ireland's PRSI rate of 4% for employees is relatively low compared to other European countries. In Germany, employees pay approximately 20% of gross earnings in social insurance contributions (covering health, pensions, unemployment, and long-term care). In France, employee social contributions total approximately 22%. Even the UK's National Insurance, at 8% above the primary threshold, is double Ireland's rate.
+      Ireland's PRSI rate of 4.2% for employees is relatively low compared to other European countries. In Germany, employees pay approximately 20% of gross earnings in social insurance contributions (covering health, pensions, unemployment, and long-term care). In France, employee social contributions total approximately 22%. Even the UK's National Insurance, at 8% above the primary threshold, is almost double Ireland's rate.
     </p>
     <p>
-      However, Ireland's lower rate means the benefits funded by PRSI are correspondingly less generous in some areas. The State Pension, while valuable, is lower than many European equivalents. Illness Benefit is capped at &euro;220 per week, compared to a percentage of salary in most EU countries. The absence of an earnings cap means high earners contribute proportionally the same percentage as mid-level earners, unlike countries such as Germany where contributions are capped.
+      However, Ireland's lower rate means the benefits funded by PRSI are correspondingly less generous in some areas. The State Pension, while valuable, is lower than many European equivalents. Illness Benefit is capped at &euro;254 per week, compared to a percentage of salary in most EU countries. The absence of an earnings cap means high earners contribute proportionally the same percentage as mid-level earners, unlike countries such as Germany where contributions are capped.
     </p>
 
     <h2>Frequently Asked Questions</h2>
 
     <details>
       <summary><strong>Is there an upper earnings limit for PRSI?</strong></summary>
-      <p>No. Unlike many European countries, Ireland does not cap employee PRSI contributions. The 4% rate applies to all earnings above the &euro;352 weekly threshold, with no upper limit. Someone earning &euro;500,000 pays &euro;20,000 in annual PRSI. This has been debated politically, with some arguing for a ceiling and others maintaining that uncapped contributions are more equitable.</p>
+      <p>No. Unlike many European countries, Ireland does not cap employee PRSI contributions. The 4.2% rate, 4.35% from 1 October 2026, applies to all earnings once weekly pay exceeds &euro;352, with no upper limit. Someone earning &euro;500,000 pays about &euro;21,190 in PRSI over 2026. This has been debated politically, with some arguing for a ceiling and others maintaining that uncapped contributions are more equitable.</p>
     </details>
     <details>
       <summary><strong>Do I pay PRSI on rental or investment income?</strong></summary>
-      <p>If you are already paying Class A PRSI through employment, you do not generally pay additional PRSI on rental or investment income. However, if your only income is from self-employment (including rental income), you would pay Class S PRSI at 4% on that income. The interaction between different income types and PRSI classes can be complex, and the Department of Social Protection can advise on your specific situation.</p>
+      <p>If you are already paying Class A PRSI through employment, you do not generally pay additional PRSI on rental or investment income. However, if your only income is from self-employment (including rental income), you would pay Class S PRSI at 4.2% on that income. The interaction between different income types and PRSI classes can be complex, and the Department of Social Protection can advise on your specific situation.</p>
     </details>
     <details>
       <summary><strong>Can I check my PRSI contribution record online?</strong></summary>
@@ -282,7 +285,7 @@ import Layout from '../../../layouts/Layout.astro';
       "name": "Is there an upper earnings limit for PRSI?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Unlike many European countries, Ireland does not cap employee PRSI contributions. The 4% rate applies to all earnings above the €352 weekly threshold, with no upper limit. Someone earning €500,000 pays €20,000 in annual PRSI. This has been debated politically, with some arguing for a ceiling and others maintaining that uncapped contributions are more equitable."
+        "text": "No. Unlike many European countries, Ireland does not cap employee PRSI contributions. The 4.2% rate, 4.35% from 1 October 2026, applies to all earnings once weekly pay exceeds €352, with no upper limit. Someone earning €500,000 pays about €21,190 in PRSI over 2026. This has been debated politically, with some arguing for a ceiling and others maintaining that uncapped contributions are more equitable."
       }
     },
     {
@@ -290,7 +293,7 @@ import Layout from '../../../layouts/Layout.astro';
       "name": "Do I pay PRSI on rental or investment income?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "If you are already paying Class A PRSI through employment, you do not generally pay additional PRSI on rental or investment income. However, if your only income is from self-employment (including rental income), you would pay Class S PRSI at 4% on that income. The interaction between different income types and PRSI classes can be complex, and the Department of Social Protection can advise on your specific situation."
+        "text": "If you are already paying Class A PRSI through employment, you do not generally pay additional PRSI on rental or investment income. However, if your only income is from self-employment (including rental income), you would pay Class S PRSI at 4.2% on that income. The interaction between different income types and PRSI classes can be complex, and the Department of Social Protection can advise on your specific situation."
       }
     },
     {

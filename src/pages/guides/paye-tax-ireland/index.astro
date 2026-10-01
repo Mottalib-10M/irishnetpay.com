@@ -1,6 +1,7 @@
 ---
 import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
+import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
 ---
 
 <Layout
@@ -20,6 +21,8 @@ import Layout from '../../../layouts/Layout.astro';
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
       <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/paye-tax-ireland/']}</p>
+<MiniSimAutonome client:visible kind="paye" lang="en" locale="en-IE" href="/" />
+
 
 
     <p>
@@ -65,29 +68,29 @@ import Layout from '../../../layouts/Layout.astro';
       <tbody>
         <tr>
           <td>Single person</td>
-          <td>First &euro;42,000</td>
+          <td>First &euro;44,000</td>
           <td>Balance</td>
         </tr>
         <tr>
           <td>Single parent</td>
-          <td>First &euro;46,000</td>
+          <td>First &euro;48,000</td>
           <td>Balance</td>
         </tr>
         <tr>
           <td>Married couple (one income)</td>
-          <td>First &euro;51,000</td>
+          <td>First &euro;53,000</td>
           <td>Balance</td>
         </tr>
         <tr>
           <td>Married couple (two incomes)</td>
-          <td>Up to &euro;84,000 combined (max &euro;42,000 each)</td>
+          <td>Up to &euro;88,000 combined (&euro;53,000 plus up to &euro;35,000 for the second income)</td>
           <td>Balance</td>
         </tr>
       </tbody>
     </table>
 
     <p>
-      To illustrate, consider a single person earning &euro;55,000 in 2026. The first &euro;42,000 is taxed at 20%, producing a charge of &euro;8,400. The remaining &euro;13,000 is taxed at 40%, producing a charge of &euro;5,200. The gross income tax before credits is therefore &euro;13,600.
+      To illustrate, consider a single person earning &euro;55,000 in 2026. The first &euro;44,000 is taxed at 20%, producing a charge of &euro;8,800. The remaining &euro;11,000 is taxed at 40%, producing a charge of &euro;4,400. The gross income tax before credits is therefore &euro;13,200.
     </p>
 
     <h2>How the Standard Rate Cut-Off Point (SRCOP) works</h2>
@@ -99,26 +102,26 @@ import Layout from '../../../layouts/Layout.astro';
       Your SRCOP is set by Revenue based on your personal circumstances and is communicated to your employer through the RPN. If your circumstances change - for example, you get married or your spouse stops working - you should update your details on Revenue's myAccount service so that your SRCOP and tax credits are adjusted accordingly.
     </p>
     <p>
-      For married couples assessed jointly where both spouses work, the combined SRCOP of &euro;84,000 can be split between spouses. However, neither spouse can have an SRCOP exceeding &euro;42,000. This means that if one spouse earns &euro;30,000 and uses only &euro;30,000 of the standard rate band, the remaining &euro;12,000 can be transferred to the other spouse, increasing their SRCOP to &euro;54,000. This transfer mechanism can produce meaningful tax savings for couples with unequal incomes.
+      For married couples assessed jointly where both spouses work, the combined SRCOP of &euro;88,000 can be split between spouses. It is made up of a base of &euro;53,000, which can be allocated to either spouse, plus an increase of up to &euro;35,000 that is limited to the income of the lower earner and cannot be transferred. This means that if one spouse earns &euro;30,000, the couple's standard rate band is &euro;83,000: &euro;53,000 for the higher earner and &euro;30,000 for the other. This transfer mechanism can produce meaningful tax savings for couples with unequal incomes.
     </p>
 
     <h2>Tax credits: reducing your tax bill</h2>
 
     <p>
-      Tax credits are amounts that are subtracted directly from your calculated tax. They are not deducted from your income (which would be a tax deduction or allowance) - they are deducted from the tax itself, euro for euro. This distinction is important: a &euro;1,875 tax credit saves you exactly &euro;1,875 in tax, regardless of your marginal rate.
+      Tax credits are amounts that are subtracted directly from your calculated tax. They are not deducted from your income (which would be a tax deduction or allowance) - they are deducted from the tax itself, euro for euro. This distinction is important: a &euro;2,000 tax credit saves you exactly &euro;2,000 in tax, regardless of your marginal rate.
     </p>
     <p>
       The two most common credits for PAYE workers are:
     </p>
     <ul>
-      <li><strong>Personal Tax Credit</strong> - &euro;1,875 for a single person, &euro;3,750 for a married couple.</li>
-      <li><strong>Employee (PAYE) Tax Credit</strong> - &euro;1,875 for any employee paying tax through the PAYE system.</li>
+      <li><strong>Personal Tax Credit</strong> - &euro;2,000 for a single person, &euro;4,000 for a married couple.</li>
+      <li><strong>Employee (PAYE) Tax Credit</strong> - &euro;2,000 for any employee paying tax through the PAYE system.</li>
     </ul>
     <p>
-      Together, these give a single PAYE worker &euro;3,750 in annual tax credits, meaning the first &euro;18,750 of income (at the 20% rate) is effectively tax-free. For a married couple with one PAYE income, the combined credits are &euro;5,625 (&euro;3,750 personal + &euro;1,875 employee).
+      Together, these give a single PAYE worker &euro;4,000 in annual tax credits, meaning the first &euro;20,000 of income (at the 20% rate) is effectively tax-free. For a married couple with one PAYE income, the combined credits are &euro;6,000 (&euro;4,000 personal + &euro;2,000 employee).
     </p>
     <p>
-      Additional credits may be available depending on your circumstances. A single parent can claim the Single Person Child Carer Credit (SPCCC) of &euro;1,750. Married couples where one spouse is a home carer can claim the Home Carer Tax Credit of &euro;1,800. Other credits include the Rent Tax Credit (up to &euro;750 per person), flat-rate expenses for certain occupations, and relief on medical expenses.
+      Additional credits may be available depending on your circumstances. A single parent can claim the Single Person Child Carer Credit (SPCCC) of &euro;1,900. Married couples where one spouse is a home carer can claim the Home Carer Tax Credit of &euro;1,950. Other credits include the Rent Tax Credit (up to &euro;1,000 per person, &euro;2,000 for a jointly assessed couple), flat-rate expenses for certain occupations, and relief on medical expenses.
     </p>
 
     <h2>Calculating your PAYE tax - a worked example</h2>
@@ -128,14 +131,14 @@ import Layout from '../../../layouts/Layout.astro';
     </p>
     <ol>
       <li><strong>Gross income:</strong> &euro;50,000</li>
-      <li><strong>Tax at 20%:</strong> &euro;42,000 &times; 0.20 = &euro;8,400</li>
-      <li><strong>Tax at 40%:</strong> (&euro;50,000 &minus; &euro;42,000) &times; 0.40 = &euro;3,200</li>
-      <li><strong>Gross tax:</strong> &euro;8,400 + &euro;3,200 = &euro;11,600</li>
-      <li><strong>Less tax credits:</strong> &euro;1,875 (personal) + &euro;1,875 (employee) = &euro;3,750</li>
-      <li><strong>Net income tax:</strong> &euro;11,600 &minus; &euro;3,750 = <strong>&euro;7,850</strong></li>
+      <li><strong>Tax at 20%:</strong> &euro;44,000 &times; 0.20 = &euro;8,800</li>
+      <li><strong>Tax at 40%:</strong> (&euro;50,000 &minus; &euro;44,000) &times; 0.40 = &euro;2,400</li>
+      <li><strong>Gross tax:</strong> &euro;8,800 + &euro;2,400 = &euro;11,200</li>
+      <li><strong>Less tax credits:</strong> &euro;2,000 (personal) + &euro;2,000 (employee) = &euro;4,000</li>
+      <li><strong>Net income tax:</strong> &euro;11,200 &minus; &euro;4,000 = <strong>&euro;7,200</strong></li>
     </ol>
     <p>
-      This &euro;7,850 is the total income tax for the year. Divided across 12 monthly pay periods, the employee would see approximately &euro;654 deducted for income tax each month. Remember, this is only the income tax component - USC and PRSI are calculated separately.
+      This &euro;7,200 is the total income tax for the year. Divided across 12 monthly pay periods, the employee would see &euro;600 deducted for income tax each month. Remember, this is only the income tax component - USC and PRSI are calculated separately.
     </p>
 
     <h2>The cumulative basis vs the week-1/month-1 basis</h2>
@@ -195,7 +198,7 @@ import Layout from '../../../layouts/Layout.astro';
     </details>
     <details>
       <summary><strong>Can my spouse and I share our tax bands and credits?</strong></summary>
-      <p>Yes. Married couples who elect joint assessment can transfer unused standard rate band between spouses (up to a cap of &euro;42,000 per person) and share tax credits. This is particularly beneficial when one spouse earns significantly more than the other, as it moves more income into the lower 20% tax band. You can set up joint assessment through Revenue's myAccount service.</p>
+      <p>Yes. Married couples who elect joint assessment can allocate the &euro;53,000 standard rate band to either spouse, add up to &euro;35,000 for the second income, and share tax credits. This is particularly beneficial when one spouse earns significantly more than the other, as it moves more income into the lower 20% tax band. You can set up joint assessment through Revenue's myAccount service.</p>
     </details>
 
     <div class="not-prose bg-emerald-50 border border-emerald-200 rounded-xl p-6 my-8">
@@ -253,7 +256,7 @@ import Layout from '../../../layouts/Layout.astro';
       "name": "Can my spouse and I share our tax bands and credits?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Married couples who elect joint assessment can transfer unused standard rate band between spouses (up to a cap of €42,000 per person) and share tax credits. This is particularly beneficial when one spouse earns significantly more than the other, as it moves more income into the lower 20% tax band. You can set up joint assessment through Revenue's myAccount service."
+        "text": "Yes. Married couples who elect joint assessment can transfer unused standard rate band between spouses (up to a cap of €44,000 per person) and share tax credits. This is particularly beneficial when one spouse earns significantly more than the other, as it moves more income into the lower 20% tax band. You can set up joint assessment through Revenue's myAccount service."
       }
     }
   ]

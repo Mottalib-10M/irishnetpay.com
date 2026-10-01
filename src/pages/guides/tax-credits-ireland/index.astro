@@ -1,6 +1,7 @@
 ---
 import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
+import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
 ---
 
 <Layout
@@ -20,10 +21,12 @@ import Layout from '../../../layouts/Layout.astro';
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
       <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/tax-credits-ireland/']}</p>
+<MiniSimAutonome client:visible kind="credits" lang="en" locale="en-IE" href="/" />
+
 
 
     <p>
-      Tax credits are one of the most important factors in determining how much income tax you actually pay in Ireland. They work by reducing your tax bill euro for euro - a &euro;1,875 credit saves you exactly &euro;1,875 in tax. Many Irish workers are only aware of the two main credits (Personal and Employee), but there are numerous additional credits that could save you hundreds or even thousands of euros per year. This guide covers every significant tax credit available in 2026, how to claim them, and common mistakes people make.
+      Tax credits are one of the most important factors in determining how much income tax you actually pay in Ireland. They work by reducing your tax bill euro for euro - a &euro;2,000 credit saves you exactly &euro;2,000 in tax. Many Irish workers are only aware of the two main credits (Personal and Employee), but there are numerous additional credits that could save you hundreds or even thousands of euros per year. This guide covers every significant tax credit available in 2026, how to claim them, and common mistakes people make.
     </p>
 
     <h2>How tax credits work</h2>
@@ -32,7 +35,7 @@ import Layout from '../../../layouts/Layout.astro';
       It is important to understand the distinction between a tax credit and a tax deduction. A tax deduction reduces the income on which tax is calculated. A tax credit reduces the tax itself. In Ireland's system, tax credits are far more valuable than an equivalent deduction for lower-rate taxpayers, because the credit applies at its full face value regardless of your marginal tax rate.
     </p>
     <p>
-      For example, if you have a &euro;1,875 tax credit and your gross tax liability (before credits) is &euro;8,000, your net tax is &euro;6,125. If your gross tax liability is only &euro;1,500, your net tax is zero - the credit cannot create a negative tax liability or generate a refund in most cases. This means tax credits benefit middle and higher earners proportionally, but they cannot generate a payment for those with very low incomes.
+      For example, if you have a &euro;2,000 tax credit and your gross tax liability (before credits) is &euro;8,000, your net tax is &euro;6,000. If your gross tax liability is only &euro;1,500, your net tax is zero - the credit cannot create a negative tax liability or generate a refund in most cases. This means tax credits benefit middle and higher earners proportionally, but they cannot generate a payment for those with very low incomes.
     </p>
     <p>
       Your tax credits are allocated to your employer through Revenue's Revenue Payroll Notification (RPN). Each pay period, your employer calculates your gross tax and then subtracts the credits to arrive at the net tax deducted. If your credits change during the year - for example, because you claim a new credit - Revenue issues an updated RPN, and your employer adjusts future deductions accordingly.
@@ -44,49 +47,49 @@ import Layout from '../../../layouts/Layout.astro';
       The Personal Tax Credit is the most fundamental credit and is available to every Irish taxpayer. In 2026, the amounts are:
     </p>
     <ul>
-      <li><strong>Single person:</strong> &euro;1,875</li>
-      <li><strong>Married couple (joint assessment):</strong> &euro;3,750</li>
-      <li><strong>Widowed person (without dependent children):</strong> &euro;2,190</li>
-      <li><strong>Widowed person (with dependent children):</strong> &euro;1,875 plus the Single Person Child Carer Credit</li>
+      <li><strong>Single person:</strong> &euro;2,000</li>
+      <li><strong>Married couple (joint assessment):</strong> &euro;4,000</li>
+      <li><strong>Widowed person (without dependent children):</strong> &euro;2,540</li>
+      <li><strong>Widowed person (with dependent children):</strong> &euro;2,000 plus the Single Person Child Carer Credit</li>
     </ul>
     <p>
-      For a married couple assessed jointly, the combined Personal Tax Credit of &euro;3,750 is typically allocated to the higher-earning spouse by default, but can be split between spouses through myAccount. This credit is granted automatically - you do not need to apply for it.
+      For a married couple assessed jointly, the combined Personal Tax Credit of &euro;4,000 is typically allocated to the higher-earning spouse by default, but can be split between spouses through myAccount. This credit is granted automatically - you do not need to apply for it.
     </p>
 
     <h2>Employee (PAYE) Tax Credit</h2>
 
     <p>
-      The Employee Tax Credit of &euro;1,875 is available to anyone who pays tax through the PAYE system. It is granted automatically when your employer registers you with Revenue. If you have multiple PAYE employments, the credit is typically allocated to one employment - you can adjust the allocation through myAccount.
+      The Employee Tax Credit of &euro;2,000 is available to anyone who pays tax through the PAYE system. It is granted automatically when your employer registers you with Revenue. If you have multiple PAYE employments, the credit is typically allocated to one employment - you can adjust the allocation through myAccount.
     </p>
     <p>
-      Combined with the Personal Tax Credit, a single PAYE employee receives &euro;3,750 in automatic credits. This effectively makes the first &euro;18,750 of income at the 20% rate tax-free (&euro;3,750 &divide; 0.20 = &euro;18,750). Put another way, a single person does not start paying net income tax until their annual income exceeds &euro;18,750.
+      Combined with the Personal Tax Credit, a single PAYE employee receives &euro;4,000 in automatic credits. This effectively makes the first &euro;20,000 of income at the 20% rate tax-free (&euro;4,000 &divide; 0.20 = &euro;20,000). Put another way, a single person does not start paying net income tax until their annual income exceeds &euro;20,000.
     </p>
 
     <h2>Earned Income Tax Credit</h2>
 
     <p>
-      The Earned Income Tax Credit of &euro;1,875 is the equivalent of the Employee Credit but for self-employed individuals and proprietary directors. If you are both an employee and self-employed, you can claim both the Employee Credit and the Earned Income Credit, but the combined value of both credits cannot exceed &euro;1,875.
+      The Earned Income Tax Credit of &euro;2,000 is the equivalent of the Employee Credit but for self-employed individuals and proprietary directors. If you are both an employee and self-employed, you can claim both the Employee Credit and the Earned Income Credit, but the combined value of both credits cannot exceed &euro;2,000.
     </p>
 
     <h2>Single Person Child Carer Credit (SPCCC)</h2>
 
     <p>
-      The SPCCC is worth &euro;1,750 per year and is available to single parents who are the primary carer of a qualifying child. A qualifying child is one who is under 18, or under 21 and in full-time education. Only one parent can claim the SPCCC - it goes to the parent with whom the child lives for the majority of the year (the "primary claimant").
+      The SPCCC is worth &euro;1,900 per year and is available to single parents who are the primary carer of a qualifying child. A qualifying child is one who is under 18, or under 21 and in full-time education. Only one parent can claim the SPCCC - it goes to the parent with whom the child lives for the majority of the year (the "primary claimant").
     </p>
     <p>
-      In addition to the &euro;1,750 credit, the SPCCC also increases the primary claimant's Standard Rate Cut-Off Point by &euro;4,000 (from &euro;42,000 to &euro;46,000 for a single person). This means more income is taxed at 20% instead of 40%, providing an additional saving of up to &euro;800 for those earning above the standard SRCOP.
+      In addition to the &euro;1,900 credit, the SPCCC also increases the primary claimant's Standard Rate Cut-Off Point by &euro;4,000 (from &euro;44,000 to &euro;48,000 for a single person). This means more income is taxed at 20% instead of 40%, providing an additional saving of up to &euro;800 for those earning above the standard SRCOP.
     </p>
     <p>
-      If the primary claimant does not wish to claim the SPCCC (or is not entitled to it due to cohabitation), the credit can be transferred to the other parent (the "secondary claimant"), but only the &euro;1,750 credit transfers - not the increased rate band.
+      If the primary claimant does not wish to claim the SPCCC (or is not entitled to it due to cohabitation), the credit can be transferred to the other parent (the "secondary claimant"), but only the &euro;1,900 credit transfers - not the increased rate band.
     </p>
 
     <h2>Home Carer Tax Credit</h2>
 
     <p>
-      The Home Carer Tax Credit of &euro;1,800 is available to married couples who are jointly assessed, where one spouse works in the home caring for a dependent person. The dependent person can be a child, an elderly relative, or an incapacitated person living with the couple.
+      The Home Carer Tax Credit of &euro;1,950 is available to married couples who are jointly assessed, where one spouse works in the home caring for a dependent person. The dependent person can be a child, an elderly relative, or an incapacitated person living with the couple.
     </p>
     <p>
-      The home carer's own income must not exceed &euro;7,200 to claim the full credit. If the home carer's income is between &euro;7,200 and &euro;10,800, the credit is reduced by the amount of income exceeding &euro;7,200. Above &euro;10,800, the credit is not available.
+      The home carer's own income must not exceed &euro;7,200 to claim the full credit. If the home carer's income is between &euro;7,200 and &euro;11,100, the credit is reduced by half the amount of income exceeding &euro;7,200. Above &euro;11,100, the credit is not available.
     </p>
     <p>
       This credit cannot be combined with the increased Standard Rate Cut-Off Point for married couples with two incomes. Couples must choose whichever option is more beneficial - in practice, if the home carer's income is very low, the Home Carer Credit is usually the better option.
@@ -98,8 +101,8 @@ import Layout from '../../../layouts/Layout.astro';
       The Rent Tax Credit was reintroduced in 2022 and is available to tenants who pay rent on their principal private residence. In 2026, the credit is worth:
     </p>
     <ul>
-      <li><strong>&euro;750</strong> per year for a single person</li>
-      <li><strong>&euro;1,500</strong> per year for a married couple or civil partners who are jointly assessed</li>
+      <li><strong>&euro;1,000</strong> per year for a single person</li>
+      <li><strong>&euro;2,000</strong> per year for a married couple or civil partners who are jointly assessed</li>
     </ul>
     <p>
       To claim the Rent Tax Credit, you must not be related to your landlord, the property must be your principal private residence, and you must be paying rent under a tenancy registered with the Residential Tenancies Board (RTB). The credit can be claimed through myAccount by providing your landlord's name, address, and the RTB registration number. You can claim the credit for the current year or retroactively for previous years back to 2022.
@@ -118,52 +121,52 @@ import Layout from '../../../layouts/Layout.astro';
       <tbody>
         <tr>
           <td>Personal (Single)</td>
-          <td>&euro;1,875</td>
+          <td>&euro;2,000</td>
           <td>All single taxpayers</td>
         </tr>
         <tr>
           <td>Personal (Married)</td>
-          <td>&euro;3,750</td>
+          <td>&euro;4,000</td>
           <td>Jointly assessed couples</td>
         </tr>
         <tr>
           <td>Employee (PAYE)</td>
-          <td>&euro;1,875</td>
+          <td>&euro;2,000</td>
           <td>PAYE employees</td>
         </tr>
         <tr>
           <td>Earned Income</td>
-          <td>&euro;1,875</td>
+          <td>&euro;2,000</td>
           <td>Self-employed / proprietary directors</td>
         </tr>
         <tr>
           <td>Single Person Child Carer</td>
-          <td>&euro;1,750</td>
+          <td>&euro;1,900</td>
           <td>Primary carer of qualifying child</td>
         </tr>
         <tr>
           <td>Home Carer</td>
-          <td>&euro;1,800</td>
+          <td>&euro;1,950</td>
           <td>Married couple, one spouse caring at home</td>
         </tr>
         <tr>
           <td>Rent Tax Credit (Single)</td>
-          <td>&euro;750</td>
+          <td>&euro;1,000</td>
           <td>Tenants paying qualifying rent</td>
         </tr>
         <tr>
           <td>Rent Tax Credit (Couple)</td>
-          <td>&euro;1,500</td>
+          <td>&euro;2,000</td>
           <td>Jointly assessed tenants</td>
         </tr>
         <tr>
           <td>Widowed Person</td>
-          <td>&euro;2,190</td>
+          <td>&euro;2,540</td>
           <td>Widowed person (no dependent children)</td>
         </tr>
         <tr>
           <td>Incapacitated Child</td>
-          <td>&euro;3,300</td>
+          <td>&euro;3,800</td>
           <td>Parent/guardian of permanently incapacitated child</td>
         </tr>
         <tr>
@@ -173,7 +176,7 @@ import Layout from '../../../layouts/Layout.astro';
         </tr>
         <tr>
           <td>Blind Person</td>
-          <td>&euro;1,650 (single) / &euro;3,300 (both)</td>
+          <td>&euro;1,950 (single) / &euro;3,900 (both)</td>
           <td>Registered blind person</td>
         </tr>
         <tr>
@@ -220,7 +223,7 @@ import Layout from '../../../layouts/Layout.astro';
     <h2>Common mistakes with tax credits</h2>
 
     <p>
-      One of the most common mistakes is failing to claim the Rent Tax Credit. Since its reintroduction in 2022, many qualifying tenants have not claimed it, potentially missing out on &euro;750 per year. Another common error is married couples not electing joint assessment, which can result in a higher combined tax bill than necessary, particularly when one spouse earns significantly more than the other.
+      One of the most common mistakes is failing to claim the Rent Tax Credit. Since its reintroduction in 2022, many qualifying tenants have not claimed it, potentially missing out on &euro;1,000 per year. Another common error is married couples not electing joint assessment, which can result in a higher combined tax bill than necessary, particularly when one spouse earns significantly more than the other.
     </p>
     <p>
       Single parents sometimes fail to claim the SPCCC or do not realise that the increased rate band is also available. And many employees in occupations that qualify for flat-rate expenses never claim the deduction, simply because they are not aware it exists. A few minutes on myAccount can identify these missed opportunities.
@@ -238,7 +241,7 @@ import Layout from '../../../layouts/Layout.astro';
     </details>
     <details>
       <summary><strong>Can both parents claim the Single Person Child Carer Credit?</strong></summary>
-      <p>No. Only one parent can claim the SPCCC in any given year. The credit is available to the "primary claimant" - the parent with whom the qualifying child lives for the majority of the year. If the primary claimant does not claim the credit (or is not entitled due to cohabitation), they can surrender it to the other parent, but only the &euro;1,750 credit transfers, not the increased standard rate cut-off point.</p>
+      <p>No. Only one parent can claim the SPCCC in any given year. The credit is available to the "primary claimant" - the parent with whom the qualifying child lives for the majority of the year. If the primary claimant does not claim the credit (or is not entitled due to cohabitation), they can surrender it to the other parent, but only the &euro;1,900 credit transfers, not the increased standard rate cut-off point.</p>
     </details>
 
     <div class="not-prose bg-emerald-50 border border-emerald-200 rounded-xl p-6 my-8">
@@ -295,7 +298,7 @@ import Layout from '../../../layouts/Layout.astro';
       "name": "Can both parents claim the Single Person Child Carer Credit?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Only one parent can claim the SPCCC in any given year. The credit is available to the \"primary claimant\" - the parent with whom the qualifying child lives for the majority of the year. If the primary claimant does not claim the credit (or is not entitled due to cohabitation), they can surrender it to the other parent, but only the €1,750 credit transfers, not the increased standard rate cut-off point."
+        "text": "No. Only one parent can claim the SPCCC in any given year. The credit is available to the \"primary claimant\" - the parent with whom the qualifying child lives for the majority of the year. If the primary claimant does not claim the credit (or is not entitled due to cohabitation), they can surrender it to the other parent, but only the €1,900 credit transfers, not the increased standard rate cut-off point."
       }
     }
   ]
