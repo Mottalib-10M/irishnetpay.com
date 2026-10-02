@@ -1,4 +1,5 @@
 ---
+import Consent from '../components/Consent.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -79,6 +80,7 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
       (G-XXXXXXXXXX), donc deux requetes vers googletagmanager a chaque
       page pour une mesure qui n'arrivait nulle part.
     -->
+  <Consent part="head" lang="en" moreHref="/privacy/" />
 </head>
   <body class="min-h-screen bg-surface text-gray-900 font-sans">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-blue-700 focus:rounded-lg focus:shadow-lg focus:ring-2 focus:ring-blue-500">Skip to content</a>
@@ -196,5 +198,6 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
         });
       })();
     </script>
+    <Consent part="body" lang="en" moreHref="/privacy/" />
   </body>
 </html>
