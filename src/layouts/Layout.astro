@@ -75,11 +75,7 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
     })} />
 
     <script defer data-domain="irishnetpay.com" src="https://plausible.io/js/script.js"></script>
-    <!--
-      Pas de GA4 : l'identifiant etait reste a l'etat de gabarit
-      (G-XXXXXXXXXX), donc deux requetes vers googletagmanager a chaque
-      page pour une mesure qui n'arrivait nulle part.
-    -->
+    <!-- GA4 (GA4_ID dans site-config) est charge par Consent.astro, comme Clarity. -->
   <Consent part="head" lang="en" moreHref="/privacy/" />
 </head>
   <body class="min-h-screen bg-surface text-gray-900 font-sans">
