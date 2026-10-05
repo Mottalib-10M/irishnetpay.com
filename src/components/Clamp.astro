@@ -1,0 +1,20 @@
+---
+/**
+ * Chapeau replié (RECETTE §26, 2026-10-02) : un seul <p> dans le HTML servi,
+ * l'écran ne montre que les premières phrases entières, « Read more » déplie
+ * la suite sans JavaScript (case à cocher). Le bloc citable de 120 mots (§21)
+ * reste donc entier pour les moteurs.
+ */
+interface Props { id: string; text: string; sentences?: number; class?: string; label?: string }
+const { id, text, sentences = 2, class: className = '', label = 'Read more' } = Astro.props;
+const parts = text.split(/(?<=[.!?])\s+/);
+const head = parts.slice(0, sentences).join(' ');
+const rest = parts.slice(sentences).join(' ');
+---
+{rest ? (
+  <div class="clamp">
+    <input type="checkbox" id={id} class="clamp-toggle" aria-label={label} />
+    <p class={className}>{head} <span class="clamp-rest">{rest}</span></p>
+    <label for={id} class="clamp-more" aria-hidden="true">{label}</label>
+  </div>
+) : <p class={className}>{head}</p>}

@@ -2,6 +2,7 @@
 import { calculateSalary } from './engine';
 import { USC_EXEMPTION, SRCOP } from './tax-rates-2026';
 import type { MiniSpec } from './mini-types';
+import { WELFARE_SPECS } from './welfare-specs';
 
 const eur = (x: number, d = 0) => new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: d, maximumFractionDigits: d }).format(x);
 const pct = (x: number) => new Intl.NumberFormat('en-IE', { style: 'percent', maximumFractionDigits: 1 }).format(x > 1 ? x / 100 : x);
@@ -41,5 +42,5 @@ const SPECS: Record<string, MiniSpec> = {
 };
 
 export function getSpec(kind: string, _lang?: string): MiniSpec {
-  const s = SPECS[kind]; if (!s) throw new Error(`Mini-simulateur inconnu : ${kind}`); return s;
+  const s = SPECS[kind] ?? WELFARE_SPECS[kind]; if (!s) throw new Error(`Mini-simulateur inconnu : ${kind}`); return s;
 }

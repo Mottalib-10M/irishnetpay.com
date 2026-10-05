@@ -1,0 +1,11 @@
+---
+/** One route for the seven payment pages; each reads its own data file (src/data/welfare/pages/). */
+import WelfareArticle from '../../components/WelfareArticle.astro';
+import { WELFARE_PAGES } from '../../data/welfare/index';
+
+export function getStaticPaths() {
+  return WELFARE_PAGES.map((page) => ({ params: { slug: page.path.split('/')[2] }, props: { page } }));
+}
+const { page } = Astro.props;
+---
+<WelfareArticle page={page} />

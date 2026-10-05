@@ -279,7 +279,7 @@ export const salaries: SalaryEntry[] = [
       {
         question: 'What is the employer cost for a €120,000 salary?',
         answer:
-          'The employer pays 11.25% (11.4% from October 2026) PRSI on top of your salary, adding approximately €13,545 to the cost of employment. The total employer cost is therefore approximately €133,545. This does not include any employer pension contributions, health insurance, or other benefits. That figure matters in a salary negotiation, because it is the number the employer has in mind rather than the gross on the contract. It also makes salary sacrifice arrangements attractive to both sides: a euro moved into a pension avoids employer PRSI as well as employee deductions.',
+          'The employer pays 11.25% (11.4% from October 2026) PRSI on top of your salary, adding approximately €13,545 to the cost of employment. The total employer cost is therefore approximately €133,545. This excludes employer pension contributions and health insurance. That figure matters in a salary negotiation, because it is the number the employer has in mind rather than the gross on the contract. It also makes salary sacrifice arrangements attractive to both sides: a euro moved into a pension avoids employer PRSI as well as employee deductions.',
       },
     ],
   },

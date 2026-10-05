@@ -34,14 +34,14 @@ import Layout from '../../layouts/Layout.astro';
       <ol class="list-decimal list-inside space-y-3 text-gray-700">
         <li><strong>Copy the embed code</strong> from the code block above.</li>
         <li><strong>Open your website editor</strong> and navigate to the page where you want to display the calculator. Switch to the HTML or code view if you are using a visual editor.</li>
-        <li><strong>Paste the code</strong> at the desired location in your HTML. The iframe will automatically fill the width of its container element.</li>
+        <li><strong>Paste it</strong> into the page, inside the column where the calculator should sit: the frame takes the full width of that column on a phone as on a desktop.</li>
         <li><strong>Save and publish</strong> your page. The calculator will load directly from IrishNetPay.com and will always reflect the latest tax rates and features.</li>
       </ol>
     </section>
 
     <section class="mb-8">
       <h2 class="text-xl font-semibold text-gray-800 mb-4">Customization Options</h2>
-      <p class="text-gray-700 mb-4">You can adjust the following attributes to fit the calculator into your site design:</p>
+      <p class="text-gray-700 mb-4">Three attributes of the iframe tag decide how the Irish salary calculator sits in your page:</p>
       <div class="overflow-x-auto max-w-full">
         <table class="w-full text-sm text-left border border-gray-200 rounded-lg overflow-hidden">
           <thead class="bg-gray-100 text-gray-700">
@@ -55,7 +55,7 @@ import Layout from '../../layouts/Layout.astro';
             <tr>
               <td class="px-4 py-3 font-mono text-sm">width</td>
               <td class="px-4 py-3">100%</td>
-              <td class="px-4 py-3 text-gray-600">The width of the calculator. Use a percentage for responsive layouts or a fixed pixel value (e.g., "600px").</td>
+              <td class="px-4 py-3 text-gray-600">Keep 100% so the frame follows the column on mobile; a fixed value in pixels suits a sidebar.</td>
             </tr>
             <tr>
               <td class="px-4 py-3 font-mono text-sm">height</td>
@@ -75,7 +75,7 @@ import Layout from '../../layouts/Layout.astro';
     <section class="mb-8">
       <h2 class="text-xl font-semibold text-gray-800 mb-4">Terms of Use</h2>
       <p class="text-gray-700 leading-relaxed">
-        The widget is provided free of charge for personal and commercial use. Please do not modify the calculator content within the iframe or attempt to remove attribution. The calculator is served directly from our servers and will always display the most current version. We reserve the right to update the calculator design and functionality at any time.
+        Any site may embed it, commercial or not, at no cost. The credit link under the frame stays visible, and the figures inside the frame are not altered. Because the frame loads from irishnetpay.com, Budget changes to Irish tax bands, credits, USC and PRSI reach your readers the day we publish them, and the layout may change over time.
       </p>
     </section>
   </div>

@@ -34,6 +34,12 @@ import Layout from '../../layouts/Layout.astro';
       <p class="text-gray-700 leading-relaxed mb-3">Every page carries the date of its last revision at the top and in the footer. That date comes from the site's version history, so it reflects a real change to the page rather than an automatic refresh.</p>
     </section>
     <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3">Social welfare, Stamp Duty and Help to Buy</h2>
+      <p class="text-gray-700 leading-relaxed mb-3">The welfare and property calculators run on a separate parameter file, read from the Department of Social Protection's SW19 booklet of rates for 2026 (May 2026 edition), the Citizens Information page of each scheme and Revenue's Stamp Duty and Help to Buy pages. Each figure in that file carries its source and the date it was read, and the pages take their figures from it rather than repeating them by hand.</p>
+      <p class="text-gray-700 leading-relaxed mb-3">The rules are those of the paying body. Jobseeker's Benefit and Illness Benefit use average weekly earnings in the relevant tax year, 2024 for a claim made in 2026, and the SW19 tables for the increase for a qualified adult. Jobseeker's Pay-Related Benefit applies its three capped steps and its minimum. The means tests of Jobseeker's Allowance and Carer's Allowance use their own capital scales and disregards, and the Carer's Allowance rate falls in the €2.50 steps of the SW19 table. The State Pension applies the Total Contributions Approach with the Department's rounding, and in 2026 the better of that or the blend with the yearly average. Stamp Duty is charged band by band on the VAT-exclusive price of a new home.</p>
+      <p class="text-gray-700 leading-relaxed mb-3">The worked examples published by Citizens Information, gov.ie and Revenue are automated tests of these calculators: if a rate changes and an example no longer matches, the site does not build. What they do not model is said on each page, for example the parental income assessed for a young jobseeker living at home.</p>
+    </section>
+    <section class="mb-8">
       <h2 class="text-xl font-semibold text-gray-800 mb-3">Where the figures come from</h2>
       <p class="text-gray-700 leading-relaxed mb-3">Every rate and threshold used by the calculator is taken from the following official publications, and nothing is derived from third-party summaries:</p>
       <ul class="list-disc pl-6 text-gray-700 space-y-2">
@@ -41,6 +47,9 @@ import Layout from '../../layouts/Layout.astro';
         <li><a class="underline" href="https://www.revenue.ie/en/jobs-and-pensions/usc/index.aspx" rel="nofollow noopener" target="_blank">Revenue, Universal Social Charge (USC)</a></li>
         <li><a class="underline" href="https://www.gov.ie/en/department-of-social-protection/publications/prsi-pay-related-social-insurance/" rel="nofollow noopener" target="_blank">gov.ie, PRSI classes and contribution rates</a></li>
         <li><a class="underline" href="https://www.gov.ie/en/department-of-finance/campaigns/budget-2026/" rel="nofollow noopener" target="_blank">gov.ie, Budget documentation</a></li>
+        <li><a class="underline" href="https://assets.gov.ie/static/documents/9c18b85f/20260520_Rates_of_Payment_Booklet_-_SW19_-_2026_May.pdf" rel="nofollow noopener" target="_blank">Department of Social Protection, SW19 Rates of Payment 2026</a></li>
+        <li><a class="underline" href="https://www.revenue.ie/en/property/stamp-duty/property/stamp-duty-property/rates.aspx" rel="nofollow noopener" target="_blank">Revenue, Stamp Duty rates on property</a></li>
+        <li><a class="underline" href="https://www.revenue.ie/en/property/help-to-buy-incentive/how-much-can-you-claim.aspx" rel="nofollow noopener" target="_blank">Revenue, Help to Buy: how much can you claim</a></li>
       </ul>
     </section>
   </div>

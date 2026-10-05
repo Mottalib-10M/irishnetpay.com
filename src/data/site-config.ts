@@ -1,3 +1,6 @@
+/** Adresse du site : lue par check-regles.py pour s'exclure de la comparaison. */
+export const SITE_URL = 'https://irishnetpay.com';
+
 
 export const CONTACT_EMAIL = 'contact@irishnetpay.com';
 

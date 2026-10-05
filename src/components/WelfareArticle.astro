@@ -1,0 +1,79 @@
+---
+/**
+ * Renders one page of the social welfare and property module from its data
+ * file (src/data/welfare/pages/*.ts). One FAQ array feeds both the visible
+ * <details> and the FAQPage JSON-LD (RECETTE §7).
+ */
+import Layout from '../layouts/Layout.astro';
+import MiniSimAutonome from './calc/MiniSimAutonome';
+import type { WelfarePage } from '../data/welfare/types';
+import { LABELS } from '../data/welfare/index';
+import { SOURCES, WELFARE_CHECKED } from '../lib/welfare-2026';
+import { date } from '../data/welfare/fmt';
+
+interface Props { page: WelfarePage }
+const { page } = Astro.props;
+const site = 'https://irishnetpay.com';
+const inWelfare = page.path.startsWith('/social-welfare/') && page.path !== '/social-welfare/';
+const crumbs = [
+  { name: 'Home', path: '/' },
+  ...(inWelfare ? [{ name: 'Social welfare', path: '/social-welfare/' }] : []),
+  { name: page.nav, path: page.path },
+];
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: page.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: `${site}${c.path}` })),
+};
+---
+<Layout title={page.title} description={page.description}>
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
+    <ol class="flex flex-wrap items-center gap-1">
+      {crumbs.map((c, i) => i < crumbs.length - 1
+        ? <li class={i ? "before:content-['/'] before:mx-1" : ''}><a href={c.path} class="hover:text-primary">{c.name}</a></li>
+        : <li class="before:content-['/'] before:mx-1">{c.name}</li>)}
+    </ol>
+  </nav>
+
+  <article class="prose prose-slate max-w-none" data-outil={page.tool ? '' : undefined}>
+    <h1>{page.h1}</h1>
+    <p class="leading-relaxed text-gray-700">{page.citable}</p>
+    <MiniSimAutonome client:visible kind={page.sim} lang="en" locale="en-IE" href={page.simHref} />
+
+    {page.sections.map((s) => (
+      <Fragment>
+        <h2>{s.h2}</h2>
+        <Fragment set:html={s.html} />
+        {s.mini && <MiniSimAutonome client:visible kind={s.mini} lang="en" locale="en-IE" href={s.miniHref} />}
+      </Fragment>
+    ))}
+
+    <h2 id="faq">Questions people ask</h2>
+    {page.faqs.map((f) => (
+      <details>
+        <summary><strong>{f.q}</strong></summary>
+        <p>{f.a}</p>
+      </details>
+    ))}
+
+    <div class="not-prose bg-emerald-50 border border-emerald-200 rounded-xl p-6 my-8">
+      <h2 class="font-semibold text-gray-900 mb-3 text-lg">Related calculators and guides</h2>
+      <ul class="space-y-2 text-sm">
+        {page.related.map((r) => <li><a href={r} class="text-primary hover:underline">{LABELS[r] ?? r}</a></li>)}
+      </ul>
+    </div>
+
+    <h2>Sources, checked on {date(WELFARE_CHECKED)}</h2>
+    <ul>
+      {page.sources.map((k) => <li><a href={SOURCES[k].url} target="_blank" rel="noopener noreferrer">{SOURCES[k].label}</a>, read on {date(SOURCES[k].read)}</li>)}
+    </ul>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Layout>

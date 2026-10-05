@@ -104,6 +104,15 @@
   .prose th { text-align: left; font-weight: 600; border-bottom: 2px solid var(--color-border); padding: 0.5em 0.75em 0.5em 0; }
   .prose td { border-bottom: 1px solid var(--color-border); padding: 0.5em 0.75em 0.5em 0; }
   .prose-lg { font-size: 1.0625rem; }
+
+  /* Chapeau replie (components/Clamp.astro) : la suite reste dans le HTML. */
+  .clamp { position: relative; }
+  .clamp-toggle { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  .clamp-rest { display: none; }
+  .clamp-toggle:checked ~ p .clamp-rest { display: inline; }
+  .clamp-more { display: inline-block; margin-top: 0.25rem; cursor: pointer; font-weight: 600; font-size: 0.9375rem; color: var(--color-primary); text-decoration: underline; text-underline-offset: 2px; }
+  .clamp-toggle:checked ~ .clamp-more { display: none; }
+  .clamp-toggle:focus-visible ~ .clamp-more { outline: 2px solid var(--color-primary); outline-offset: 2px; }
 }
 
 /*
@@ -133,6 +142,7 @@
   }
 
   @layer components {
+    .clamp-more { color: #8fd9b4; }
     .prose a { color: #8fd9b4; }
     .prose li::marker { color: #8fd9b4; }
     .prose blockquote { border-left-color: #8fd9b4; }

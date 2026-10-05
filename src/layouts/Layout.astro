@@ -88,11 +88,13 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
         </a>
 
         <!-- Desktop navigation -->
-        <nav class="hidden md:flex items-center gap-6 text-sm">
+        <nav class="hidden md:flex items-center gap-5 text-sm">
           <a href="/" class="text-gray-600 hover:text-primary transition-colors">Calculator</a>
           <a href="/guides/" class="text-gray-600 hover:text-primary transition-colors">Guides</a>
           <a href="/average-salary-ireland/" class="text-gray-600 hover:text-primary transition-colors">Average Salary</a>
           <a href="/minimum-wage-ireland/" class="text-gray-600 hover:text-primary transition-colors">Minimum Wage</a>
+          <a href="/social-welfare/" class="text-gray-600 hover:text-primary transition-colors">Welfare</a>
+          <a href="/stamp-duty-ireland/" class="text-gray-600 hover:text-primary transition-colors">Stamp Duty</a>
           <a href="/faq/" class="text-gray-600 hover:text-primary transition-colors">FAQ</a>
         </nav>
 
@@ -121,6 +123,9 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
           <a href="/guides/" class="text-gray-600 hover:text-primary transition-colors py-1">Guides</a>
           <a href="/average-salary-ireland/" class="text-gray-600 hover:text-primary transition-colors py-1">Average Salary</a>
           <a href="/minimum-wage-ireland/" class="text-gray-600 hover:text-primary transition-colors py-1">Minimum Wage</a>
+          <a href="/social-welfare/" class="text-gray-600 hover:text-primary transition-colors py-1">Social Welfare</a>
+          <a href="/stamp-duty-ireland/" class="text-gray-600 hover:text-primary transition-colors py-1">Stamp Duty</a>
+          <a href="/help-to-buy-ireland/" class="text-gray-600 hover:text-primary transition-colors py-1">Help to Buy</a>
           <a href="/faq/" class="text-gray-600 hover:text-primary transition-colors py-1">FAQ</a>
           <a href="/legal/" class="text-gray-600 hover:text-primary transition-colors py-1">Legal Notice</a>
           <a href="/privacy/" class="text-gray-600 hover:text-primary transition-colors py-1">Privacy Policy</a>
@@ -132,7 +137,7 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
     </main>
     <footer class="bg-white border-t border-border mt-12">
       <div class="max-w-5xl mx-auto px-4 py-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm text-gray-600">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-sm text-gray-600">
           <div>
             <h3 class="font-semibold text-gray-900 mb-3">Tools</h3>
             <ul class="space-y-2">
@@ -141,6 +146,17 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
               <li><a href="/average-salary-ireland/" class="hover:text-primary">Average Salary Ireland</a></li>
               <li><a href="/minimum-wage-ireland/" class="hover:text-primary">Minimum Wage Ireland</a></li>
               <li><a href="/faq/" class="hover:text-primary">FAQ</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-semibold text-gray-900 mb-3">Benefits &amp; Property</h3>
+            <ul class="space-y-2">
+              <li><a href="/social-welfare/" class="hover:text-primary">Social Welfare Rates 2026</a></li>
+              <li><a href="/social-welfare/jobseekers-benefit/" class="hover:text-primary">Jobseeker's Benefit</a></li>
+              <li><a href="/social-welfare/illness-benefit/" class="hover:text-primary">Illness Benefit</a></li>
+              <li><a href="/social-welfare/state-pension/" class="hover:text-primary">State Pension</a></li>
+              <li><a href="/stamp-duty-ireland/" class="hover:text-primary">Stamp Duty Calculator</a></li>
+              <li><a href="/help-to-buy-ireland/" class="hover:text-primary">Help to Buy</a></li>
             </ul>
           </div>
           <div>
@@ -160,7 +176,7 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
           </div>
         </div>
         <div class="mt-8 pt-6 border-t border-gray-200 text-xs text-gray-500">
-          <p>Independent, free salary calculator. Results are estimates only. 2026 tax rates.</p>
+          <p>Independent, free salary, welfare and property calculators. Results are estimates only. 2026 rates.</p>
         </div>
       </div>
     </footer>

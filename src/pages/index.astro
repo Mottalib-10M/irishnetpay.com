@@ -2,6 +2,25 @@
 import Layout from '../layouts/Layout.astro';
 import SalaryCalculator from '../components/SalaryCalculator';
 import PayBreakdown from '../components/PayBreakdown.astro';
+import Clamp from '../components/Clamp.astro';
+import { USC_BANDS, USC_EXEMPTION, PRSI_RATE_JAN_SEP, PRSI_RATE_OCT_DEC, PRSI_WEEKLY_THRESHOLD, SRCOP, TAX_CREDITS } from '../lib/tax-rates-2026';
+import { JA, SPC, FAMILY_LEAVE, JPRB, STAMP_DUTY, HTB } from '../lib/welfare-2026';
+
+const eur = (x: number) => new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: Number.isInteger(x) ? 0 : 2 }).format(x);
+const pc = (x: number) => `${Math.round(x * 10000) / 100}%`;
+
+/* §21 : le bloc citable de la page d'accueil, replie a l'ecran (§26). */
+const chapeau = `Your Irish take-home pay for 2026 is gross salary minus three separate charges, each with its own rules: income tax at 20% up to your standard rate cut-off point (${eur(SRCOP.single)} for a single person) and 40% above, reduced by tax credits; the Universal Social Charge, charged in bands once income passes ${eur(USC_EXEMPTION)}; and PRSI at ${pc(PRSI_RATE_JAN_SEP)} of gross pay above ${eur(PRSI_WEEKLY_THRESHOLD)} a week, rising to ${pc(PRSI_RATE_OCT_DEC)} on 1 October 2026. The calculator below applies all three to your salary, status and pension contribution. The site goes further than the official pages, which list the rules without applying them: every page works out the figure for your own case, from the payslip to the social welfare payments (Jobseeker's, Illness and Maternity Benefit, Working Family Payment, Carer's Allowance, State Pension) and the cost of buying a home (Stamp Duty and Help to Buy), each with its Revenue or Department of Social Protection source and the date it was read.`;
+
+/* §7 : une seule liste pour la FAQ visible et pour le balisage FAQPage. */
+const faqs = [
+  { q: 'What is the income tax rate in Ireland in 2026?', a: `Ireland has two income tax rates: 20% on income up to the standard rate cut-off point, ${eur(SRCOP.single)} for a single person and ${eur(SRCOP.married_one_income)} for a married couple with one income, and 40% on the rest. Tax credits are then deducted from the tax itself, ${eur(TAX_CREDITS.personal_single + TAX_CREDITS.employee_paye)} for a single employee with the personal and employee credits.` },
+  { q: 'What is USC and how is it calculated?', a: `The Universal Social Charge is a separate charge on gross income. Nothing is due if total income is ${eur(USC_EXEMPTION)} or less; above that, the whole income is charged: ${pc(USC_BANDS[0].rate)} on the first ${eur(USC_BANDS[0].max)}, ${pc(USC_BANDS[1].rate)} up to ${eur(USC_BANDS[1].max)}, ${pc(USC_BANDS[2].rate)} up to ${eur(USC_BANDS[2].max)} and ${pc(USC_BANDS[3].rate)} above. Tax credits do not reduce it.` },
+  { q: 'What PRSI rate do employees pay?', a: `Most employees pay Class A PRSI at ${pc(PRSI_RATE_JAN_SEP)} of gross earnings until 30 September 2026 and ${pc(PRSI_RATE_OCT_DEC)} from 1 October. Nothing is charged when weekly pay is ${eur(PRSI_WEEKLY_THRESHOLD)} or less, and a tapered credit softens the step just above it. There is no upper limit on the earnings it is charged on.` },
+  { q: 'How much would I get on Jobseeker’s if I lost my job?', a: `Someone fully unemployed with at least two years of paid PRSI gets Jobseeker’s Pay-Related Benefit: ${pc(JPRB.long[0].rate)} of previous weekly pay, capped at ${eur(JPRB.long[0].cap)}, for the first 13 weeks, then lower steps. Without enough PRSI, Jobseeker’s Allowance pays up to ${eur(JA.personal)} a week after a means test. The social welfare section calculates both.` },
+  { q: 'Does this site cover the State Pension and maternity pay?', a: `Yes. The State Pension (Contributory) page applies the Total Contributions Approach and the 2026 blend with the yearly average to your record, up to ${eur(SPC.max)} a week. The Maternity Benefit page compares the standard ${eur(FAMILY_LEAVE.rate)} a week with the Illness Benefit rate for your family, and pays the higher, as the Department does.` },
+  { q: 'How much Stamp Duty will I pay on a home?', a: `${pc(STAMP_DUTY.bands[0].rate)} of the price up to ${eur(STAMP_DUTY.bands[0].upTo)}, ${pc(STAMP_DUTY.bands[1].rate)} up to ${eur(STAMP_DUTY.bands[1].upTo)} and ${pc(STAMP_DUTY.bands[2].rate)} above, with the VAT taken out of a new home's price first. A first-time buyer of a new home may also claim up to ${eur(HTB.max)} under Help to Buy. Both have their own calculator on this site.` },
+];
 ---
 
 <Layout
@@ -13,14 +32,25 @@ import PayBreakdown from '../components/PayBreakdown.astro';
       <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
         Irish Take-Home Pay Calculator 2026
       </h1>
-      <p class="text-lg text-gray-600 leading-relaxed">
-        Calculate your net salary after income tax, USC, and PRSI deductions using the latest
-        2026 Irish tax rates. Our calculator accounts for your filing status, tax credits,
-        and pension contributions.
-      </p>
+      <Clamp id="home-intro" text={chapeau} sentences={1} class="text-lg text-gray-600 leading-relaxed text-left" />
     </div>
 
     <SalaryCalculator client:idle />
+
+    <section class="max-w-5xl mx-auto" aria-labelledby="beyond-payslip">
+      <h2 id="beyond-payslip" class="text-2xl font-bold text-gray-900 mb-4">Beyond the payslip: benefits, pension and buying a home</h2>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+        <li class="bg-white border border-border rounded-xl p-4"><a href="/social-welfare/jobseekers-benefit/" class="font-semibold text-primary hover:underline">Jobseeker's Benefit</a><span class="block text-gray-600 mt-1">Pay-related rate after a lay-off, up to {eur(JPRB.long[0].cap)} a week.</span></li>
+        <li class="bg-white border border-border rounded-xl p-4"><a href="/social-welfare/jobseekers-allowance/" class="font-semibold text-primary hover:underline">Jobseeker's Allowance</a><span class="block text-gray-600 mt-1">The means test with part-time pay, a partner and savings.</span></li>
+        <li class="bg-white border border-border rounded-xl p-4"><a href="/social-welfare/illness-benefit/" class="font-semibold text-primary hover:underline">Illness Benefit</a><span class="block text-gray-600 mt-1">Weekly rate from 2024 earnings, waiting days, duration.</span></li>
+        <li class="bg-white border border-border rounded-xl p-4"><a href="/social-welfare/maternity-benefit/" class="font-semibold text-primary hover:underline">Maternity and Paternity Benefit</a><span class="block text-gray-600 mt-1">{eur(FAMILY_LEAVE.rate)} a week, or more with dependants.</span></li>
+        <li class="bg-white border border-border rounded-xl p-4"><a href="/social-welfare/working-family-payment/" class="font-semibold text-primary hover:underline">Working Family Payment</a><span class="block text-gray-600 mt-1">The weekly top-up from your gross pay.</span></li>
+        <li class="bg-white border border-border rounded-xl p-4"><a href="/social-welfare/carers-allowance/" class="font-semibold text-primary hover:underline">Carer's Allowance</a><span class="block text-gray-600 mt-1">Rate after the means test, new disregard included.</span></li>
+        <li class="bg-white border border-border rounded-xl p-4"><a href="/social-welfare/state-pension/" class="font-semibold text-primary hover:underline">State Pension (Contributory)</a><span class="block text-gray-600 mt-1">Your rate from your PRSI record, up to {eur(SPC.max)}.</span></li>
+        <li class="bg-white border border-border rounded-xl p-4"><a href="/stamp-duty-ireland/" class="font-semibold text-primary hover:underline">Stamp Duty</a> and <a href="/help-to-buy-ireland/" class="font-semibold text-primary hover:underline">Help to Buy</a><span class="block text-gray-600 mt-1">What a home costs in duty, and what Help to Buy refunds.</span></li>
+      </ul>
+      <p class="mt-4 text-sm"><a href="/social-welfare/" class="text-primary hover:underline">All 2026 social welfare rates in one table</a> · <a href="/about/" class="text-primary hover:underline">About</a> · <a href="/methodology/" class="text-primary hover:underline">Methodology</a></p>
+    </section>
 
     <div class="prose prose-slate max-w-none">
 
@@ -170,35 +200,17 @@ import PayBreakdown from '../components/PayBreakdown.astro';
         (11.25% vs 30-40% in France) makes the total cost of employment competitive for businesses.
       </p>
 
+      <h2 id="faq">Frequently asked questions</h2>
+      {faqs.map((f) => (
+        <details>
+          <summary><strong>{f.q}</strong></summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
       <script type="application/ld+json" set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is the income tax rate in Ireland in 2026?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Ireland has a two-rate income tax system: 20% (standard rate) on income up to the Standard Rate Cut-Off Point (€44,000 for a single person), and 40% (higher rate) on income above that threshold. Tax credits of €4,000 (Personal + PAYE) reduce the amount payable."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is USC and how is it calculated?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The Universal Social Charge (USC) is a tax on gross income. In 2026, it has four bands: 0.5% on the first €12,012, 2% up to €28,700, 4% up to €70,044, and 8% above that. Income under €13,000 is exempt. Unlike income tax, USC cannot be reduced by tax credits."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What PRSI rate do employees pay?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Most employees (Class A) pay PRSI at 4.2% of gross earnings, 4.35% from 1 October 2026. No PRSI is charged if weekly earnings are €352 or below. Employers pay an additional 9% or 11.25% depending on the employee's weekly earnings."
-            }
-          }
-        ]
+        "mainEntity": faqs.map((f) => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })),
       })} />
     </div>
   </div>
