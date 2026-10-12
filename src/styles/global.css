@@ -88,6 +88,13 @@
 @layer components {
   .prose { color: var(--color-text); line-height: 1.75; max-width: 68ch; }
   .prose > * + * { margin-top: 1.25em; }
+  /* Le plugin de typographie n'est pas chargé : sans cette règle, le préflight de Tailwind
+     ramenait le H1 des pages en prose (guides, aide sociale) à 16 px, graisse normale. Même
+     style que les H1 du reste du site (text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900). */
+  .prose h1 { font-size: 1.5rem; line-height: 1.25; font-weight: 700; color: var(--color-text); margin-top: 0.75rem; margin-bottom: 0.5rem; }
+  .prose > .clamp-lines { margin-top: 0.75rem; }
+  @media (min-width: 40rem) { .prose h1 { font-size: 1.875rem; } }
+  @media (min-width: 48rem) { .prose h1 { font-size: 2.25rem; line-height: 1.2; } }
   .prose h2 { font-size: 1.6em; line-height: 1.25; font-weight: 700; margin-top: 2.25em; margin-bottom: 0.6em; }
   .prose h3 { font-size: 1.25em; line-height: 1.35; font-weight: 700; margin-top: 1.9em; margin-bottom: 0.5em; }
   .prose h2:first-child, .prose h3:first-child { margin-top: 0; }
