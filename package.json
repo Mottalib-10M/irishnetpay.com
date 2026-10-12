@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "build": "astro build && node scripts/typo-nbsp.mjs dist",
     "preview": "astro preview",
-    "check": "astro check && node scripts/check-url-propre.mjs .",
+    "check": "astro check && node scripts/check-url-propre.mjs . && node scripts/check-premier-ecran.mjs .",
     "test": "vitest run",
     "test:watch": "vitest",
     "check:cookies": "python3 scripts/check-cookies.py ."

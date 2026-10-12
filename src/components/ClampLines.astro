@@ -1,0 +1,15 @@
+---
+/**
+ * Chapeau replié sur trois lignes (RECETTE §5, règle du 2026-10-11, et §26) :
+ * le paragraphe reste un seul <p> entier dans le HTML servi (bloc citable §21),
+ * l'écran n'en montre que trois lignes pour que le simulateur se voie sans
+ * défiler ; « Read more » le déplie sans JavaScript (case à cocher).
+ */
+interface Props { id: string; class?: string; label?: string }
+const { id, class: className = '', label = 'Read more' } = Astro.props;
+---
+<div class="clamp-lines">
+  <input type="checkbox" id={id} class="clamp-toggle" aria-label={label} />
+  <p class={className}><slot /></p>
+  <label for={id} class="clamp-more" aria-hidden="true">{label}</label>
+</div>

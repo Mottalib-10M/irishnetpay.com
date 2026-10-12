@@ -6,6 +6,7 @@
  */
 import Layout from '../layouts/Layout.astro';
 import MiniSimAutonome from './calc/MiniSimAutonome';
+import ClampLines from './ClampLines.astro';
 import type { WelfarePage } from '../data/welfare/types';
 import { LABELS } from '../data/welfare/index';
 import { SOURCES, WELFARE_CHECKED } from '../lib/welfare-2026';
@@ -32,7 +33,7 @@ const breadcrumbSchema = {
 };
 ---
 <Layout title={page.title} description={page.description}>
-  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-3">
     <ol class="flex flex-wrap items-center gap-1">
       {crumbs.map((c, i) => i < crumbs.length - 1
         ? <li class={i ? "before:content-['/'] before:mx-1" : ''}><a href={c.path} class="hover:text-primary">{c.name}</a></li>
@@ -42,14 +43,14 @@ const breadcrumbSchema = {
 
   <article class="prose prose-slate max-w-none" data-outil={page.tool ? '' : undefined}>
     <h1>{page.h1}</h1>
-    <p class="leading-relaxed text-gray-700">{page.citable}</p>
-    <MiniSimAutonome client:visible kind={page.sim} lang="en" locale="en-IE" href={page.simHref} />
+    <ClampLines id="chapeau" class="leading-relaxed text-gray-700">{page.citable}</ClampLines>
+    <MiniSimAutonome client:visible principal kind={page.sim} lang="en" locale="en-IE" href={page.simHref} />
 
     {page.sections.map((s) => (
       <Fragment>
         <h2>{s.h2}</h2>
         <Fragment set:html={s.html} />
-        {s.mini && <MiniSimAutonome client:visible kind={s.mini} lang="en" locale="en-IE" href={s.miniHref} />}
+        {s.mini && <MiniSimAutonome client:visible secondaire kind={s.mini} lang="en" locale="en-IE" href={s.miniHref} />}
       </Fragment>
     ))}
 

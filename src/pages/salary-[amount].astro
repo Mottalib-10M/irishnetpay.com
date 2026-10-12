@@ -74,13 +74,40 @@ import PayBreakdown from '../components/PayBreakdown.astro';
 >
   <div class="space-y-10">
 
-    {/* Breadcrumb */}
-    <nav data-chrome aria-label="Breadcrumb" class="text-sm text-gray-500">
-      <ol class="flex items-center gap-1.5 flex-wrap">
-        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
-        <li class="before:content-['/'] before:mx-1.5 before:text-gray-300">{salary.grossFormatted} Salary</li>
-      </ol>
-    </nav>
+    {/* Premier écran (RECETTE §5, 2026-10-11) : titre, réponse directe, puis le simulateur ;
+        le badge, les chiffres clés et le tableau passent juste en dessous. */}
+    <div class="space-y-4">
+      {/* Breadcrumb */}
+      <nav data-chrome aria-label="Breadcrumb" class="text-sm text-gray-500">
+        <ol class="flex items-center gap-1.5 flex-wrap">
+          <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+          <li class="before:content-['/'] before:mx-1.5 before:text-gray-300">{salary.grossFormatted} Salary</li>
+        </ol>
+      </nav>
+
+      {/* Heading */}
+      <div class="text-center max-w-5xl mx-auto">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+          {salary.grossFormatted} Salary in Ireland - Take Home Pay 2026
+        </h1>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          On a gross salary of {salary.grossFormatted} in Ireland, a single PAYE worker takes home
+          approximately <strong class="text-primary">{fmt(singleResult.netAnnual)}</strong> per year
+          or <strong class="text-primary">{fmt(singleResult.netMonthly)}</strong> per month after
+          income tax, USC, and PRSI deductions.
+        </p>
+      </div>
+
+      {/* Calculator */}
+      <div data-chrome>
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">Calculate Your Exact Take-Home Pay</h2>
+        <p class="text-gray-600 mb-4">
+          Adjust the salary, filing status, and pension contributions below to see your personalised breakdown.
+        </p>
+        <SalaryCalculator client:idle initialGross={salary.gross} />
+      </div>
+
+    </div>
 
     {/* Trust badge */}
     <div data-chrome class="flex flex-wrap items-center gap-3 text-xs text-gray-500">
@@ -93,19 +120,6 @@ import PayBreakdown from '../components/PayBreakdown.astro';
       <span>
         By <a href="/about/" class="font-medium text-gray-700 hover:text-primary">Radif Partners, Publisher of calculators and practical guides</a>
       </span>
-    </div>
-
-    {/* Heading */}
-    <div class="text-center max-w-5xl mx-auto">
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-        {salary.grossFormatted} Salary in Ireland - Take Home Pay 2026
-      </h1>
-      <p class="text-lg text-gray-600 leading-relaxed">
-        On a gross salary of {salary.grossFormatted} in Ireland, a single PAYE worker takes home
-        approximately <strong class="text-primary">{fmt(singleResult.netAnnual)}</strong> per year
-        or <strong class="text-primary">{fmt(singleResult.netMonthly)}</strong> per month after
-        income tax, USC, and PRSI deductions.
-      </p>
     </div>
 
     {/* Stat Cards */}
@@ -180,15 +194,6 @@ import PayBreakdown from '../components/PayBreakdown.astro';
           {a.paragraphs.map((p) => <p>{p}</p>)}
         </div>
       ))}
-    </div>
-
-    {/* Calculator */}
-    <div data-chrome>
-      <h2 class="text-xl font-semibold text-gray-900 mb-4">Calculate Your Exact Take-Home Pay</h2>
-      <p class="text-gray-600 mb-6">
-        Adjust the salary, filing status, and pension contributions below to see your personalised breakdown.
-      </p>
-      <SalaryCalculator client:idle />
     </div>
 
     {/* FAQ Section */}

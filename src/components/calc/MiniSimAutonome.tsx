@@ -9,6 +9,7 @@
  */
 import { type ChangeEvent, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { getSpec } from '../../lib/mini-specs';
+import StickyResult from './StickyResult';
 
 const C = {
   text: 'var(--color-text, #1f2937)', muted: 'var(--color-text-muted, #4b5563)', border: 'var(--color-border, #d1d5db)',
@@ -50,15 +51,18 @@ function Field({ id, label, value, onChange, unit, max = 1e9, decimals = 0, loca
   );
 }
 
-interface Props { kind: string; lang?: string; href?: string; locale?: string }
+/** `principal` : le simulateur de la page, juste sous le chapeau (résultat marqué `data-resultat`,
+ *  barre collante sur téléphone) ; `secondaire` : mini-simulateur dans le corps du texte (§9.3). */
+interface Props { kind: string; lang?: string; href?: string; locale?: string; principal?: boolean; secondaire?: boolean }
 
-export default function MiniSimAutonome({ kind, lang = 'en', href, locale = 'en-GB' }: Props) {
+export default function MiniSimAutonome({ kind, lang = 'en', href, locale = 'en-GB', principal = false, secondaire = false }: Props) {
+  const res = useRef<HTMLDivElement>(null);
   const spec = getSpec(kind, lang);
   const [v, setV] = useState<Record<string, number>>(() => Object.fromEntries(spec.inputs.map((i) => [i.id, i.def])));
   const out = useMemo(() => spec.run(v), [v, spec]);
   const set = (id: string) => (x: number) => setV((o) => ({ ...o, [id]: x }));
   return (
-    <div data-chrome data-mini={kind} className="not-prose rechner-mini my-8 rounded-xl border bg-white p-4 shadow-sm sm:p-5" style={{ borderColor: C.border }}>
+    <div data-chrome data-mini={kind} data-simulateur-secondaire={secondaire ? '' : undefined} className={`not-prose rechner-mini ${principal ? 'mb-8 mt-4' : 'my-8'} rounded-xl border bg-white p-4 shadow-sm sm:p-5`} style={{ borderColor: C.border }}>
       <p className="text-base font-semibold" style={{ color: C.text }}>{spec.title}</p>
       <div className="mt-3 grid gap-5 sm:grid-cols-2">
         <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
@@ -69,7 +73,7 @@ export default function MiniSimAutonome({ kind, lang = 'en', href, locale = 'en-
                 </select></div>
             : <Field key={i.id} id={`m-${kind}-${i.id}`} label={i.label} value={v[i.id]} onChange={set(i.id)} unit={i.unit} max={i.max} decimals={i.decimals} locale={locale} />)}
         </form>
-        <div aria-live="polite" className="rounded-lg p-4" style={{ background: C.surface }}>
+        <div ref={res} aria-live="polite" data-resultat={principal ? '' : undefined} className="rounded-lg p-4" style={{ background: C.surface }}>
           <p className="text-sm font-medium" style={{ color: C.muted }}>{out.head[0]}</p>
           <p className="tabular-nums mt-1 text-3xl font-bold" style={{ color: C.text }}>{out.head[1]}</p>
           <table className="mt-3 w-full text-sm"><tbody>
@@ -78,6 +82,7 @@ export default function MiniSimAutonome({ kind, lang = 'en', href, locale = 'en-
           {out.note && <p className="mt-2 text-xs" style={{ color: C.muted }}>{out.note}</p>}
         </div>
       </div>
+      {principal && <StickyResult target={res} label={out.head[0]} value={out.head[1]} />}
       {href && <a href={href} className="mt-4 inline-block text-sm font-medium hover:underline" style={{ color: C.link }}>{spec.cta} →</a>}
     </div>
   );

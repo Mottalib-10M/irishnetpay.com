@@ -1,6 +1,7 @@
 ---
 import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
+import ClampLines from '../../../components/ClampLines.astro';
 import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
 ---
 
@@ -8,7 +9,7 @@ import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
   title="USC in Ireland 2026: bands, exemptions and real cost"
   description="The four USC bands, the exemption threshold that works as a cliff rather than a slope, the reduced rates, and why credits and pensions do not reduce it."
 >
-  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-3">
     <ol class="flex items-center gap-1">
       <li><a href="/" class="hover:text-primary">Home</a></li>
       <li class="before:content-['/'] before:mx-1"><a href="/guides/" class="hover:text-primary">Guides</a></li>
@@ -20,8 +21,8 @@ import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
     <h1>USC (Universal Social Charge): Rates, Thresholds &amp; Exemptions 2026</h1>
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
-      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/usc-universal-social-charge/']}</p>
-<div data-chrome><MiniSimAutonome client:visible kind="usc" lang="en" locale="en-IE" href="/" /></div>
+      <ClampLines id="chapeau" class="leading-relaxed text-gray-700">{CITABLE['/guides/usc-universal-social-charge/']}</ClampLines>
+<div data-chrome><MiniSimAutonome client:visible principal kind="usc" lang="en" locale="en-IE" href="/" /></div>
 
 
 

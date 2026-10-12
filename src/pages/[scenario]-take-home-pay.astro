@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import SalaryCalculator from '../components/SalaryCalculator';
 import { taxScenarios, type TaxScenarioEntry } from '../lib/tax-credits-data';
 import { salaries } from '../lib/salaries-data';
+import type { FilingStatus } from '../lib/tax-rates-2026';
 
 export function getStaticPaths() {
   return taxScenarios.map((s) => ({
@@ -43,6 +44,11 @@ const faqSchema = {
 };
 
 const otherScenarios = taxScenarios.filter((s) => s.slug !== scenario.slug);
+
+/* Le calculateur s'ouvre sur la situation de la page (premier écran, RECETTE §5). La
+   cotisation retraite de départ est le plus bas des plafonds par âge (15 %, moins de 30 ans). */
+const STATUS: Record<string, FilingStatus> = { 'married-one-income': 'married_one_income', 'married-two-incomes': 'married_two_incomes', 'single-parent': 'single_parent' };
+const PENSION = 15;
 import { faqsSituation } from '../lib/faq-complement';
 import PayBreakdown from '../components/PayBreakdown.astro';
 ---
@@ -54,13 +60,40 @@ import PayBreakdown from '../components/PayBreakdown.astro';
 >
   <div class="space-y-10">
 
-    {/* Breadcrumb */}
-    <nav data-chrome aria-label="Breadcrumb" class="text-sm text-gray-500">
-      <ol class="flex items-center gap-1.5 flex-wrap">
-        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
-        <li class="before:content-['/'] before:mx-1.5 before:text-gray-300">{scenario.label} Take Home Pay</li>
-      </ol>
-    </nav>
+    {/* Premier écran (RECETTE §5, 2026-10-11) : titre, réponse directe, puis le simulateur ;
+        le badge, les chiffres clés et le tableau passent juste en dessous. */}
+    <div class="space-y-4">
+      {/* Breadcrumb */}
+      <nav data-chrome aria-label="Breadcrumb" class="text-sm text-gray-500">
+        <ol class="flex items-center gap-1.5 flex-wrap">
+          <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+          <li class="before:content-['/'] before:mx-1.5 before:text-gray-300">{scenario.label} Take Home Pay</li>
+        </ol>
+      </nav>
+
+      {/* Heading */}
+      <div class="text-center max-w-5xl mx-auto">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+          {scenario.label} - Take Home Pay Ireland 2026
+        </h1>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          Everything you need to know about tax credits, deductions, and net salary
+          as a {scenario.label.toLowerCase()} in Ireland. Use our calculator below to see your
+          exact take-home pay.
+        </p>
+      </div>
+
+      {/* Calculator */}
+      <div data-chrome>
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">Calculate Your Take-Home Pay</h2>
+        <p class="text-gray-600 mb-4">
+          Enter your gross salary and adjust the settings to match your {scenario.label.toLowerCase()} status.
+          The calculator shows your net pay after income tax, USC, and PRSI.
+        </p>
+        <SalaryCalculator client:idle initialStatus={STATUS[scenario.slug] ?? 'single'} initialPension={scenario.slug === 'pension-contributor' ? PENSION : 0} />
+      </div>
+
+    </div>
 
     {/* Trust badge */}
     <div data-chrome class="flex flex-wrap items-center gap-3 text-xs text-gray-500">
@@ -73,18 +106,6 @@ import PayBreakdown from '../components/PayBreakdown.astro';
       <span>
         By <a href="/about/" class="font-medium text-gray-700 hover:text-primary">Radif Partners, Publisher of calculators and practical guides</a>
       </span>
-    </div>
-
-    {/* Heading */}
-    <div class="text-center max-w-5xl mx-auto">
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-        {scenario.label} - Take Home Pay Ireland 2026
-      </h1>
-      <p class="text-lg text-gray-600 leading-relaxed">
-        Everything you need to know about tax credits, deductions, and net salary
-        as a {scenario.label.toLowerCase()} in Ireland. Use our calculator below to see your
-        exact take-home pay.
-      </p>
     </div>
 
     {/* Key Credits Cards */}
@@ -102,16 +123,6 @@ import PayBreakdown from '../components/PayBreakdown.astro';
     <div class="prose prose-slate max-w-none">
       <h2>Tax Credits and Deductions for a {scenario.label}</h2>
       <p>{scenario.description}</p>
-    </div>
-
-    {/* Calculator */}
-    <div data-chrome>
-      <h2 class="text-xl font-semibold text-gray-900 mb-4">Calculate Your Take-Home Pay</h2>
-      <p class="text-gray-600 mb-6">
-        Enter your gross salary and adjust the settings to match your {scenario.label.toLowerCase()} status.
-        The calculator shows your net pay after income tax, USC, and PRSI.
-      </p>
-      <SalaryCalculator client:idle />
     </div>
 
     {/* FAQ Section */}

@@ -113,6 +113,11 @@
   .clamp-more { display: inline-block; margin-top: 0.25rem; cursor: pointer; font-weight: 600; font-size: 0.9375rem; color: var(--color-primary); text-decoration: underline; text-underline-offset: 2px; }
   .clamp-toggle:checked ~ .clamp-more { display: none; }
   .clamp-toggle:focus-visible ~ .clamp-more { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+  /* Chapeau replie sur trois lignes (components/ClampLines.astro, RECETTE §5, 2026-10-11) :
+     le simulateur remonte dans le premier ecran, le paragraphe reste entier dans le HTML. */
+  .clamp-lines > p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; margin-bottom: 0; }
+  .clamp-lines > .clamp-toggle:checked ~ p { display: block; -webkit-line-clamp: unset; line-clamp: none; overflow: visible; }
+  .clamp-lines > .clamp-more { margin-top: 0.125rem; }
 }
 
 /*

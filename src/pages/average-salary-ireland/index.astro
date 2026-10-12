@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ClampLines from '../../components/ClampLines.astro';
 
 // Tous les chiffres viennent du Central Statistics Office, jeu EHQ03
 // (Average Earnings, Hours Worked, Employment and Labour Costs), trimestre
@@ -72,7 +73,7 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
   title="Average Salary in Ireland 2026: What the CSO Data Shows"
   description="Average weekly earnings reached €1,046.88 in the second quarter of 2026. What that means annually, how it splits by sector, and why the average misleads."
 >
-  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-3">
     <ol class="flex items-center gap-1">
       <li><a href="/" class="hover:text-primary">Home</a></li>
       <li class="before:content-['/'] before:mx-1">Average Salary Ireland</li>
@@ -82,7 +83,7 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
   <div class="prose prose-slate max-w-none">
     <h1>Average Salary in Ireland 2026: What the CSO Data Shows</h1>
 
-    <p>
+    <ClampLines id="chapeau">
       Average weekly earnings across all sectors in Ireland stood at <strong>&euro;{euro(HEBDO)}</strong>
       in {TRIMESTRE}, according to the Central Statistics Office. Multiplied across fifty-two weeks,
       that is <strong>&euro;{ANNUEL.toLocaleString('en-IE')} a year</strong> before tax. Average hourly
@@ -95,8 +96,8 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
       is not what a typical worker earns, it is not a median, and it is not a salary you should expect
       to be offered. What it is good for is comparison over time and between sectors, and that is how
       this page uses it.
-    </p>
-<MiniSimAutonome client:visible kind="takehome" lang="en" locale="en-IE" href="/" />
+    </ClampLines>
+<MiniSimAutonome client:visible principal kind="takehome" lang="en" locale="en-IE" href="/" />
 
 
     <h2>The headline numbers, and what each one measures</h2>
@@ -107,8 +108,8 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
       </thead>
       <tbody>
         <tr><td>Average weekly earnings</td><td>&euro;{euro(HEBDO)}</td><td>&euro;{ANNUEL.toLocaleString('en-IE')}</td></tr>
-        <tr><td>Average hourly earnings</td><td>&euro;{euro(HORAIRE)}</td><td>, </td></tr>
-        <tr><td>Average weekly paid hours</td><td>{HEURES} hours</td><td>, </td></tr>
+        <tr><td>Average hourly earnings</td><td>&euro;{euro(HORAIRE)}</td><td>–</td></tr>
+        <tr><td>Average weekly paid hours</td><td>{HEURES} hours</td><td>–</td></tr>
       </tbody>
     </table>
 
@@ -179,7 +180,7 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
             <td>{r.an}Q2</td>
             <td>&euro;{euro(r.hebdo)}</td>
             <td>&euro;{annuel(r.hebdo)}</td>
-            <td>{i === 0 ? ', ' : `+${(100 * (r.hebdo - serie[i - 1].hebdo) / serie[i - 1].hebdo).toFixed(1)} %`}</td>
+            <td>{i === 0 ? '–' : `+${(100 * (r.hebdo - serie[i - 1].hebdo) / serie[i - 1].hebdo).toFixed(1)} %`}</td>
           </tr>
         ))}
       </tbody>

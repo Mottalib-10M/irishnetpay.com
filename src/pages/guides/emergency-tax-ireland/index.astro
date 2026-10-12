@@ -1,6 +1,7 @@
 ---
 import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
+import ClampLines from '../../../components/ClampLines.astro';
 import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
 import { calculateSalary } from '../../../lib/engine';
 import { SRCOP, TAX_CREDITS, STANDARD_RATE, HIGHER_RATE } from '../../../lib/tax-rates-2026';
@@ -20,7 +21,7 @@ const flat = m50 * HIGHER_RATE;
   title="Emergency tax in Ireland: why it happens and the fix"
   description="What emergency tax costs, why Revenue applies it, the exact steps that stop it, and how long the refund takes once the correct RPN reaches your employer."
 >
-  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-3">
     <ol class="flex items-center gap-1">
       <li><a href="/" class="hover:text-primary">Home</a></li>
       <li class="before:content-['/'] before:mx-1"><a href="/guides/" class="hover:text-primary">Guides</a></li>
@@ -32,8 +33,8 @@ const flat = m50 * HIGHER_RATE;
     <h1>Emergency Tax in Ireland: Why It Happens &amp; How to Get a Refund</h1>
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
-      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/emergency-tax-ireland/']}</p>
-<div data-chrome><MiniSimAutonome client:visible kind="emergency" lang="en" locale="en-IE" href="/" /></div>
+      <ClampLines id="chapeau" class="leading-relaxed text-gray-700">{CITABLE['/guides/emergency-tax-ireland/']}</ClampLines>
+<div data-chrome><MiniSimAutonome client:visible principal kind="emergency" lang="en" locale="en-IE" href="/" /></div>
 
 
 

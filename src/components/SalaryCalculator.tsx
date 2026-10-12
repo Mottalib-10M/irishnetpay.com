@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
+import StickyResult from './calc/StickyResult';
 import { calculateSalary, type SalaryResult } from '../lib/engine';
 import type { FilingStatus } from '../lib/tax-rates-2026';
 
@@ -11,13 +12,16 @@ function pct(n: number): string {
   return (n * 100).toFixed(1) + '%';
 }
 
-export default function SalaryCalculator() {
+/** Valeurs de départ propres à la page (salaire de la page, situation du scénario). */
+interface Props { initialGross?: number; initialStatus?: FilingStatus; initialPension?: number }
+
+export default function SalaryCalculator({ initialGross = 50000, initialStatus = 'single', initialPension = 0 }: Props = {}) {
   // Le texte saisi est la source de verite ; les nombres en sont derives. Sans cela
   // un champ vide vaut `Number("") === 0`, l'etat repasse a 0 et React reecrit « 0 »
   // dans le champ : impossible de l'effacer.
-  const [grossText, setGrossText] = useState('50000');
-  const [filingStatus, setFilingStatus] = useState<FilingStatus>('single');
-  const [pensionText, setPensionText] = useState('0');
+  const [grossText, setGrossText] = useState(String(initialGross));
+  const [filingStatus, setFilingStatus] = useState<FilingStatus>(initialStatus);
+  const [pensionText, setPensionText] = useState(String(initialPension));
   const [creditsText, setCreditsText] = useState('0');
 
   // Le champ qu'on remplit garde son texte brut ; les autres affichent les
@@ -44,11 +48,15 @@ export default function SalaryCalculator() {
     return calculateSalary({ grossAnnual, filingStatus, pensionRate: pensionRate / 100, additionalCredits });
   }, [grossAnnual, filingStatus, pensionRate, additionalCredits]);
 
+  // Premier écran (RECETTE §5, 2026-10-11) : sur ordinateur, les champs à gauche et le
+  // résultat à droite ; le détail mensuel et annuel suit en dessous, sur toute la largeur.
+  const res = useRef<HTMLDivElement>(null);
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl shadow-sm border border-border p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Your Details</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+      <div className="bg-white rounded-xl shadow-sm border border-border p-5 sm:p-6">
+        <h2 className="text-lg font-semibold text-gray-900 mb-3">Your Details</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Gross Annual Salary</label>
             <div className="relative">
@@ -83,25 +91,25 @@ export default function SalaryCalculator() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-border p-6">
+      <div ref={res} aria-live="polite" data-resultat className="bg-white rounded-xl shadow-sm border border-border p-5 sm:p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Your Take-Home Pay</h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-          <div className="bg-green-50 rounded-lg p-4 text-center">
+        <div className="grid grid-cols-3 gap-3 mb-6">
+          <div className="bg-green-50 rounded-lg p-3 sm:p-4 text-center">
             <p className="text-xs text-gray-500 mb-1">Net Monthly</p>
-            <p className="text-2xl font-bold text-green-600">€{fmt(result.netMonthly)}</p>
+            <p className="text-xl sm:text-2xl font-bold text-green-600">€{fmt(result.netMonthly)}</p>
           </div>
-          <div className="bg-blue-50 rounded-lg p-4 text-center">
+          <div className="bg-blue-50 rounded-lg p-3 sm:p-4 text-center">
             <p className="text-xs text-gray-500 mb-1">Net Annual</p>
             <p className="text-xl font-bold text-primary">€{fmt(result.netAnnual)}</p>
           </div>
-          <div className="bg-gray-50 rounded-lg p-4 text-center">
+          <div className="bg-gray-50 rounded-lg p-3 sm:p-4 text-center">
             <p className="text-xs text-gray-500 mb-1">Effective Tax Rate</p>
             <p className="text-xl font-bold text-gray-700">{pct(result.effectiveTotalRate)}</p>
           </div>
         </div>
 
-        <div className="mb-6">
+        <div>
           <div className="w-full bg-gray-200 rounded-full h-5 overflow-hidden flex">
             <div className="bg-green-500 h-5 transition-all duration-500"
               style={{ width: `${grossAnnual > 0 ? (result.netAnnual / grossAnnual) * 100 : 0}%` }} />
@@ -119,7 +127,11 @@ export default function SalaryCalculator() {
             <span className="flex items-center gap-1"><span className="w-2 h-2 bg-blue-400 rounded-full inline-block" /> PRSI</span>
           </div>
         </div>
+      </div>
+      </div>
+      <StickyResult target={res} label="Net Monthly" value={`€${fmt(result.netMonthly)}`} />
 
+      <div className="bg-white rounded-xl shadow-sm border border-border p-5 sm:p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h3 className="text-sm font-semibold text-gray-700 mb-3">Monthly Breakdown</h3>

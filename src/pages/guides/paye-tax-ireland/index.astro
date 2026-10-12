@@ -1,6 +1,7 @@
 ---
 import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
+import ClampLines from '../../../components/ClampLines.astro';
 import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
 ---
 
@@ -8,7 +9,7 @@ import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
   title="PAYE income tax in Ireland: bands, credits and rates"
   description="How Irish income tax is actually calculated: the twenty and forty percent bands, the cut-off point, and the credits that cut the bill euro for euro each year."
 >
-  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-3">
     <ol class="flex items-center gap-1">
       <li><a href="/" class="hover:text-primary">Home</a></li>
       <li class="before:content-['/'] before:mx-1"><a href="/guides/" class="hover:text-primary">Guides</a></li>
@@ -20,8 +21,8 @@ import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
     <h1>PAYE Tax in Ireland: How It Works, Rates &amp; Bands 2026</h1>
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
-      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/paye-tax-ireland/']}</p>
-<div data-chrome><MiniSimAutonome client:visible kind="paye" lang="en" locale="en-IE" href="/" /></div>
+      <ClampLines id="chapeau" class="leading-relaxed text-gray-700">{CITABLE['/guides/paye-tax-ireland/']}</ClampLines>
+<div data-chrome><MiniSimAutonome client:visible principal kind="paye" lang="en" locale="en-IE" href="/" /></div>
 
 
 

@@ -1,6 +1,7 @@
 ---
 import { CITABLE } from '../../data/citable';
 import Layout from '../../layouts/Layout.astro';
+import ClampLines from '../../components/ClampLines.astro';
 
 const guides = [
   {
@@ -116,7 +117,7 @@ import { ALL_PAGES } from '../../data/welfare/index';
   title="Tax Guides - Irish Income Tax, USC, PRSI Explained (2026)"
   description="In-depth guides to PAYE income tax, USC, PRSI, tax credits, pension relief, emergency tax, married assessment, and starting your first job in Ireland."
 >
-  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-3">
     <ol class="flex items-center gap-1">
       <li><a href="/" class="hover:text-primary">Home</a></li>
       <li class="before:content-['/'] before:mx-1">Guides</li>
@@ -129,8 +130,8 @@ import { ALL_PAGES } from '../../data/welfare/index';
     </h1>
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
-      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/']}</p>
-<MiniSimAutonome client:visible kind="takehome" lang="en" locale="en-IE" href="/" />
+      <ClampLines id="chapeau" class="leading-relaxed text-gray-700">{CITABLE['/guides/']}</ClampLines>
+<MiniSimAutonome client:visible principal kind="takehome" lang="en" locale="en-IE" href="/" />
 
 
     <p class="text-lg text-gray-600 leading-relaxed">

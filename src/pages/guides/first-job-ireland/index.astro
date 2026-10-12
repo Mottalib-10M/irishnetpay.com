@@ -1,6 +1,7 @@
 ---
 import { CITABLE } from '../../../data/citable';
 import Layout from '../../../layouts/Layout.astro';
+import ClampLines from '../../../components/ClampLines.astro';
 import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
 import { calculateSalary } from '../../../lib/engine';
 import { TAX_CREDITS, STANDARD_RATE } from '../../../lib/tax-rates-2026';
@@ -13,7 +14,7 @@ const rows = [28000, 32000, 36000, 40000, 45000].map((g) => calculateSalary({ gr
   title="First job in Ireland: tax, credits and first payslip"
   description="What to register with Revenue before your first payday, which credits apply automatically, and how to read the payslip that arrives at the end of the month."
 >
-  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-3">
     <ol class="flex items-center gap-1">
       <li><a href="/" class="hover:text-primary">Home</a></li>
       <li class="before:content-['/'] before:mx-1"><a href="/guides/" class="hover:text-primary">Guides</a></li>
@@ -25,8 +26,8 @@ const rows = [28000, 32000, 36000, 40000, 45000].map((g) => calculateSalary({ gr
     <h1>Starting Your First Job in Ireland: Tax Registration &amp; What to Expect</h1>
       {/* §21 : the paragraph an answer engine can lift, before the rest of the
           body. The hero is one line: it does not extract. */}
-      <p class="mb-8 leading-relaxed text-gray-700">{CITABLE['/guides/first-job-ireland/']}</p>
-<div data-chrome><MiniSimAutonome client:visible kind="takehome" lang="en" locale="en-IE" href="/" /></div>
+      <ClampLines id="chapeau" class="leading-relaxed text-gray-700">{CITABLE['/guides/first-job-ireland/']}</ClampLines>
+<div data-chrome><MiniSimAutonome client:visible principal kind="takehome" lang="en" locale="en-IE" href="/" /></div>
 
 
 

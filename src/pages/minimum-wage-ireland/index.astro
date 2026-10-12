@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ClampLines from '../../components/ClampLines.astro';
 import { calculateSalary } from '../../lib/engine';
 import { MINIMUM_WAGE_HOURLY, LIVING_WAGE_HOURLY } from '../../lib/tax-rates-2026';
 
@@ -70,7 +71,7 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
   title="Minimum Wage Ireland 2026: Rates, Take-Home Pay and Rules"
   description="The national minimum wage is €14.15 an hour in 2026. What it leaves after tax, the reduced rates for young workers, and how it sits against the living wage."
 >
-  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-3">
     <ol class="flex items-center gap-1">
       <li><a href="/" class="hover:text-primary">Home</a></li>
       <li class="before:content-['/'] before:mx-1">Minimum Wage Ireland</li>
@@ -80,7 +81,7 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
   <div class="prose prose-slate max-w-none">
     <h1>Minimum Wage Ireland 2026: Rates, Take-Home Pay and Rules</h1>
 
-    <p>
+    <ClampLines id="chapeau">
       The national minimum wage in Ireland is <strong>&euro;{eur2(MINIMUM_WAGE_HOURLY)} an hour</strong>
       in 2026, for employees aged twenty and over. On a thirty-nine hour week that is
       &euro;{eur(brut(MINIMUM_WAGE_HOURLY))} a year before deductions, and
@@ -93,8 +94,8 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
       than it sounds, because entitlement is calculated over a pay reference period rather than per
       shift. What follows sets out the reduced rates for younger workers, what actually counts as
       pay for the purpose of meeting the floor, and how the minimum compares with the living wage.
-    </p>
-<MiniSimAutonome client:visible kind="minwage" lang="en" locale="en-IE" href="/" />
+    </ClampLines>
+<MiniSimAutonome client:visible principal kind="minwage" lang="en" locale="en-IE" href="/" />
 
 
     <h2>The rates in 2026</h2>
@@ -165,7 +166,7 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
           <tr>
             <td>{r.an}</td>
             <td>&euro;{eur2(r.taux)}</td>
-            <td>{i === 0 ? ', ' : (r.taux === historique[i - 1].taux ? 'unchanged' : `+${(100 * (r.taux - historique[i - 1].taux) / historique[i - 1].taux).toFixed(1)} %`)}</td>
+            <td>{i === 0 ? '–' : (r.taux === historique[i - 1].taux ? 'unchanged' : `+${(100 * (r.taux - historique[i - 1].taux) / historique[i - 1].taux).toFixed(1)} %`)}</td>
             <td>&euro;{eur(brut(r.taux))}</td>
           </tr>
         ))}
