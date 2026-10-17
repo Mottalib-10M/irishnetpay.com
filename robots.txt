@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Sitemap: https://irishnetpay.com/sitemap-index.xml
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+Disallow: /*?*
