@@ -1,16 +1,17 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { CONTACT_EMAIL, LEGAL } from '../../data/site-config';
+import { CONTACT_EMAIL, GA4_ID, LEGAL } from '../../data/site-config';
 ---
 
-<Layout title="Privacy policy of this Irish salary calculator 2026" description="Your gross pay, tax credits and PRSI class never leave your browser. irishnetpay.com sets no cookies and keeps no personal data; only site stability is checked.">
+<Layout title="Privacy policy of this Irish salary calculator 2026" description="Your gross pay, tax credits and PRSI class never leave your browser. Google Analytics audience cookies, no advertising, cookieless stability checks, and your rights.">
   <div class="mx-auto max-w-5xl px-4 pt-4 pb-8 prose prose-slate">
     <h1>Privacy Policy</h1>
-    <p><em>Last updated: 6 October 2026</em></p>
+    <p><em>Last updated: 17 October 2026</em></p>
     <p>
       irishnetpay.com is published by {LEGAL.entityName}. This policy explains, under the General Data Protection
       Regulation (GDPR) and Ireland’s Data Protection Act 2018, what happens to information about your visit. Put
-      simply: the site sets no cookies and the publisher stores no personal data about you.
+      simply: what you type stays in your browser, the site shows no advertising, and the only cookies are those of
+      Google Analytics audience measurement.
     </p>
 
     <h2>Figures you enter</h2>
@@ -21,12 +22,36 @@ import { CONTACT_EMAIL, LEGAL } from '../../data/site-config';
       saved on your device either; closing the tab clears it.
     </p>
 
-    <h2>Cookies</h2>
+    <h2 id="cookies">Cookies</h2>
     <p>
-      Neither the calculators nor the stability tool described below set any cookie, and nothing is written to your
-      browser’s local or session storage. That is why no cookie banner appears: there is nothing to accept or
-      refuse. The site carries no advertising and no advertising trackers.
+      What you type in the calculators is never stored in your browser. The only cookies are those of
+      Google Analytics audience measurement, described below; there is no advertising cookie and no social media
+      cookie. The site carries no advertising.
     </p>
+    <table>
+      <thead><tr><th>Name</th><th>Provider</th><th>Purpose</th><th>Lifetime</th></tr></thead>
+      <tbody>
+        <tr><td><code>_ga</code></td><td>Google Analytics</td><td>Tell visitors apart with a random identifier</td><td>13 months at most (390 days)</td></tr>
+        <tr><td><code>_ga_{GA4_ID.replace('G-', '')}</code></td><td>Google Analytics</td><td>Keep the state of the current visit</td><td>13 months at most (390 days)</td></tr>
+      </tbody>
+    </table>
+    <p>These lifetimes are not extended on each visit; Google’s default is 2 years and the site shortens it.</p>
+
+    <h2>Audience measurement with Google Analytics</h2>
+    <p>
+      The site uses Google Analytics 4 to count visits and see which pages are useful: pages viewed, referring page,
+      visit length, device and browser type, approximate country and city. The IP address is anonymised: Google
+      Analytics 4 neither logs nor stores it. The page address sent to Google is stripped of its parameters, so the
+      figures you enter are never included. Ad storage, ad user data, ad personalisation and Google signals are
+      switched off, and measurement data is shared with no advertiser.
+    </p>
+    <ul>
+      <li><strong>Processor</strong>: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland, acting on the publisher’s behalf (Article 28 GDPR). Data may be transferred to Google LLC in the United States under the EU–U.S. Data Privacy Framework and the European Commission’s standard contractual clauses.</li>
+      <li><strong>Purpose</strong>: audience measurement.</li>
+      <li><strong>Retention</strong>: 14 months for visit-level and identifier-level data, then deletion; only anonymous totals remain.</li>
+      <li><strong>Legal basis</strong>: the publisher’s legitimate interests (Article 6(1)(f) GDPR).</li>
+      <li><strong>Objecting</strong>: block or delete cookies in your browser settings, or install the <a href="https://tools.google.com/dlpage/gaoptout" rel="nofollow noopener" target="_blank">Google Analytics opt-out browser add-on</a>. The calculators work exactly the same.</li>
+    </ul>
 
     <h2>Anonymous stability monitoring</h2>
     <p>
@@ -60,9 +85,9 @@ import { CONTACT_EMAIL, LEGAL } from '../../data/site-config';
 
     <h2>Your rights</h2>
     <p>
-      The GDPR gives you rights of access, rectification, erasure, restriction and objection. As the publisher keeps
-      no data about you, in practice they apply to any email you have sent, and, for stability monitoring, can also be
-      exercised with Microsoft. You may complain to the {LEGAL.supervisoryAuthority}
+      The GDPR gives you rights of access, rectification, erasure, restriction and objection. With no user accounts, the
+      publisher usually holds no data that identifies you; in practice they apply to any email you have sent and to
+      audience measurement, and can also be exercised with Google or Microsoft. You may complain to the {LEGAL.supervisoryAuthority}
       (<a href={LEGAL.supervisoryAuthorityUrl} rel="nofollow noopener" target="_blank">how to contact the DPC</a>), or to
       the CNIL in France, where the publisher is established.
     </p>

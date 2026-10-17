@@ -1,6 +1,6 @@
 ---
 import LegalIdentity from '../../components/LegalIdentity.astro';
-import { LEGAL } from '../../data/site-config';
+import { GA4_ID, LEGAL } from '../../data/site-config';
 import Layout from '../../layouts/Layout.astro';
 ---
 
@@ -19,6 +19,6 @@ import Layout from '../../layouts/Layout.astro';
     <h2>Disclaimer</h2>
     <p>Results are estimates based on 2026 tax rates and thresholds. They do not constitute tax advice. Consult Revenue.ie or a qualified tax advisor for your specific situation.</p>
     <h2>Personal data and cookies</h2>
-    <p>The calculators keep nothing: the salary and credits you enter are processed in your browser and disappear when you close the tab. The site sets no cookies and the publisher records no personal data. The only measurement is an anonymous, technical check of page stability with Microsoft Clarity, cookieless and with content masked. See our <a href="/privacy/">privacy policy</a>.</p>
+    <p>The calculators keep nothing: the salary and credits you enter are processed in your browser and disappear when you close the tab. The site sets Google Analytics audience measurement cookies (<code>_ga</code>, <code>_ga_{GA4_ID.replace('G-', '')}</code>, 13 months at most), with no advertising; page stability is monitored with Microsoft Clarity, cookieless and with content masked. Details, legal basis and how to object: our <a href="/privacy/">privacy policy</a> and its <a href="/privacy/#cookies">cookies</a> section.</p>
   </div>
 </Layout>
