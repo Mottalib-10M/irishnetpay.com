@@ -147,7 +147,7 @@ import PayBreakdown from '../components/PayBreakdown.astro';
         <h2 class="text-lg font-semibold text-gray-900">
           {salary.grossFormatted} Salary - Comparison by Filing Status
         </h2>
-        <p class="text-sm text-gray-500 mt-1">No pension contribution, standard tax credits only.</p>
+        <p class="text-sm text-gray-500 mt-1">No pension contribution, standard tax credits only (no Home Carer credit). Married with two incomes: this salary is taken as the higher of the two, so {fmt(scenarios[2].result.standardRateBand)} of it is taxed at 20%; the €35,000 increase only applies to the other spouse's income.</p>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">

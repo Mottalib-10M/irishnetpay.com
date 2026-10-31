@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef } from 'react';
 import StickyResult from './calc/StickyResult';
 import { calculateSalary, type SalaryResult } from '../lib/engine';
-import type { FilingStatus } from '../lib/tax-rates-2026';
+import { type FilingStatus, TAX_CREDITS } from '../lib/tax-rates-2026';
 
 function fmt(n: number): string {
   // Entiers a l'ecran, decimales dans les calculs.
@@ -23,6 +23,10 @@ export default function SalaryCalculator({ initialGross = 50000, initialStatus =
   const [filingStatus, setFilingStatus] = useState<FilingStatus>(initialStatus);
   const [pensionText, setPensionText] = useState(String(initialPension));
   const [creditsText, setCreditsText] = useState('0');
+  // Marié, deux revenus : le salaire du conjoint fixe la part de la tranche à 20 % (audit de Sami du 2026-10-28).
+  const [spouseText, setSpouseText] = useState('');
+  // Marié, un revenu : crédit Home Carer seulement si le conjoint au foyer s'occupe d'une personne à charge.
+  const [homeCarer, setHomeCarer] = useState(false);
 
   // Le champ qu'on remplit garde son texte brut ; les autres affichent les
   // milliers separes par la virgule anglaise.
@@ -43,10 +47,11 @@ export default function SalaryCalculator({ initialGross = 50000, initialStatus =
   // frappe faisait apparaitre « 40 » a qui tapait « 500 ».
   const pensionRate = nombre(pensionText, 40);
   const additionalCredits = nombre(creditsText);
+  const spouseIncome = spouseText.trim() === '' ? undefined : nombre(spouseText.replace(/,/g, ''));
 
   const result: SalaryResult = useMemo(() => {
-    return calculateSalary({ grossAnnual, filingStatus, pensionRate: pensionRate / 100, additionalCredits });
-  }, [grossAnnual, filingStatus, pensionRate, additionalCredits]);
+    return calculateSalary({ grossAnnual, filingStatus, pensionRate: pensionRate / 100, additionalCredits, spouseIncome, homeCarer });
+  }, [grossAnnual, filingStatus, pensionRate, additionalCredits, spouseIncome, homeCarer]);
 
   // Premier écran (RECETTE §5, 2026-10-11) : sur ordinateur, les champs à gauche et le
   // résultat à droite ; le détail mensuel et annuel suit en dessous, sur toute la largeur.
@@ -58,17 +63,17 @@ export default function SalaryCalculator({ initialGross = 50000, initialStatus =
         <h2 className="text-lg font-semibold text-gray-900 mb-3">Your Details</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Gross Annual Salary</label>
+            <label htmlFor="inp-gross" className="block text-sm font-medium text-gray-700 mb-1">Gross Annual Salary</label>
             <div className="relative">
               <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm" aria-hidden="true">€</span>
-              <input type="text" value={affiche(grossText, "gross")} onChange={e => setGrossText(nettoie(e.target.value))} onFocus={() => setChampActif("gross")} onBlur={() => setChampActif(null)} inputMode="decimal"
+              <input id="inp-gross" type="text" value={affiche(grossText, "gross")} onChange={e => setGrossText(nettoie(e.target.value))} onFocus={() => setChampActif("gross")} onBlur={() => setChampActif(null)} inputMode="decimal"
                 className="w-full rounded-lg border-gray-300 border pl-7 pr-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} step="any" />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Filing Status</label>
+            <label htmlFor="inp-status" className="block text-sm font-medium text-gray-700 mb-1">Filing Status</label>
             <div className="relative self-start">
-              <select value={filingStatus} onChange={e => setFilingStatus(e.target.value as FilingStatus)}
+              <select id="inp-status" value={filingStatus} onChange={e => setFilingStatus(e.target.value as FilingStatus)}
                 className="w-full appearance-none truncate rounded-lg border-gray-300 border bg-white pl-3 pr-10 py-2 focus:ring-2 focus:ring-primary focus:border-primary">
                 <option value="single">Single</option>
                 <option value="married_one_income">Married (one income)</option>
@@ -78,16 +83,38 @@ export default function SalaryCalculator({ initialGross = 50000, initialStatus =
               <svg className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M5 7.5l5 5 5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </div>
           </div>
+          {filingStatus === 'married_two_incomes' && (
+            <div>
+              <label htmlFor="inp-spouse" className="block text-sm font-medium text-gray-700 mb-1">Spouse's Gross Annual Income</label>
+              <div className="relative">
+                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm" aria-hidden="true">€</span>
+                <input id="inp-spouse" type="text" value={affiche(spouseText, "spouse")} onChange={e => setSpouseText(nettoie(e.target.value))} onFocus={() => setChampActif("spouse")} onBlur={() => setChampActif(null)} inputMode="decimal" aria-describedby="inp-spouse-note"
+                  className="w-full rounded-lg border-gray-300 border pl-7 pr-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} step="any" />
+              </div>
+              <p id="inp-spouse-note" className="mt-1 text-xs text-gray-500">
+                {spouseIncome === undefined || grossAnnual >= spouseIncome ? 'Taken as the higher earner' : 'Your spouse is the higher earner'}: €{fmt(result.standardRateBand)} of your salary is taxed at 20%.
+              </p>
+            </div>
+          )}
+          {filingStatus === 'married_one_income' && (
+            <div className="flex items-start gap-2 sm:pt-6">
+              <input id="inp-carer" type="checkbox" checked={homeCarer} onChange={e => setHomeCarer(e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+              <label htmlFor="inp-carer" className="text-sm text-gray-700">
+                Spouse at home cares for a dependent person (child with Child Benefit, person aged 65+ or incapacitated): Home Carer Tax Credit €{fmt(TAX_CREDITS.home_carer)}
+              </label>
+            </div>
+          )}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Pension Contribution (%)</label>
-            <input type="text" value={pensionText} onChange={e => setPensionText(e.target.value.replace(/[^\d.,]/g, ""))} inputMode="decimal"
+            <label htmlFor="inp-pension" className="block text-sm font-medium text-gray-700 mb-1">Pension Contribution (%)</label>
+            <input id="inp-pension" type="text" value={pensionText} onChange={e => setPensionText(e.target.value.replace(/[^\d.,]/g, ""))} inputMode="decimal"
               className="w-full rounded-lg border-gray-300 border px-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} max={40} step="any" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Extra Tax Credits (annual)</label>
+            <label htmlFor="inp-credits" className="block text-sm font-medium text-gray-700 mb-1">Extra Tax Credits (annual)</label>
             <div className="relative">
               <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm" aria-hidden="true">€</span>
-              <input type="text" value={affiche(creditsText, "credits")} onChange={e => setCreditsText(nettoie(e.target.value))} onFocus={() => setChampActif("credits")} onBlur={() => setChampActif(null)} inputMode="decimal"
+              <input id="inp-credits" type="text" value={affiche(creditsText, "credits")} onChange={e => setCreditsText(nettoie(e.target.value))} onFocus={() => setChampActif("credits")} onBlur={() => setChampActif(null)} inputMode="decimal"
                 className="w-full rounded-lg border-gray-300 border pl-7 pr-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary" min={0} step="any" />
             </div>
           </div>

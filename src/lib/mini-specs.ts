@@ -1,6 +1,6 @@
 /** Mini-simulateurs des guides (RECETTE §9.3), calculés par le moteur fiscal irlandais. */
 import { calculateSalary } from './engine';
-import { USC_EXEMPTION, SRCOP } from './tax-rates-2026';
+import { USC_EXEMPTION } from './tax-rates-2026';
 import type { MiniSpec } from './mini-types';
 import { WELFARE_SPECS } from './welfare-specs';
 
@@ -16,7 +16,7 @@ const SPECS: Record<string, MiniSpec> = {
     const r = C(s, t); return { head: ['Take-home per month', eur(r.netMonthly)], rows: [['Income tax per year', eur(r.incomeTaxNet)], ['USC per year', eur(r.usc)], ['PRSI per year', eur(r.prsi)]] };
   } },
   paye: { title: 'PAYE on your salary', cta: 'Full salary calculator', inputs: [salary(), { id: 't', label: 'Tax status', def: 0, options: STATUS }], run: ({ s, t }) => {
-    const r = C(s, t); return { head: ['Income tax after credits', eur(r.incomeTaxNet)], rows: [['Tax before credits', eur(r.incomeTaxGross)], ['Tax credits', eur(r.taxCreditsTotal)], ['Standard rate band', eur(SRCOP[ST[t] ?? 'single'])]] };
+    const r = C(s, t); return { head: ['Income tax after credits', eur(r.incomeTaxNet)], rows: [['Tax before credits', eur(r.incomeTaxGross)], ['Tax credits', eur(r.taxCreditsTotal)], ['Standard rate band', eur(r.standardRateBand)]] };
   } },
   usc: { title: 'Your Universal Social Charge', cta: 'Full salary calculator', inputs: [salary()], run: ({ s }) => {
     const r = C(s); return { head: ['USC per year', eur(r.usc)], rows: [['Per month', eur(r.uscMonthly)], ['Exempt below', eur(USC_EXEMPTION)], ['Effective USC rate', pct(r.effectiveUSCRate)]] };

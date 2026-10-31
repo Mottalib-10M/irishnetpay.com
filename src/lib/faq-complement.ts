@@ -38,7 +38,7 @@ export function faqsSalaire(s: SalaryEntry): FAQ[] {
   /* Ce que la pension coute reellement : la cotisation, moins le net regagne. */
   const coutNetPension = s.gross * 0.05 - (r.netAnnual - avecPension.netAnnual);
   const tauxEffectif = (r.totalDeductions / s.gross) * 100;
-  const auDessusSRCOP = s.gross > 42000;
+  const auDessusSRCOP = r.taxableIncome > r.standardRateBand;
 
   return [
     {

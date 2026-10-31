@@ -226,7 +226,7 @@ export const salaries: SalaryEntry[] = [
       {
         question: 'What is the marginal tax rate on €80,000?',
         answer:
-          'At €80,000, your marginal rate is 52.2%: 40% income tax + 8% USC (as you are above the €70,044 threshold) + 4.2% PRSI. This means for every additional euro earned above this level, about 52 cent goes to tax and charges.',
+          'At €80,000, your marginal rate is 52.35%: 40% income tax + 8% USC (as you are above the €70,044 threshold) + 4.35% PRSI (the rate since 1 October 2026). This means for every additional euro earned above this level, about 52 cent goes to tax and charges.',
       },
       {
         question: 'How much can I save in tax through pension contributions?',

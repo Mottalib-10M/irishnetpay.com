@@ -21,6 +21,14 @@ export const SRCOP: Record<FilingStatus, number> = {
   single_parent: 48_000,
 };
 
+/**
+ * Married couple or civil partners, both with income: the €53,000 band is increased by the lower of €35,000 and the
+ * income of the spouse with the lower income. The increase is not transferable between spouses, so one salary never
+ * uses the full €88,000 (Revenue, "Tax rates, bands and reliefs", tax relief charts, read on 2026-10-31).
+ */
+export const MARRIED_BASE_BAND = 53_000;
+export const MARRIED_TWO_INCOMES_INCREASE_MAX = 35_000;
+
 // --- Tax Credits (annual) ---
 
 export const TAX_CREDITS = {
@@ -29,7 +37,10 @@ export const TAX_CREDITS = {
   employee_paye: 2_000,
   earned_income: 2_000, // For self-employed (not used for PAYE workers)
   single_parent: 1_900, // Single Person Child Carer Credit
-  home_carer: 1_950, // Home Carer Tax Credit (married, one earner)
+  // Home Carer Tax Credit: married couple or civil partners, one spouse caring at home for a dependent person (a child
+  // for whom Child Benefit is paid, a person aged 65 or over, or a permanently incapacitated person). Not automatic:
+  // the calculator only adds it when the box is ticked (Revenue, Home Carer Tax Credit, read on 2026-10-31).
+  home_carer: 1_950,
 };
 
 // --- Universal Social Charge (USC) ---

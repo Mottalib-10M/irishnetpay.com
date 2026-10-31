@@ -19,12 +19,46 @@ describe('Income Tax', () => {
   });
 
   it('applies married one income SRCOP and credits', () => {
-    const r = calculateSalary({ grossAnnual: 60_000, filingStatus: 'married_one_income', ...DEFAULT });
+    const r = calculateSalary({ grossAnnual: 60_000, filingStatus: 'married_one_income', homeCarer: true, ...DEFAULT });
     // SRCOP = 53000: 53000×0.20 + 7000×0.40 = 10600 + 2800 = 13400
     // Credits: 4000 (married) + 2000 (PAYE) + 1950 (home carer) = 7950
     // Net tax = 13400 - 7950 = 5450
     expect(r.incomeTaxGross).toBeCloseTo(13_400, 0);
     expect(r.incomeTaxNet).toBeCloseTo(5_450, 0);
+  });
+
+  // Audit de Sami du 2026-10-28 ; règles lues sur revenue.ie le 2026-10-31.
+  it('adds the Home Carer credit only when a dependent person is cared for', () => {
+    const sans = calculateSalary({ grossAnnual: 70_000, filingStatus: 'married_one_income', ...DEFAULT });
+    expect(sans.taxCreditsTotal).toBe(6_000);
+    expect(Math.round(sans.netAnnual)).toBe(54_001);
+    const avec = calculateSalary({ grossAnnual: 70_000, filingStatus: 'married_one_income', homeCarer: true, ...DEFAULT });
+    expect(avec.taxCreditsTotal).toBe(7_950);
+    expect(Math.round(avec.netAnnual)).toBe(55_951);
+  });
+
+  it('married two incomes: one salary uses €53,000 at 20%, never the couple\'s €88,000', () => {
+    const r = calculateSalary({ grossAnnual: 88_000, filingStatus: 'married_two_incomes', ...DEFAULT });
+    expect(r.standardRateBand).toBe(53_000);
+    expect(r.incomeTaxGross).toBeCloseTo(24_600, 0); // 53000×0.2 + 35000×0.4
+    const r60 = calculateSalary({ grossAnnual: 60_000, filingStatus: 'married_two_incomes', spouseIncome: 30_000, ...DEFAULT });
+    expect(r60.incomeTaxGross).toBeCloseTo(13_400, 0); // 53000×0.2 + 7000×0.4, 1,400 more than with an €88,000 band
+  });
+
+  it('married two incomes: the lower earner uses the €35,000 increase plus any unused base band', () => {
+    // Spouse earns 70,000 (uses the full 53,000): this 40,000 salary has 35,000 at 20%.
+    const a = calculateSalary({ grossAnnual: 40_000, filingStatus: 'married_two_incomes', spouseIncome: 70_000, ...DEFAULT });
+    expect(a.standardRateBand).toBe(35_000);
+    expect(a.incomeTaxGross).toBeCloseTo(9_000, 0); // 35000×0.2 + 5000×0.4
+    // Spouse earns 45,000: 8,000 of the base band is unused and can go to this salary.
+    const b = calculateSalary({ grossAnnual: 40_000, filingStatus: 'married_two_incomes', spouseIncome: 45_000, ...DEFAULT });
+    expect(b.standardRateBand).toBe(43_000);
+    expect(b.incomeTaxGross).toBeCloseTo(8_000, 0);
+  });
+
+  it('marginal rate uses PRSI at 4.35% (rate since 1 October 2026)', () => {
+    expect(calculateSalary({ grossAnnual: 60_000, filingStatus: 'single', ...DEFAULT }).marginalRate).toBeCloseTo(0.4735, 4);
+    expect(calculateSalary({ grossAnnual: 80_000, filingStatus: 'single', ...DEFAULT }).marginalRate).toBeCloseTo(0.5235, 4);
   });
 
   it('applies single parent credits', () => {

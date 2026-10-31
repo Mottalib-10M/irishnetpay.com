@@ -35,10 +35,10 @@ const effectif = (base.totalDeductions / brut) * 100;
 const pensionBrut = brut * 0.05;
 const pensionCoutNet = base.netAnnual - avecPension.netAnnual;
 const pensionGratuit = pensionBrut - pensionCoutNet;
-/* PRSI employeur : 8,8 % sous le seuil hebdomadaire, 11,05 % au-dessus. */
-const tauxEmployeur = brut / 52 > 527 ? 0.1105 : 0.088;
-const coutEmployeur = brut * (1 + tauxEmployeur);
-const auDessusSRCOP = brut > 42000;
+/* PRSI employeur et seuil à 20 % repris du moteur (taux et seuils de tax-rates-2026.ts). */
+const tauxEmployeur = brut > 0 ? base.employerPRSI / brut : 0;
+const coutEmployeur = base.totalEmployerCost;
+const auDessusSRCOP = base.taxableIncome > base.standardRateBand;
 const auDessusUSC = brut > 70044;
 const sujet = libelle ?? eur(brut);
 ---

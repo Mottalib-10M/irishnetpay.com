@@ -2,6 +2,8 @@
  * Téléphone : tant que le bloc du résultat est sous l'écran, une barre collée en bas
  * montre le chiffre clé (RECETTE §5, règle du 2026-10-11). Ajoutée côté client
  * seulement : aucun texte en double dans le HTML servi.
+ * Elle n'apparaît qu'après un premier défilement ou une première saisie : à l'ouverture sur
+ * iPhone, elle recouvrait le champ du salaire (audit de Sami du 2026-10-28).
  */
 import { type RefObject, useEffect, useState } from 'react';
 
@@ -17,9 +19,22 @@ export function useBelow(ref: RefObject<HTMLElement | null>) {
   return below;
 }
 
+function useEngaged() {
+  const [engaged, setEngaged] = useState(false);
+  useEffect(() => {
+    if (engaged) return;
+    const on = () => setEngaged(true);
+    window.addEventListener('scroll', on, { passive: true, once: true });
+    window.addEventListener('input', on, { once: true });
+    return () => { window.removeEventListener('scroll', on); window.removeEventListener('input', on); };
+  }, [engaged]);
+  return engaged;
+}
+
 export default function StickyResult({ target, label, value }: { target: RefObject<HTMLElement | null>; label: string; value: string }) {
   const below = useBelow(target);
-  if (!below) return null;
+  const engaged = useEngaged();
+  if (!below || !engaged) return null;
   return (
     <button type="button" aria-hidden="true" tabIndex={-1}
       onClick={() => target.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}

@@ -58,7 +58,7 @@ export const taxScenarios: TaxScenarioEntry[] = [
       {
         question: 'How much extra tax do married one-income couples save?',
         answer:
-          'Compared to a single person, a married one-income couple saves approximately €3,675 to €5,475 per year in income tax, depending on salary level. This comes from the higher SRCOP (€53,000 vs €44,000), double Personal Tax Credit (€4,000 vs €2,000), and the Home Carer Credit (€1,950) if applicable.',
+          'Compared to a single person, a married one-income couple saves up to €3,800 a year in income tax: €2,000 from the double Personal Tax Credit (€4,000 vs €2,000) and up to €1,800 from the higher SRCOP (€53,000 vs €44,000, reached from a salary of €53,000). The Home Carer Credit adds €1,950 when the spouse at home cares for a dependent person, for up to €5,750 in all.',
       },
       {
         question: 'What is the Home Carer Tax Credit?',
