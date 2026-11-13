@@ -20,7 +20,7 @@ export const page: WelfarePage = {
   simHref: '/social-welfare/jobseekers-benefit/',
   sections: [
     {
-      h2: 'The maximum rate for your household',
+      h2: "The maximum Jobseeker's Allowance rate for your household",
       html: `<p>The means test starts from a ceiling, the most the household could get with no means at all. It is the personal rate, plus an increase for a qualified adult if your spouse, civil partner or cohabitant depends on you, plus the Child Support Payment for each child. A couple with two children under 12 and no income has a maximum of ${e(familyMax, 2)} a week.</p>
 ${table(['Situation', 'Personal rate', 'Qualified adult'], [
   ['Aged 25 or over', e(JA.personal), e(JA.adult, 2)],

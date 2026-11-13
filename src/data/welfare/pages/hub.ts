@@ -18,7 +18,7 @@ export const page: WelfarePage = {
   simHref: '/social-welfare/jobseekers-benefit/',
   sections: [
     {
-      h2: 'Weekly rates in 2026 at a glance',
+      h2: 'Social welfare rates in Ireland for 2026 at a glance',
       html: `${table(['Payment', 'Type', 'Maximum personal rate', 'Calculator'], [
   ["Jobseeker's Pay-Related Benefit", 'PRSI, pay-related', `${p(l1.rate)} of pay, up to ${e(l1.cap)}`, '<a href="/social-welfare/jobseekers-benefit/">Pay-related rate</a>'],
   ["Jobseeker's Benefit", 'PRSI, graduated', e(top.personal), '<a href="/social-welfare/jobseekers-benefit/">Part-time weeks</a>'],

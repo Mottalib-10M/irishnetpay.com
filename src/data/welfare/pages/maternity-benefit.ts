@@ -33,7 +33,7 @@ export const page: WelfarePage = {
 <p>The Illness Benefit side also depends on your earnings in the relevant tax year (2024 for leave starting in 2026). A parent who earned less than ${e(GRADUATED_BANDS[0].from)} a week on average that year has a lower personal rate in the comparison, which can make the top-up smaller.</p>`,
     },
     {
-      h2: 'PRSI conditions',
+      h2: 'PRSI conditions for Maternity Benefit',
       html: `<p>Contributions from employment (Classes A, E and H) and self-employment (Class S) both count. One of three conditions must be met at the start of the leave:</p>
 <ul>
 <li>${n(FAMILY_LEAVE.minPaidInYear)} weeks of PRSI paid in the 12 months before the first day of leave; or</li>

@@ -39,7 +39,7 @@ ${table(['Yearly average', 'Rate at 100 %'], SPC.yaBands.map((b, i) => [i === 0 
 <p>The yearly average is rounded to the nearest whole number, 47.5 becoming 48. Take someone with ${n(1040)} paid contributions over 20 years in insurance: a yearly average of 52, the top band, but only half the TCA target. Drawn in 2026, the TCA alone pays ${e(gap.tcaRate, 2)}, while the combined approach pays ${p(ya2026, 0)} × ${e(gap.yaRate, 2)} + ${p(1 - ya2026, 0)} × ${e(gap.tcaRate, 2)} = ${e(gap.combined, 2)}, which is what they receive. The same record drawn in 2030 gives ${e(gap2030.weekly, 2)}.</p>`,
     },
     {
-      h2: 'Drawing the pension later',
+      h2: 'Drawing the State Pension later',
       html: `<p>Since January 2024 the pension can be drawn at any age from 66 to 70, with an actuarially increased rate. You choose the drawdown date; contributions paid until then count, which can matter for anyone short of ${n(SPC.minPaid)}. The year of drawdown, not the year you turn 66, sets which combined approach applies.</p>
 ${table(['Age at drawdown', 'Maximum weekly rate 2026'], ages.map((a) => [String(a), e(SPC.byAge[a], 2)]), 'Flexible pension: maximum rates (TCA 100 %)')}
 <p>For someone on less than the maximum, the increase is reduced in proportion. Waiting four years means giving up four years of payments, which the higher rate repays slowly: the calculator below shows how many years it takes, before tax and future Budget increases, which apply to both options.</p>`,

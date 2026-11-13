@@ -20,7 +20,7 @@ export const page: WelfarePage = {
   simHref: '/social-welfare/state-pension/',
   sections: [
     {
-      h2: 'The four maximum rates',
+      h2: "The four maximum rates of Carer's Allowance",
       html: `${table(['Carer', 'Caring for one person', 'Caring for two or more'], [
   ['Under 66', e(CA.under66.one), e(CA.under66.twoOrMore)],
   ['66 or over', e(CA.over66.one), e(CA.over66.twoOrMore)],

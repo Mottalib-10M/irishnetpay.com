@@ -20,7 +20,7 @@ export const page: WelfarePage = {
   simHref: '/social-welfare/jobseekers-allowance/',
   sections: [
     {
-      h2: 'The income limits from January 2026',
+      h2: 'Working Family Payment income limits from January 2026',
       html: `${table(['Children', 'Weekly family income must be under', 'Maximum gap paid at 60 %'], L.map((lim, i) => [i === L.length - 1 ? `${i + 1} or more` : String(i + 1), e(lim), `${e(lim * WFP.rate, 2)} if income were nil`]), 'Working Family Payment income limits from 1 January 2026 (SW19)')}
 <p>The third column is only the arithmetic ceiling: in practice someone working ${WFP.hoursPerFortnight} hours a fortnight always has some income. With two children and an assessable family income of ${e(640)} a week, the gap to the ${e(L[1])} limit is ${e(ex.gap)} and the payment ${e(ex.weekly, 2)} a week, ${e(ex.weekly * WFP.weeks)} over the year.</p>`,
     },

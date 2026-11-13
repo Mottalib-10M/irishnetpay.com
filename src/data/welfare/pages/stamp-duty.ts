@@ -49,7 +49,7 @@ ${table(['Price', 'Stamp Duty', 'Effective rate'], examples.map((x) => { const r
       miniHref: '/help-to-buy-ireland/',
     },
     {
-      h2: 'Paying it',
+      h2: 'Paying Stamp Duty',
       html: `<p>The buyer pays. A Stamp Duty return is filed through the Revenue Online Service, usually by the solicitor handling the purchase, who needs the Local Property Tax property ID of the home. The duty is paid as part of filing the return, and both should happen within ${STAMP_DUTY.fileWithinDays} days of the date the deed is executed (signed, sealed or both).</p>
 <p>A return filed after ${STAMP_DUTY.fileWithinDays} days carries a surcharge of ${p(STAMP_DUTY.surcharge[0].rate)} of the unpaid duty, capped at ${e(STAMP_DUTY.surcharge[0].cap)}; after ${STAMP_DUTY.surcharge[1].afterDays} days it becomes ${p(STAMP_DUTY.surcharge[1].rate)}, capped at ${e(STAMP_DUTY.surcharge[1].cap)}. Late payment also bears interest of ${p(STAMP_DUTY.dailyInterest, 4)} a day from the date of execution. Once the return is filed and paid, ROS issues a stamp certificate: attached to the deed, it shows that the deed has been stamped, and it is also the receipt.</p>
 <p>For a first home that is new, Help to Buy can refund part of the deposit, which is usually several times the Stamp Duty on the same purchase.</p>`,

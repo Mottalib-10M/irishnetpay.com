@@ -47,7 +47,7 @@ ${table(['Average weekly earnings in 2024', 'Personal rate', 'Qualified adult, m
 <p>A Medical Assessor employed by the Department can ask to see you and give an opinion on whether you are fit for work; missing that appointment suspends the payment. After six months on Illness Benefit, Partial Capacity Benefit lets you return to work with part of the payment kept. When the limit is reached, Invalidity Pension (permanent incapacity) or Disability Allowance (means-tested, for a disability expected to last a year) are the usual next steps.</p>`,
     },
     {
-      h2: 'Claiming',
+      h2: 'Claiming Illness Benefit',
       html: `<p>The claim must be made within ${IB.applyWithinWeeks} weeks of falling ill, online at MyWelfare.ie with a verified MyGovID account once your GP has completed the medical certificate, or on form IB1 posted with the paper certificate to the Department. The GP does not charge for the certificate itself, though the consultation may be charged. A late claim can lose part of the payment unless there is a good reason for the delay.</p>
 <p>When you are fit to return, the GP marks the last certificate as final and you close the claim on MyWelfare.ie. Working, including voluntary work or a course, needs written approval first.</p>`,
     },
