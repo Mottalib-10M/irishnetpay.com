@@ -95,3 +95,33 @@ export const MINIMUM_WAGE_HOURLY = 14.15;
 
 /** Living wage (per hour) 2026 */
 export const LIVING_WAGE_HOURLY = 14.80;
+
+// --- 2027 (Budget 2027, 6 October 2026) ---
+/**
+ * Year of assessment 2027. Bands and credits: Finance (No. 2) Bill 2026, sections 2 and 3, as initiated on
+ * 19 October 2026 (USC 2 % ceiling €30,300; cut-off €46,500 / €50,500 / €55,500; two-income increase €37,500;
+ * personal €2,125 / €4,250; employee and earned income €2,125; home carer €2,050). The Single Person Child Carer
+ * Credit, the USC exemption and the 0.5 % band are not amended. PRSI: 4.35 % to 30 September 2027, 4.5 % from
+ * 1 October 2027 (Department of Finance, Budget 2027 tax policy changes); employer PRSI +0.15 point on the same
+ * date and higher-rate threshold €600 a week from 1 January 2027 (Citizens Information, Budget 2027).
+ * Minimum wage €14.94 from 1 January 2027 (S.I. No. 533 of 2026).
+ */
+export const RATES_2027 = {
+  SRCOP: { single: 46_500, married_one_income: 55_500, married_two_incomes: 93_000, single_parent: 50_500 } as Record<FilingStatus, number>,
+  MARRIED_BASE_BAND: 55_500,
+  MARRIED_TWO_INCOMES_INCREASE_MAX: 37_500,
+  TAX_CREDITS: { ...TAX_CREDITS, personal_single: 2_125, personal_married: 4_250, employee_paye: 2_125, earned_income: 2_125, home_carer: 2_050 },
+  USC_BANDS: [
+    { max: 12_012, rate: 0.005 },
+    { max: 30_300, rate: 0.02 },
+    { max: 70_044, rate: 0.03 },
+    { max: Infinity, rate: 0.08 },
+  ] as USCBand[],
+  PRSI_RATE_JAN_SEP: 0.0435,
+  PRSI_RATE_OCT_DEC: 0.045,
+  PRSI_RATE: (0.0435 * 9 + 0.045 * 3) / 12, // 4.3875 %
+  EMPLOYER_PRSI_RATE_LOW: (0.0915 * 9 + 0.093 * 3) / 12,
+  EMPLOYER_PRSI_RATE_HIGH: (0.114 * 9 + 0.1155 * 3) / 12,
+  EMPLOYER_PRSI_WEEKLY_THRESHOLD: 600,
+  MINIMUM_WAGE_HOURLY: 14.94,
+};

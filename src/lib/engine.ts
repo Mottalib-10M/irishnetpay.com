@@ -22,7 +22,13 @@ import {
   EMPLOYER_PRSI_RATE_LOW,
   EMPLOYER_PRSI_RATE_HIGH,
   EMPLOYER_PRSI_WEEKLY_THRESHOLD,
+  RATES_2027,
 } from './tax-rates-2026';
+
+/** One year's parameters; 2026 by default, 2027 from Budget 2027 (tax-rates-2026.ts). */
+const R2026 = { SRCOP, MARRIED_BASE_BAND, MARRIED_TWO_INCOMES_INCREASE_MAX, TAX_CREDITS, USC_BANDS, PRSI_RATE, PRSI_RATE_OCT_DEC, EMPLOYER_PRSI_RATE_LOW, EMPLOYER_PRSI_RATE_HIGH, EMPLOYER_PRSI_WEEKLY_THRESHOLD };
+export type TaxYear = 2026 | 2027;
+const rates = (y: TaxYear = 2026) => (y === 2027 ? RATES_2027 : R2026);
 
 // --- Types ---
 
@@ -39,6 +45,8 @@ export interface SalaryInput {
   spouseIncome?: number;
   /** Married, one income: the spouse at home cares for a dependent person (Home Carer Tax Credit). */
   homeCarer?: boolean;
+  /** Year of assessment: 2026 (default) or 2027. */
+  year?: TaxYear;
 }
 
 export interface SalaryResult {
@@ -90,10 +98,11 @@ export interface SalaryResult {
  * earner uses the €35,000 increase (capped by law at their own income, which the band cannot exceed anyway) plus any
  * part of the €53,000 the higher earner leaves unused.
  */
-export function standardRateBand(grossAnnual: number, filingStatus: FilingStatus, spouseIncome?: number): number {
-  if (filingStatus !== 'married_two_incomes') return SRCOP[filingStatus];
-  if (spouseIncome === undefined || grossAnnual >= spouseIncome) return MARRIED_BASE_BAND;
-  return MARRIED_TWO_INCOMES_INCREASE_MAX + Math.max(0, MARRIED_BASE_BAND - spouseIncome);
+export function standardRateBand(grossAnnual: number, filingStatus: FilingStatus, spouseIncome?: number, year: TaxYear = 2026): number {
+  const R = rates(year);
+  if (filingStatus !== 'married_two_incomes') return R.SRCOP[filingStatus];
+  if (spouseIncome === undefined || grossAnnual >= spouseIncome) return R.MARRIED_BASE_BAND;
+  return R.MARRIED_TWO_INCOMES_INCREASE_MAX + Math.max(0, R.MARRIED_BASE_BAND - spouseIncome);
 }
 
 function calculateIncomeTax(taxableIncome: number, cutoff: number): number {
@@ -103,7 +112,8 @@ function calculateIncomeTax(taxableIncome: number, cutoff: number): number {
   return atStandardRate * STANDARD_RATE + atHigherRate * HIGHER_RATE;
 }
 
-function getTaxCredits(filingStatus: FilingStatus, additionalCredits: number, homeCarer: boolean): number {
+function getTaxCredits(filingStatus: FilingStatus, additionalCredits: number, homeCarer: boolean, year: TaxYear): number {
+  const TAX_CREDITS = rates(year).TAX_CREDITS;
   let credits = 0;
 
   if (filingStatus === 'married_one_income' || filingStatus === 'married_two_incomes') {
@@ -129,7 +139,7 @@ function getTaxCredits(filingStatus: FilingStatus, additionalCredits: number, ho
 
 // --- USC ---
 
-function calculateUSC(grossAnnual: number): number {
+function calculateUSC(grossAnnual: number, USC_BANDS = R2026.USC_BANDS): number {
   if (grossAnnual <= USC_EXEMPTION) return 0;
 
   let usc = 0;
@@ -150,7 +160,7 @@ function calculateUSC(grossAnnual: number): number {
 
 // --- PRSI ---
 
-function calculatePRSI(grossAnnual: number): number {
+function calculatePRSI(grossAnnual: number, PRSI_RATE = R2026.PRSI_RATE): number {
   const weeklyIncome = grossAnnual / 52;
 
   if (weeklyIncome <= PRSI_WEEKLY_THRESHOLD) return 0;
@@ -170,18 +180,22 @@ function calculatePRSI(grossAnnual: number): number {
 
 // --- Employer PRSI ---
 
-function calculateEmployerPRSI(grossAnnual: number): number {
+function calculateEmployerPRSI(grossAnnual: number, year: TaxYear): number {
+  const R = rates(year);
   const weeklyIncome = grossAnnual / 52;
-  const rate = weeklyIncome <= EMPLOYER_PRSI_WEEKLY_THRESHOLD
-    ? EMPLOYER_PRSI_RATE_LOW
-    : EMPLOYER_PRSI_RATE_HIGH;
+  const rate = weeklyIncome <= R.EMPLOYER_PRSI_WEEKLY_THRESHOLD
+    ? R.EMPLOYER_PRSI_RATE_LOW
+    : R.EMPLOYER_PRSI_RATE_HIGH;
   return Math.round(grossAnnual * rate * 100) / 100;
 }
 
 // --- Marginal rate ---
 
 /** Rate on the next euro earned today: PRSI at the rate in force since 1 October 2026, not the yearly average. */
-function calculateMarginalRate(taxableIncome: number, cutoff: number): number {
+function calculateMarginalRate(taxableIncome: number, cutoff: number, year: TaxYear): number {
+  const { USC_BANDS } = rates(year);
+  // 2027: the rate in force from January (4.35 %); 2026: the rate in force since 1 October 2026.
+  const prsiNow = year === 2027 ? RATES_2027.PRSI_RATE_JAN_SEP : PRSI_RATE_OCT_DEC;
   const incomeTaxMarginal = taxableIncome > cutoff ? HIGHER_RATE : STANDARD_RATE;
 
   // USC marginal rate
@@ -193,14 +207,15 @@ function calculateMarginalRate(taxableIncome: number, cutoff: number): number {
     }
   }
 
-  return incomeTaxMarginal + uscMarginal + PRSI_RATE_OCT_DEC;
+  return incomeTaxMarginal + uscMarginal + prsiNow;
 }
 
 // --- Main calculation ---
 
 export function calculateSalary(input: SalaryInput): SalaryResult {
-  const { grossAnnual, filingStatus, pensionRate, additionalCredits, spouseIncome, homeCarer = false } = input;
-  const band = standardRateBand(grossAnnual, filingStatus, spouseIncome);
+  const { grossAnnual, filingStatus, pensionRate, additionalCredits, spouseIncome, homeCarer = false, year = 2026 } = input;
+  const R = rates(year);
+  const band = standardRateBand(grossAnnual, filingStatus, spouseIncome, year);
 
   // Pension contribution
   const pensionContribution = Math.round(grossAnnual * pensionRate * 100) / 100;
@@ -210,14 +225,14 @@ export function calculateSalary(input: SalaryInput): SalaryResult {
 
   // Income Tax
   const incomeTaxGross = Math.round(calculateIncomeTax(taxableIncome, band) * 100) / 100;
-  const taxCreditsTotal = getTaxCredits(filingStatus, additionalCredits, homeCarer);
+  const taxCreditsTotal = getTaxCredits(filingStatus, additionalCredits, homeCarer, year);
   const incomeTaxNet = Math.max(0, Math.round((incomeTaxGross - taxCreditsTotal) * 100) / 100);
 
   // USC (on gross, not reduced by pension for occupational pension)
-  const usc = calculateUSC(grossAnnual);
+  const usc = calculateUSC(grossAnnual, R.USC_BANDS);
 
   // PRSI
-  const prsi = calculatePRSI(grossAnnual);
+  const prsi = calculatePRSI(grossAnnual, R.PRSI_RATE);
 
   // Total deductions
   const totalDeductions = pensionContribution + incomeTaxNet + usc + prsi;
@@ -236,10 +251,10 @@ export function calculateSalary(input: SalaryInput): SalaryResult {
   const effectiveTotalRate = grossAnnual > 0 ? totalDeductions / grossAnnual : 0;
 
   // Marginal rate
-  const marginalRate = calculateMarginalRate(taxableIncome, band);
+  const marginalRate = calculateMarginalRate(taxableIncome, band, year);
 
   // Employer cost
-  const employerPRSI = calculateEmployerPRSI(grossAnnual);
+  const employerPRSI = calculateEmployerPRSI(grossAnnual, year);
   const totalEmployerCost = Math.round((grossAnnual + employerPRSI) * 100) / 100;
 
   return {

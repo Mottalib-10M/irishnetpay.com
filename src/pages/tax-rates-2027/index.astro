@@ -1,0 +1,201 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ClampLines from '../../components/ClampLines.astro';
+import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
+import { calculateSalary } from '../../lib/engine';
+import { SRCOP, TAX_CREDITS, USC_BANDS, USC_EXEMPTION, MINIMUM_WAGE_HOURLY, EMPLOYER_PRSI_WEEKLY_THRESHOLD, MARRIED_TWO_INCOMES_INCREASE_MAX, RATES_2027 as N } from '../../lib/tax-rates-2026';
+
+// Tous les montants viennent du moteur et des deux jeux de paramètres (2026 et 2027) : rien n'est écrit à la main.
+const eur = (n: number) => Math.round(n).toLocaleString('en-IE');
+const eur2 = (n: number) => n.toLocaleString('en-IE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const pc = (x: number, d = 1) => `${(x * 100).toFixed(d)} %`;
+const calc = (g: number, filingStatus: 'single' | 'married_one_income' = 'single', year?: 2027) => calculateSalary({ grossAnnual: g, filingStatus, pensionRate: 0, additionalCredits: 0, year });
+const salaries = [30_000, 40_000, 50_000, 60_000, 80_000, 100_000];
+const rows = salaries.map((g) => { const o = calc(g); const n = calc(g, 'single', 2027); return { g, o: o.netAnnual, n: n.netAnnual, d: n.netAnnual - o.netAnnual, m: n.netMonthly }; });
+const ex = rows.find((r) => r.g === 50_000)!;
+const married = { o: calc(70_000, 'married_one_income'), n: calc(70_000, 'married_one_income', 2027) };
+const minWeekly = (h: number) => h * 39;
+const min2027 = calc(Math.round(N.MINIMUM_WAGE_HOURLY * 39 * 52 * 100) / 100, 'single', 2027);
+const faqs = [
+  {
+    question: 'What are the tax bands in Ireland for 2027?',
+    answer: `Income tax stays at 20 % and 40 %. The 20 % band rises by €2,500: €${eur(N.SRCOP.single)} for a single person, €${eur(N.SRCOP.single_parent)} for a single parent with the Single Person Child Carer Credit, €${eur(N.MARRIED_BASE_BAND)} for a married couple or civil partners with one income, and up to €${eur(N.SRCOP.married_two_incomes)} for a couple with two incomes, the second band being capped at €${eur(N.MARRIED_TWO_INCOMES_INCREASE_MAX)} or the lower income.`,
+  },
+  {
+    question: 'How much are tax credits in 2027?',
+    answer: `The personal tax credit rises from €${eur(TAX_CREDITS.personal_single)} to €${eur(N.TAX_CREDITS.personal_single)} for a single person and from €${eur(TAX_CREDITS.personal_married)} to €${eur(N.TAX_CREDITS.personal_married)} for a married couple. The employee (PAYE) credit and the earned income credit rise to €${eur(N.TAX_CREDITS.employee_paye)}. The Home Carer credit goes to €${eur(N.TAX_CREDITS.home_carer)}. The Single Person Child Carer Credit stays at €${eur(TAX_CREDITS.single_parent)}.`,
+  },
+  {
+    question: 'How much more will I take home in 2027?',
+    answer: `On €50,000 as a single PAYE employee, take-home pay goes from €${eur(ex.o)} to €${eur(ex.n)} over the year, €${eur(ex.d)} more, or about €${eur(ex.d / 12)} a month. The gain comes from the wider 20 % band, the €250 of extra credits and the wider 2 % USC band, less the PRSI increase of 1 October 2027.`,
+  },
+  {
+    question: 'Does PRSI go up in 2027?',
+    answer: 'Yes, on 1 October 2027. Employee PRSI rises from 4.35 % to 4.5 %, the fourth step of the increase agreed for 2024 to 2028, and employer rates rise by the same 0.15 point. From 1 January 2027 the weekly pay at which the higher employer rate starts moves from €552 to €600, to follow the new minimum wage.',
+  },
+  {
+    question: 'Is the Budget 2027 tax package law yet?',
+    answer: 'The income tax and USC changes are in the Finance (No. 2) Bill 2026, published on 19 October 2026, which must be enacted before the end of the year to apply from 1 January 2027. The minimum wage of €14.94 is already set by statutory instrument. Revenue updates its tables and your tax credit certificate for January once the Act is signed.',
+  },
+];
+---
+
+<Layout
+  title="Tax Rates Ireland 2027: Bands, Credits, USC and PRSI vs 2026"
+  description="Irish tax rates for 2027 next to 2026: the 20 % band at €46,500, credits of €2,125, USC 2 % to €30,300, PRSI at 4.5 % from October, and what you take home."
+>
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-3">
+    <ol class="flex items-center gap-1">
+      <li><a href="/" class="hover:text-primary">Home</a></li>
+      <li class="before:content-['/'] before:mx-1">Tax Rates 2027</li>
+    </ol>
+  </nav>
+
+  <div class="prose prose-slate max-w-none">
+    <h1>Tax rates in Ireland for 2027, next to 2026</h1>
+    <ClampLines id="chapeau">
+      Tax rates in Ireland for 2027 were set by Budget 2027 on 6 October 2026 and written into the Finance (No. 2)
+      Bill 2026. Income tax stays at 20 % and 40 %, but the amount taxed at 20 % rises by €2,500, to
+      <strong>€{eur(N.SRCOP.single)}</strong> for a single person. The personal, employee and earned income tax
+      credits each go up by €125, to <strong>€{eur(N.TAX_CREDITS.employee_paye)}</strong>, and the 2 % USC band now
+      runs to <strong>€{eur2(30_300).replace('.00', '')}</strong>, so that a full-time job on the new minimum wage of
+      €{eur2(N.MINIMUM_WAGE_HOURLY)} an hour stays out of the 3 % band. Against that, employee PRSI rises from
+      4.35 % to 4.5 % on 1 October 2027. For a single employee on €50,000, the net effect is
+      €{eur(ex.d)} more take-home pay over the year. The tables below set every 2027 rate beside its 2026 value,
+      and the calculator works out your own figure with both years’ rules.
+    </ClampLines>
+    <div data-chrome><MiniSimAutonome client:visible principal kind="y2027" lang="en" locale="en-IE" href="/" /></div>
+
+    <h2>Income tax bands, 2026 and 2027</h2>
+    <table>
+      <thead><tr><th>Status</th><th>20 % band 2026</th><th>20 % band 2027</th></tr></thead>
+      <tbody>
+        <tr><td>Single or widowed</td><td>€{eur(SRCOP.single)}</td><td>€{eur(N.SRCOP.single)}</td></tr>
+        <tr><td>Single parent (Child Carer Credit)</td><td>€{eur(SRCOP.single_parent)}</td><td>€{eur(N.SRCOP.single_parent)}</td></tr>
+        <tr><td>Married, one income</td><td>€{eur(SRCOP.married_one_income)}</td><td>€{eur(N.SRCOP.married_one_income)}</td></tr>
+        <tr><td>Married, two incomes (maximum)</td><td>€{eur(SRCOP.married_two_incomes)}</td><td>€{eur(N.SRCOP.married_two_incomes)}</td></tr>
+        <tr><td>Second earner’s increase, cap</td><td>€{eur(MARRIED_TWO_INCOMES_INCREASE_MAX)}</td><td>€{eur(N.MARRIED_TWO_INCOMES_INCREASE_MAX)}</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Income above the band is taxed at 40 %. The two-income band is not one pot: each spouse keeps a band of
+      their own, the higher earner €{eur(N.MARRIED_BASE_BAND)} and the lower earner up to €{eur(N.MARRIED_TWO_INCOMES_INCREASE_MAX)},
+      limited to their own income, so a couple only reaches €{eur(N.SRCOP.married_two_incomes)} if the lower income
+      is at least €{eur(N.MARRIED_TWO_INCOMES_INCREASE_MAX)}. The <a href="/guides/married-tax-assessment/">married tax assessment guide</a>
+      explains how the bands are split.
+    </p>
+
+    <h2>Tax credits, 2026 and 2027</h2>
+    <table>
+      <thead><tr><th>Credit</th><th>2026</th><th>2027</th></tr></thead>
+      <tbody>
+        <tr><td>Personal, single</td><td>€{eur(TAX_CREDITS.personal_single)}</td><td>€{eur(N.TAX_CREDITS.personal_single)}</td></tr>
+        <tr><td>Personal, married or civil partners</td><td>€{eur(TAX_CREDITS.personal_married)}</td><td>€{eur(N.TAX_CREDITS.personal_married)}</td></tr>
+        <tr><td>Employee (PAYE)</td><td>€{eur(TAX_CREDITS.employee_paye)}</td><td>€{eur(N.TAX_CREDITS.employee_paye)}</td></tr>
+        <tr><td>Earned income (self-employed)</td><td>€{eur(TAX_CREDITS.earned_income)}</td><td>€{eur(N.TAX_CREDITS.earned_income)}</td></tr>
+        <tr><td>Home Carer</td><td>€{eur(TAX_CREDITS.home_carer)}</td><td>€{eur(N.TAX_CREDITS.home_carer)}</td></tr>
+        <tr><td>Single Person Child Carer</td><td>€{eur(TAX_CREDITS.single_parent)}</td><td>€{eur(N.TAX_CREDITS.single_parent)} (unchanged)</td></tr>
+        <tr><td>Rent, single / couple</td><td>€1,000 / €2,000</td><td>€1,150 / €2,300</td></tr>
+      </tbody>
+    </table>
+    <p>
+      A single PAYE employee gains €250 of credits, worth €250 off the tax bill whatever the salary, as long as
+      there is tax to absorb it. The employee and earned income credits together still cannot exceed
+      €{eur(N.TAX_CREDITS.employee_paye)} for someone with both types of income. The rent credit, extended to 2028,
+      is claimed through myAccount rather than applied automatically. The <a href="/guides/tax-credits-ireland/">tax credits guide</a>
+      covers who can claim what.
+    </p>
+
+    <h2>USC and PRSI, 2026 and 2027</h2>
+    <table>
+      <thead><tr><th>Charge</th><th>2026</th><th>2027</th></tr></thead>
+      <tbody>
+        <tr><td>USC 0.5 %</td><td>first €{eur(USC_BANDS[0].max)}</td><td>first €{eur(N.USC_BANDS[0].max)}</td></tr>
+        <tr><td>USC 2 %</td><td>to €{eur(USC_BANDS[1].max)}</td><td>to €{eur(N.USC_BANDS[1].max)}</td></tr>
+        <tr><td>USC 3 %</td><td>to €{eur(USC_BANDS[2].max)}</td><td>to €{eur(N.USC_BANDS[2].max)}</td></tr>
+        <tr><td>USC 8 %</td><td>above €{eur(USC_BANDS[2].max)}</td><td>above €{eur(N.USC_BANDS[2].max)}</td></tr>
+        <tr><td>USC exemption</td><td>income up to €{eur(USC_EXEMPTION)}</td><td>income up to €{eur(USC_EXEMPTION)} (unchanged)</td></tr>
+        <tr><td>Employee PRSI (Class A)</td><td>4.2 %, 4.35 % from 1 October</td><td>4.35 %, 4.5 % from 1 October</td></tr>
+        <tr><td>Employer PRSI higher-rate threshold</td><td>€{eur(EMPLOYER_PRSI_WEEKLY_THRESHOLD)} a week</td><td>€{eur(N.EMPLOYER_PRSI_WEEKLY_THRESHOLD)} a week</td></tr>
+        <tr><td>National minimum wage</td><td>€{eur2(MINIMUM_WAGE_HOURLY)} an hour</td><td>€{eur2(N.MINIMUM_WAGE_HOURLY)} an hour</td></tr>
+      </tbody>
+    </table>
+    <p>
+      The USC change is aimed at the minimum wage: a 39-hour week at €{eur2(N.MINIMUM_WAGE_HOURLY)} comes to
+      €{eur(minWeekly(N.MINIMUM_WAGE_HOURLY) * 52)} a year, which would have crossed the old €{eur(USC_BANDS[1].max)} ceiling.
+      With the new one, a full-time minimum wage earner pays €{eur(min2027.usc)} of USC in 2027 and takes home
+      €{eur(min2027.netAnnual)} a year. The PRSI rise is the 2027 step of the schedule the Government set in 2024
+      to fund the Social Insurance Fund; it applies to every euro of pay above the €352 weekly threshold, so it
+      takes back part of the Budget gain from October.
+    </p>
+
+    <h2>Tax rates Ireland 2027 and your take-home pay</h2>
+    <p>Single PAYE employee, no pension contribution, standard credits, a full calendar year at each year’s rules.</p>
+    <table>
+      <thead><tr><th>Gross salary</th><th>Net 2026</th><th>Net 2027</th><th>Gain per year</th><th>Net per month 2027</th></tr></thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr><td>€{eur(r.g)}</td><td>€{eur(r.o)}</td><td>€{eur(r.n)}</td><td>+€{eur(r.d)}</td><td>€{eur(r.m)}</td></tr>
+        ))}
+      </tbody>
+    </table>
+    <p>
+      The gain is not linear. Up to about €30,000 it comes mostly from the credits and the USC band; from
+      €{eur(N.SRCOP.single)} upwards the wider 20 % band adds its full €{eur(2_500 * 0.2)} (€2,500 moved from 40 % to 20 %),
+      which is why the gain levels off for higher salaries, minus a PRSI rise that keeps growing with pay.
+      A married couple on one income of €70,000 goes from €{eur(married.o.netAnnual)} to
+      €{eur(married.n.netAnnual)}, €{eur(married.n.netAnnual - married.o.netAnnual)} more, because both the band and
+      the doubled personal credit rise.
+    </p>
+
+    <h2>What changes on your payslip, and when</h2>
+    <p>
+      The new bands, credits and USC ceiling apply from the first pay date in January 2027. Revenue issues an
+      updated Revenue Payroll Notification to your employer at the start of the year, and your tax credit
+      certificate in myAccount shows the 2027 figures. If your first January payslip still shows €{eur(SRCOP.single)}
+      as your cut-off point, it is usually a timing issue that corrects itself with the next pay; a cumulative
+      basis means any overpayment comes back automatically. The PRSI rise appears on the first pay date on or
+      after 1 October 2027. The minimum wage of €{eur2(N.MINIMUM_WAGE_HOURLY)} applies to hours worked from 1 January 2027.
+    </p>
+    <p>
+      Weekly social welfare payments rise by €10 from January 2027, and Working Family Payment income limits by
+      €30 a week. The <a href="/social-welfare/">social welfare pages</a> still show the 2026 rates; they will
+      move to 2027 when the Department of Social Protection publishes the new rate tables in full.
+    </p>
+
+    <h2>What is not settled yet</h2>
+    <p>
+      The tax figures on this page are those of the Finance (No. 2) Bill 2026 as published on 19 October 2026.
+      The Bill can still be amended in the Dáil and Seanad before it is signed, usually in December; this page
+      will be checked against the Act and against Revenue’s 2027 tables when they appear. The PRSI step of
+      October 2027 is part of a schedule that the Government has said it will review after the 2027 actuarial
+      review of the Social Insurance Fund.
+    </p>
+
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://data.oireachtas.ie/ie/oireachtas/bill/2026/98/eng/initiated/b9826d.pdf" rel="noopener">Finance (No. 2) Bill 2026, as initiated, sections 2 to 4</a> (19 October 2026)</li>
+      <li><a href="https://assets.gov.ie/static/documents/4131c603/BIB2027_Online_Interactive_Version_Final_V2.pdf" rel="noopener">Department of Public Expenditure, Budget in Brief 2027</a> (6 October 2026)</li>
+      <li><a href="https://www.citizensinformation.ie/en/money-and-tax/budgets/budget-2027/" rel="noopener">Citizens Information, Budget 2027 summary</a> (edited 17 November 2026)</li>
+      <li><a href="https://www.irishstatutebook.ie/eli/2026/si/533/made/en/print" rel="noopener">S.I. No. 533 of 2026, National Minimum Wage Order 2026</a></li>
+    </ul>
+
+    <h2>Common questions</h2>
+    {faqs.map((f) => (
+      <div>
+        <h3>{f.question}</h3>
+        <p>{f.answer}</p>
+      </div>
+    ))}
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+    })} />
+  </div>
+</Layout>

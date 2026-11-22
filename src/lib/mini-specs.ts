@@ -11,7 +11,13 @@ const STATUS = [{ value: '0', label: 'Single' }, { value: '1', label: 'Married, 
 const ST = ['single', 'married_one_income', 'married_two_incomes', 'single_parent'] as const;
 const C = (s: number, st = 0, pension = 0, extra = 0) => calculateSalary({ grossAnnual: s, filingStatus: ST[st] ?? 'single', pensionRate: pension, additionalCredits: extra });
 
+const C27 = (s: number, st = 0) => calculateSalary({ grossAnnual: s, filingStatus: ST[st] ?? 'single', pensionRate: 0, additionalCredits: 0, year: 2027 });
+
 const SPECS: Record<string, MiniSpec> = {
+  y2027: { title: 'Your take-home pay in 2027', cta: 'Full salary calculator (2026)', inputs: [salary(), { id: 't', label: 'Tax status', def: 0, options: STATUS }], run: ({ s, t }) => {
+    const n = C27(s, t); const o = C(s, t); const d = n.netAnnual - o.netAnnual;
+    return { head: ['Take-home per month in 2027', eur(n.netMonthly)], rows: [['Same salary in 2026, per month', eur(o.netMonthly)], ['Change over the year', `${d < 0 ? '−' : '+'}${eur(Math.abs(d))}`], ['Income tax 2027', eur(n.incomeTaxNet)], ['USC 2027', eur(n.usc)], ['PRSI 2027', eur(n.prsi)]], note: 'Finance (No. 2) Bill 2026 rates, PRSI 4.35 % then 4.5 % from 1 October 2027.' };
+  } },
   takehome: { title: 'Your take-home pay', cta: 'Full salary calculator', inputs: [salary(), { id: 't', label: 'Tax status', def: 0, options: STATUS }], run: ({ s, t }) => {
     const r = C(s, t); return { head: ['Take-home per month', eur(r.netMonthly)], rows: [['Income tax per year', eur(r.incomeTaxNet)], ['USC per year', eur(r.usc)], ['PRSI per year', eur(r.prsi)]] };
   } },

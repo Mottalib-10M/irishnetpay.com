@@ -154,3 +154,24 @@ describe('Full calculation', () => {
     expect(above.marginalRate).toBeGreaterThan(0.40);
   });
 });
+
+describe('2027 (Finance (No. 2) Bill 2026)', () => {
+  const D = { pensionRate: 0, additionalCredits: 0, year: 2027 as const };
+  it('single €50,000: tax 6,450, USC 1,016.82, PRSI 2,193.75 (4.35 % then 4.5 % from October)', () => {
+    const r = calculateSalary({ grossAnnual: 50_000, filingStatus: 'single', ...D });
+    expect(r.incomeTaxNet).toBeCloseTo(6_450, 2);
+    expect(r.usc).toBeCloseTo(1_016.82, 2);
+    expect(r.prsi).toBeCloseTo(2_193.75, 2);
+    expect(r.netAnnual).toBeCloseTo(40_339.43, 2);
+  });
+  it('cut-off points €46,500 / €55,500 / €50,500 and two-income increase €37,500', () => {
+    expect(calculateSalary({ grossAnnual: 80_000, filingStatus: 'single', ...D }).standardRateBand).toBe(46_500);
+    expect(calculateSalary({ grossAnnual: 80_000, filingStatus: 'married_one_income', ...D }).standardRateBand).toBe(55_500);
+    expect(calculateSalary({ grossAnnual: 80_000, filingStatus: 'single_parent', ...D }).standardRateBand).toBe(50_500);
+    expect(calculateSalary({ grossAnnual: 40_000, filingStatus: 'married_two_incomes', spouseIncome: 60_000, ...D }).standardRateBand).toBe(37_500);
+  });
+  it('2026 unchanged when no year is given', () => {
+    expect(calculateSalary({ grossAnnual: 80_000, filingStatus: 'single', pensionRate: 0, additionalCredits: 0 }).standardRateBand).toBe(44_000);
+  });
+});
+
