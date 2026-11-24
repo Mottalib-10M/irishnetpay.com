@@ -14,6 +14,7 @@ const chapeau = `Your Irish take-home pay for 2026 is gross salary minus three s
 
 /* §7 : une seule liste pour la FAQ visible et pour le balisage FAQPage. */
 const faqs = [
+  { q: 'What will Irish tax rates be in 2027?', a: 'Budget 2027 raises the single person’s 20% band to €46,500, the main tax credits to €2,125 and the USC 2% band to €30,300, and the minimum wage rises to €14.94 on 1 January 2027. The tax changes are in the Finance (No. 2) Bill 2026, which still has to be enacted, usually in December; Revenue then sends the 2027 tax credit certificates. This calculator moves to 2027 for January pay.' },
   { q: 'What is the income tax rate in Ireland in 2026?', a: `Ireland has two income tax rates: 20% on income up to the standard rate cut-off point, ${eur(SRCOP.single)} for a single person and ${eur(SRCOP.married_one_income)} for a married couple with one income, and 40% on the rest. Tax credits are then deducted from the tax itself, ${eur(TAX_CREDITS.personal_single + TAX_CREDITS.employee_paye)} for a single employee with the personal and employee credits.` },
   { q: 'What is USC and how is it calculated?', a: `The Universal Social Charge is a separate charge on gross income. Nothing is due if total income is ${eur(USC_EXEMPTION)} or less; above that, the whole income is charged: ${pc(USC_BANDS[0].rate)} on the first ${eur(USC_BANDS[0].max)}, ${pc(USC_BANDS[1].rate)} up to ${eur(USC_BANDS[1].max)}, ${pc(USC_BANDS[2].rate)} up to ${eur(USC_BANDS[2].max)} and ${pc(USC_BANDS[3].rate)} above. Tax credits do not reduce it.` },
   { q: 'What PRSI rate do employees pay?', a: `Most employees pay Class A PRSI at ${pc(PRSI_RATE_JAN_SEP)} of gross earnings until 30 September 2026 and ${pc(PRSI_RATE_OCT_DEC)} from 1 October. Nothing is charged when weekly pay is ${eur(PRSI_WEEKLY_THRESHOLD)} or less, and a tapered credit softens the step just above it. There is no upper limit on the earnings it is charged on.` },
@@ -54,6 +55,19 @@ const faqs = [
     </section>
 
     <div class="prose prose-slate max-w-none">
+
+      <h2 id="2027">Irish tax in 2027: what is set and when it becomes law</h2>
+      <p>
+        Budget 2027, presented on 6 October 2026, sets the changes for next year: a 20% band of €46,500 for a single person, personal, employee and earned income credits of €2,125, the USC 2% band widened to €30,300, and PRSI for employees rising to 4.5% on 1 October 2027. The minimum wage of €14.94 an hour from 1 January 2027 is already law (S.I. No. 533 of 2026).
+      </p>
+      <ul>
+        <li><strong>Income tax and USC:</strong> in the Finance (No. 2) Bill 2026, published on 19 October 2026 and now before the Oireachtas; it must be enacted before 1 January 2027 to apply, usually in December.</li>
+        <li><strong>Your 2027 tax credits and rate band:</strong> Revenue issues the new Tax Credit Certificates to employers in December for the first payroll of January.</li>
+        <li><strong>PRSI and social welfare rates for 2027:</strong> published by the Department of Social Protection with the January rates.</li>
+      </ul>
+      <p>
+        The calculator stays on 2026 for this year and moves to 2027 for January pay; the <a href="/tax-rates-2027/">tax rates 2027 page</a> already gives your 2027 net pay under the Bill. Each figure is checked again against the signed Finance Act.
+      </p>
 
       <h2>How Irish salary deductions work in 2026</h2>
       <p>
