@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* La variante dark: ne suit plus le système (classe .dark jamais posée) : la page reste claire. */
+@custom-variant dark (&:where(.dark, .dark *));
 
 /*
  * Identite visuelle : le drapeau irlandais.
@@ -47,6 +49,16 @@
   --color-orange-600: #94441a;
 
   --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --color-accent-50: #EEF5F3;
+  --color-accent-100: #DDEBE6;
+  --color-accent-200: #B6D3CA;
+  --color-accent-300: #85B6A7;
+  --color-accent-400: #48927B;
+  --color-accent-500: #0B6E4F;
+  --color-accent-600: #0A6146;
+  --color-accent-700: #08523B;
+  --color-accent-800: #07422F;
+  --color-accent-900: #053224;
 }
 
 @layer base {
@@ -127,43 +139,53 @@
   .clamp-lines > .clamp-more { margin-top: 0.125rem; }
 }
 
-/*
- * Mode sombre. La version precedente empilait des `!important` sur des classes
- * Tailwind et repassait les liens en bleu ciel generique, ce qui faisait perdre
- * son identite au site. On redefinit ici les jetons, eclaircis.
- */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-surface: #0f1512;
-    --color-border: #2a3630;
-    --color-text: #e4ece7;
-    --color-text-muted: #9aaba2;
-  }
-
-  body { background-color: #0f1512; color: #e4ece7; }
-
-  a { color: #8fd9b4; }
-  a:hover { color: #ffffff; }
-
-  .bg-white { background-color: #172019; }
-
-  input, select, textarea {
-    background-color: #172019;
-    color: #e4ece7;
-    border-color: #2a3630;
-  }
-
-  @layer components {
-    .clamp-more { color: #8fd9b4; }
-    .prose a { color: #8fd9b4; }
-    .prose li::marker { color: #8fd9b4; }
-    .prose blockquote { border-left-color: #8fd9b4; }
-  }
-
-  :focus-visible { outline-color: #8fd9b4; }
-}
+/* Mode sombre automatique retiré (2026-11-26) : la charte claire de la refonte n'a pas de version sombre ; en sombre, le H1 et les libellés étaient vert sombre sur fond sombre. */
+:root { color-scheme: light; }
 
 @media print {
   header, footer, nav, .no-print { display: none !important; }
   body { background: #fff; color: #000; }
 }
+
+/* Charte de page du 2026-11-25 (refonte d'identité validée par l'éditeur, reports/refonte-identite-2026-11-24/sites/irishnetpay.com) :
+   en-tête plein, bandeau du H1, carte du simulateur, sections alternées, chiffres-résultats, boutons, pied sombre. */
+/* Proposition v2 « charte forte » pour irishnetpay.com : rien d'applique. */
+/* En-tete plein + filet de la 2e couleur */
+body > header { background:#0B6E4F !important; border-bottom:5px solid #FF883E !important; backdrop-filter:none !important; }
+body > header > div > a, body > header nav > a, body > header button { color:#fff !important; }
+body > header img { background:#fff; border-radius:8px; padding:2px; }
+#mobile-menu { background:#fff !important; }
+#mobile-menu a, #mobile-menu button, #mobile-menu span { color:#0F172A !important; }
+/* Bandeau heros pleine largeur */
+main > div > div.text-center:first-child { background:#0B6E4F !important; box-shadow:0 0 0 100vmax #0B6E4F; clip-path:inset(-3rem -100vmax 0 -100vmax); margin-bottom:0 !important; padding-top:.25rem !important; padding-bottom:.5rem !important; border:0 !important; }
+main > div > div.text-center:first-child h1, main > div > div.text-center:first-child h1 *, main > div > div.text-center:first-child > p, main > div > div.text-center:first-child > div > p, main > div > div.text-center:first-child p, main > div > div.text-center:first-child li, main > div > div.text-center:first-child label, main > div > div.text-center:first-child span:not([class*="bg-"]) { color:#fff !important; }
+main > div > div.text-center:first-child h1 { letter-spacing:-0.02em; }
+main > div > div.text-center:first-child a { color:#fff !important; text-decoration:underline; text-decoration-color:#FF883E; text-decoration-thickness:2px; }
+main > div > astro-island { background:#0B6E4F !important; box-shadow:0 0 0 100vmax #0B6E4F; clip-path:inset(0 -100vmax); padding-bottom:2.25rem !important; margin-bottom:2.25rem !important; border:0 !important; }
+main > div > astro-island .bg-white { background:#fff !important; border:0 !important; border-top:6px solid #FF883E !important; border-radius:14px !important; box-shadow:0 10px 30px rgba(0,0,0,.18) !important; }
+main > div > astro-island .bg-white, main > div > astro-island .bg-white p, main > div > astro-island .bg-white label, main > div > astro-island .bg-white span, main > div > astro-island .bg-white h2, main > div > astro-island .bg-white h3, main > div > astro-island .bg-white li, main > div > astro-island .bg-white dt, main > div > astro-island .bg-white dd, main > div > astro-island .bg-white td, main > div > astro-island .bg-white th { color:#0F172A; }
+/* Chiffres-resultats grands, dans l'accent, sur fond teinte */
+main [aria-live] :is([class*="text-2xl"],[class*="text-3xl"],[class*="text-4xl"]), main [data-resultat] :is([class*="text-2xl"],[class*="text-3xl"]), main .prose strong.big { font-size:2.1rem !important; line-height:1.15 !important; color:#0B6E4F !important; background:#EEF5F3; border-radius:8px; padding:.05em .3em; }
+/* Sections alternees blanc / teinte */
+/* pas dans le texte des guides (div.prose) : leurs blocs ne sont pas des sections et repoussaient le simulateur sous 461 px */
+main > div:not(.prose) > :is(div,section):nth-child(n+3):nth-child(odd) { background:#DDEBE6; box-shadow:0 0 0 100vmax #DDEBE6; clip-path:inset(0 -100vmax); padding-top:1.5rem; padding-bottom:1.5rem; }
+main h2 { color:#0B6E4F !important; border-left:8px solid #FF883E; padding-left:.6rem; }
+main h3 { color:#0B6E4F; }
+/* Boutons pleins 2e couleur, liens soulignes colores */
+main button[type="submit"], main a[class*="bg-accent"], main button[class*="bg-accent"], main a[class*="border-accent"], main a[class*="bg-brand"], main button[class*="bg-brand"], main a[class*="bg-primary"], main button[class*="bg-primary"] { background:#FF883E !important; color:#0F172A !important; border-color:#FF883E !important; border-radius:10px !important; font-weight:700; }
+main button[type="submit"]:hover, main a[class*="bg-accent"]:hover, main a[class*="border-accent"]:hover, main a[class*="bg-brand"]:hover, main a[class*="bg-primary"]:hover { background:#D67234 !important; }
+main .prose a, main p > a, main li > a { color:#0B6E4F !important; text-decoration:underline; text-decoration-color:#FF883E; text-decoration-thickness:2px; text-underline-offset:3px; }
+/* Encadres et tableaux */
+main .bg-accent-50 { background:#EEF5F3 !important; border-left:6px solid #FF883E; }
+main table thead th { color:#0B6E4F !important; border-bottom:3px solid #FF883E !important; background:#EEF5F3; }
+/* Pied de page plein sombre */
+footer { background:#053626 !important; border-top:6px solid #FF883E !important; }
+footer, footer *:not(svg):not(path) { color:#E5E7EB !important; border-color:rgba(255,255,255,.16) !important; }
+footer a { color:#fff !important; text-decoration:underline; text-decoration-color:#FF883E; }
+footer [class*="bg-"] { background:transparent !important; }
+/* --- corrections hors trame (maquette verifiee) --- */
+body > header { position:relative; z-index:60; }
+body > header .hamburger-line { background:#fff !important; }
+main > div > astro-island .bg-white .bg-white, main > div > astro-island .bg-white :is(input,select) { border:1px solid #CBD5E1 !important; border-top:1px solid #CBD5E1 !important; border-radius:8px !important; box-shadow:none !important; }
+/* Mobile : les trois chiffres côte à côte (net mensuel, net annuel, taux) gardent leur taille d'origine, sinon « €3,304 » sort de sa case. */
+@media (max-width: 640px) { main [data-resultat] .grid-cols-3 [class*="text-2xl"] { font-size:1.25rem !important; padding:0 !important; background:transparent !important; } }
